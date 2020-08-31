@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-07-02T13:01:02Z" product-name="ns_gallery">
+		<header/>
+		<body>
+			<trans-unit id="mlang_tabs_tab">
+				<source>Gallery</source>
+			</trans-unit>			
+			<trans-unit id="gallery.openView">
+				<source>Gallery open in</source>
+			</trans-unit>
+			<trans-unit id="general.samePage">
+				<source>Same page</source>
+			</trans-unit>
+			<trans-unit id="general.controls">
+				<source>Navigation Arrow</source>
+			</trans-unit>
+			<trans-unit id="general.selAction">
+				<source>Use global setting</source>
+			</trans-unit>
+			<trans-unit id="general.true">
+				<source>True</source>
+			</trans-unit>
+			<trans-unit id="general.false">
+				<source>False</source>
+			</trans-unit>
+			<trans-unit id="general.recordPerPage">
+				<source>Images per page</source>
+			</trans-unit>			
+			<trans-unit id="selectAlbum">
+				<source>Select albums</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

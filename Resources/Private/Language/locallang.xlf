@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-07-02T13:01:02Z" product-name="ns_gallery">
+		<header/>
+		<body>
+			<trans-unit id="tx_nsgallery_domain_model_nsalbum">
+				<source>Ns Album</source>
+			</trans-unit>
+			<trans-unit id="tx_nsgallery_domain_model_nsalbum.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_nsgallery_domain_model_nsalbum.media">
+				<source>Media</source>
+			</trans-unit>
+			<trans-unit id="tx_nsgallery_domain_model_nsmedia">
+				<source>Ns Media</source>
+			</trans-unit>
+			<trans-unit id="tx_nsgallery_domain_model_nsmedia.media">
+				<source>Media</source>
+			</trans-unit>
+			<trans-unit id="nsgallery">
+				<source>NS Gallery</source>
+			</trans-unit>
+			<trans-unit id="tx_nsfeedback_domain_model_report.documentaiton">
+				<source>Documentaiton</source>
+			</trans-unit>
+			<trans-unit id="tx_nsfeedback_domain_model_report.helpsupport">
+				<source>Help &amp; Support</source>
+			</trans-unit>
+			<trans-unit id="tx_nsfeedback_domain_model_report.donate">
+				<source>Donate</source>
+			</trans-unit>
+			<trans-unit id="tx_nsfeedback_domain_model_feedbacks.resubmit">
+				<source>Something wrong, please resubmit your feedback.</source>
+			</trans-unit>
+			<trans-unit id="globalsettings">
+				<source>Global Setting</source>
+			</trans-unit>
+			<trans-unit id="Dashboard">
+				<source>Dashboard</source>
+			</trans-unit>
+			<trans-unit id="premiumExtension">
+				<source>Premium Extension</source>
+			</trans-unit>
+			<trans-unit id="basicSettings">
+				<source>Basic Settings</source>
+			</trans-unit>
+			<trans-unit id="noThemeConfiguration">
+				<source>Sorry, Configuration not available for this!</source>
+			</trans-unit>
+			<trans-unit id="sorry">
+				<source>Sorry!</source>
+			</trans-unit>
+			<trans-unit id="noconstantline1">
+				<source>No Extension Template available for this Page.</source>
+			</trans-unit>
+			<trans-unit id="noconstantline2">
+				<source>Please go the Template Module and create new extension Template for this page.</source>
+			</trans-unit>
+			<trans-unit id="commonSettings">
+				<source>Global Settings</source>
+			</trans-unit>
+			<trans-unit id="tx_nsfeedback_domain_model_report.nsreport">
+				<source>Albums</source>
+			</trans-unit>
+			<trans-unit id="cat_appearance">
+				<source>Appearance</source>
+			</trans-unit>
+			<trans-unit id="opps">
+                <source>Oops!</source>
+            </trans-unit>
+             <trans-unit id="info1">
+                <source>Gallery Albums is not available.</source>
+            </trans-unit>
+            <trans-unit id="info2">
+                <source>Please select other page to view feedbacks.</source>
+            </trans-unit>
+			<trans-unit id="info3">
+				<source>Please add storage folder id.</source>
+			</trans-unit>
+            <trans-unit id="totalAlbums">
+				<source>Total Album</source>
+			</trans-unit>
+			<trans-unit id="totalCategory">
+				<source>Total Category</source>
+			</trans-unit>
+			<trans-unit id="totalimages">
+				<source>Total Media</source>
+			</trans-unit>
+			<trans-unit id="action">
+				<source>Action</source>
+			</trans-unit>
+			<trans-unit id="Edit">
+				<source>Edit</source>
+			</trans-unit>			
+			<trans-unit id="generalGallery">
+				<source>General gallery</source>
+			</trans-unit>			
+			<trans-unit id="save">
+				<source>Save Changes</source>
+			</trans-unit>			
+			<trans-unit id="controls">
+				<source>Navigation Arrow</source>
+			</trans-unit>			
+			<trans-unit id="general.pagination">
+				<source>Pagination</source>
+			</trans-unit>
+			<trans-unit id="general.loadmore">
+				<source>Load More</source>
+			</trans-unit>			
+			<trans-unit id="general.all">
+				<source>All</source>
+			</trans-unit>
+			<trans-unit id="general.photos">
+				<source>Media</source>
+			</trans-unit>
+			<trans-unit id="storagePid">
+				<source>Default storage PID</source>
+			</trans-unit>
+			<trans-unit id="general.AddNew">
+				<source>Add new album</source>
+			</trans-unit>
+			<trans-unit id="PagingPosition">
+				<source>Pagination/Loadmore position</source>
+			</trans-unit>
+			<trans-unit id="pagination">
+				<source>Pagination type</source>
+			</trans-unit>
+			<trans-unit id="selectAlbum">
+				<source>Select albums</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

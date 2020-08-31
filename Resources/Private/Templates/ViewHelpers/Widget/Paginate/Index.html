@@ -1,0 +1,110 @@
+<f:if condition="{configuration.insertAbove}">
+	<f:render section="paginator" arguments="{pagination: pagination, configuration: configuration}" />
+</f:if>
+
+<f:renderChildren arguments="{contentArguments}" />
+
+<f:if condition="{configuration.insertBelow}">
+	<f:render section="paginator" arguments="{pagination: pagination, configuration: configuration}" />
+</f:if>
+
+<f:section name="paginator">
+	<f:if condition="{settings.PagingPosition} != '' ">
+		<f:then>
+			<f:variable name="positionClass">{settings.PagingPosition}</f:variable>
+		</f:then>
+		<f:else>
+			<f:variable name="positionClass">{settings.GlobalPagingPosition}</f:variable>
+		</f:else>
+	</f:if>
+	<div class="pagination-block pagination-block--{positionClass}">
+		<div id="cover-spin"></div>
+		<f:if condition="{settings.paginationType} == 'pagination'">
+			<f:then>
+				<f:if condition="{pagination.nextPage} || {pagination.previousPage} ">
+					<ul class="ns-pagination dflex">
+						<f:if condition="{pagination.previousPage}">
+							<li class="prev">
+								<f:if condition="{pagination.previousPage} > 1">
+									<f:then>
+										<f:widget.link rel="prev" arguments="{currentPage: pagination.previousPage}"
+											addQueryStringMethod="{configuration.addQueryStringMethod}"
+											section="{configuration.section}" class="article-load-more">
+											<span class="mdi mdi-chevron-double-left"><span class="far fa-chevron-left"></span></span>
+										</f:widget.link>
+									</f:then>
+									<f:else>
+										<f:widget.link rel="prev" addQueryStringMethod="{configuration.addQueryStringMethod}"
+											section="{configuration.section}" class="article-load-more">
+											<span class="mdi mdi-chevron-double-left"><span class="far fa-chevron-left"></span></span>
+										</f:widget.link>
+									</f:else>
+								</f:if>
+							</li>
+						</f:if>
+						<f:if condition="{pagination.displayRangeStart} > 1">
+							<li class="first">
+								<f:widget.link class="article-load-more" addQueryStringMethod="{configuration.addQueryStringMethod}"
+									section="{configuration.section}">1</f:widget.link>
+							</li>
+						</f:if>
+						<f:if condition="{pagination.hasLessPages}">
+							<li>…</li>
+						</f:if>
+						<f:for each="{pagination.pages}" as="page">
+							<f:if condition="{page.isCurrent}">
+								<f:then>
+									<li class="current active">
+										{page.number}
+									</li>
+								</f:then>
+								<f:else>
+									<li>
+										<f:if condition="{page.number} > 1">
+											<f:then>
+												<f:widget.link class="article-load-more" arguments="{currentPage: page.number}"
+													addQueryStringMethod="{configuration.addQueryStringMethod}"
+													section="{configuration.section}">{page.number}</f:widget.link>
+											</f:then>
+											<f:else>
+												<f:widget.link class="article-load-more" addQueryStringMethod="{configuration.addQueryStringMethod}"
+													section="{configuration.section}">{page.number}</f:widget.link>
+											</f:else>
+										</f:if>
+									</li>
+								</f:else>
+							</f:if>
+						</f:for>
+						<f:if condition="{pagination.hasMorePages}">
+							<li class="">…</li>
+						</f:if>
+						<f:if condition="{pagination.displayRangeEnd} < {pagination.numberOfPages}">
+							<li class="last">
+								<f:widget.link class="article-load-more" arguments="{currentPage: pagination.numberOfPages}"
+									addQueryStringMethod="{configuration.addQueryStringMethod}" section="{configuration.section}">
+									{pagination.numberOfPages}</f:widget.link>
+							</li>
+						</f:if>
+						<f:if condition="{pagination.nextPage}">
+							<li class="next">
+								<f:widget.link class="article-load-more" rel="next" arguments="{currentPage: pagination.nextPage}"
+									addQueryStringMethod="{configuration.addQueryStringMethod}" section="{configuration.section}">
+									<span class="mdi mdi-chevron-double-right"> <span class="far fa-chevron-right"></span> </span>							
+								</f:widget.link>
+							</li>
+						</f:if>
+					</ul>
+				</f:if>
+			</f:then>
+			<f:else>
+				<f:if condition="{pagination.nextPage}">
+					<f:widget.link id="{configuration.ajaxId}" arguments="{currentPage: pagination.nextPage}"
+						addQueryStringMethod="{configuration.addQueryStringMethod}" section="{configuration.section}"
+						class="article-load-more btn ns-gallery-btn">
+						<f:translate key="general.loadmore" extensionName="ns_gallery" />
+					</f:widget.link>
+				</f:if>			
+			</f:else>
+		</f:if>
+	</div>
+</f:section>

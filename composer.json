@@ -1,0 +1,28 @@
+{
+    "name": "nitsan/ns-gallery",
+    "type": "typo3-cms-extension",
+    "description": "",
+    "authors": [
+        {
+            "name": "T3: Milan",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "NITSAN\\NsGallery\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NITSAN\\NsGallery\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "nitsan/ns-gallery": "self.version",
+        "typo3-ter/ns-gallery": "self.version"
+    }
+}

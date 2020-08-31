@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-07-02T13:01:02Z" product-name="ns_gallery">
+		<header/>
+		<body>
+			<trans-unit id="general.recordPerPage">
+				<source>Images per page</source>
+			</trans-unit>
+			<trans-unit id="selectAlbum">
+				<source>Select albums</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

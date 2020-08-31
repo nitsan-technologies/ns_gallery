@@ -1,0 +1,114 @@
+plugin.tx_nsgallery_album {
+    view {
+        templateRootPaths.0 = EXT:{extension.shortExtensionKey}/Resources/Private/Templates/
+        templateRootPaths.1 = {$plugin.tx_nsgallery_album.view.templateRootPath}
+        partialRootPaths.0 = EXT:ns_gallery/Resources/Private/Partials/
+        partialRootPaths.1 = {$plugin.tx_nsgallery_album.view.partialRootPath}
+        layoutRootPaths.0 = EXT:tx_nsgallery/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$plugin.tx_nsgallery_album.view.layoutRootPath}
+        widget{
+            TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper{
+                templateRootPaths = {$plugin.tx_nsgallery_album.view.templateRootPath}
+            }
+        }
+    }   
+    features {
+        #skipDefaultArguments = 1
+        # if set to 1, the enable fields are ignored in BE context
+        ignoreAllEnableFieldsInBe = 0
+        # Should be on by default, but can be disabled if all action in the plugin are uncached
+        requireCHashArgumentForActionArguments = 1
+    }
+    mvc {
+        #callDefaultActionIfActionCantBeResolved = 1
+    }
+    settings {        
+        controls = {$plugin.tx_nsgallery_album.appearanceSettings.generalGallery.controls}        
+        paginationType = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.Paging}
+    }
+    persistence {
+        storagePid = 23
+    }
+
+}
+
+plugin.tx_nsgallery_googlesearchimage {
+    persistence {
+        storagePid = 23
+    }
+    view {
+        templateRootPaths.0 = EXT:{extension.shortExtensionKey}/Resources/Private/Templates/
+        templateRootPaths.1 = {$plugin.tx_nsgallery_googlesearchimage.view.templateRootPath}
+        partialRootPaths.0 = EXT:ns_gallery/Resources/Private/Partials/
+        partialRootPaths.1 = {$plugin.tx_nsgallery_googlesearchimage.view.partialRootPath}
+        layoutRootPaths.0 = EXT:tx_nsgallery/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$plugin.tx_nsgallery_googlesearchimage.view.layoutRootPath}
+        widget{
+            TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper{
+                templateRootPaths = {$plugin.tx_nsgallery_album.view.templateRootPath}
+            }
+        }
+    }
+    
+    features {
+        #skipDefaultArguments = 1
+        # if set to 1, the enable fields are ignored in BE context
+        ignoreAllEnableFieldsInBe = 0
+        # Should be on by default, but can be disabled if all action in the plugin are uncached
+        requireCHashArgumentForActionArguments = 1
+    }
+    mvc {
+        #callDefaultActionIfActionCantBeResolved = 1
+    }
+    settings {
+        paginationType = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.Paging}
+        PagingPosition = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.PagingPosition}
+        GlobalPagingPosition = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.PagingPosition}
+    }
+}
+
+page {
+    meta {
+        viewport = width=device-width, initial-scale=1.0
+    }
+    includeJSFooter {
+        lightGallery =  EXT:ns_gallery/Resources/Public/Vendor/lightgallery/js/lightgallery.js
+        googleSearchImage = EXT:ns_gallery/Resources/Public/Vendor/gi-thewall/githewall.min.js        
+        nsgallery = EXT:ns_gallery/Resources/Public/Js/nsgallery.js
+        nsgalleryCustomJs = EXT:ns_gallery/Resources/Public/Js/customJs.js
+    }
+    includeCSS{            
+        nsGallerylightgallery = EXT:ns_gallery/Resources/Public/Vendor/lightgallery/css/lightgallery.min.css
+        nsGallerygi = EXT:ns_gallery/Resources/Public/Vendor/gi-thewall/githewall.css            
+        nsGalleryfontAwesome = EXT:ns_gallery/Resources/Public/Vendor/fontAwesome/css/font-awesome.min.css
+        nsgallery = EXT:ns_gallery/Resources/Public/Css/nsgallery.css
+        nsgalleryTheme = EXT:ns_gallery/Resources/Public/Css/nsgallery-theme.css
+        CustomCss = EXT:ns_gallery/Resources/Public/Css/customCss.css
+    }
+    headerData {
+        10 = TEXT
+        10 {
+            value = <script src="typo3conf/ext/ns_gallery/Resources/Public/Vendor/initializr/jquery-2.1.4.min.js"></script>
+            if.isTrue = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.jQuery}
+        }
+    }   
+}
+
+# Module configuration
+module.tx_nsgallery_nitsan_nsgallerynsgallery {
+
+    settings {
+        storagePid = {$plugin.tx_nsgallery_album.storageSettings.storagePid}
+    }
+    persistence {
+        storagePid = {$plugin.tx_nsgallery_album.storageSettings.storagePid}
+    }
+    view {
+        templateRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Backend/Templates/
+        templateRootPaths.1 = {$module.tx_nsgallery_nsgallery.view.templateRootPath}
+        partialRootPaths.0 = EXT:ns_gallery/Resources/Private/Backend/Partials/
+        partialRootPaths.1 = {$module.tx_nsgallery_nsgallery.view.partialRootPath}
+        layoutRootPaths.0 = EXT:ns_gallery/Resources/Private/Backend/Layouts/
+        layoutRootPaths.1 = {$module.tx_nsgallery_nsgallery.view.layoutRootPath}
+    }
+}

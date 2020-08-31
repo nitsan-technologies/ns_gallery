@@ -1,0 +1,59 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Function</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>										
+					<settings.recordPerPage>
+						<TCEforms>
+							<label>LLL:EXT:ns_gallery/Resources/Private/Language/galleryAlbum.xlf:general.recordPerPage</label>
+							<config>
+								<type>input</type>
+								<size>30</size>
+								<eval>trim,num</eval>
+								<default>10</default>
+							</config>
+						</TCEforms>
+					</settings.recordPerPage>					
+					<settings.controls>
+						<TCEforms>
+							<label>LLL:EXT:ns_gallery/Resources/Private/Language/galleryAlbum.xlf:general.controls</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items>
+									<numIndex index="0">
+										<numIndex index="0">LLL:EXT:ns_gallery/Resources/Private/Language/galleryAlbum.xlf:general.selAction</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1">
+										<numIndex index="0">LLL:EXT:ns_gallery/Resources/Private/Language/galleryAlbum.xlf:general.true</numIndex>
+										<numIndex index="1">true</numIndex>
+									</numIndex>
+									<numIndex index="2">
+										<numIndex index="0">LLL:EXT:ns_gallery/Resources/Private/Language/galleryAlbum.xlf:general.false</numIndex>
+										<numIndex index="1">false</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.controls>
+					<settings.records>
+						<TCEforms>
+							<label>LLL:EXT:ns_gallery/Resources/Private/Language/galleryGoogleImage.xlf:selectAlbum</label>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>tx_nsgallery_domain_model_nsalbum</allowed>
+								<minitems>1</minitems>
+							</config>
+						</TCEforms>
+					</settings.records>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

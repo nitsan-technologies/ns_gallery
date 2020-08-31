@@ -1,0 +1,67 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:be.container pageTitle="{f:translate(key: 'pagetitle')}" includeRequireJsModules="{0:'TYPO3/CMS/NsFeedback/Main'}">
+	
+	<link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Vendor/bootstrap4.3.1.min.css', extensionName: 'ns_gallery')}" media="all">
+	<link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Css/global.css', extensionName: 'ns_gallery')}" media="all">
+	<link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Css/main.css', extensionName: 'ns_gallery')}" media="all">
+	
+	<div class="typo3-fullDoc">
+		<div id="typo3-docheader">
+			<div class="typo3-docheader-functions">
+				<f:be.buttons.csh />
+				<div class="ns-ext-button-bar">
+					<div class="button-group float-sm-right">
+						<a href="javascript:;" class="btn btn-success text-white btn-sm">
+							<em class="fa fa-file-o" aria-hidden="true"></em><f:translate key="tx_nsfeedback_domain_model_report.documentaiton" extensionName="ns_gallery" />
+						</a>
+						<a href="javascript:;" class="btn btn-info text-white btn-sm">
+							<em class="fa fa-question" aria-hidden="true"></em><f:translate key="tx_nsfeedback_domain_model_report.helpsupport" extensionName="ns_gallery" />
+						</a>
+						<a href="javascript:;" class="btn btn-warning text-white btn-sm">
+							<em class="fa fa-dollar" aria-hidden="true"></em><f:translate key="tx_nsfeedback_domain_model_report.donate" extensionName="ns_gallery" />
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="typo3-docbody">
+			<div id="typo3-inner-docbody">
+				<div class="ns-ext-navigation">
+					<nav class="navbar navbar-expand-lg">
+						<a class="navbar-brand" href="javascript:;"><f:translate key="nsgallery" extensionName="ns_gallery" /></a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nsextNavbar"
+						        aria-controls="nsextNavbar" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="nsextNavbar">
+							<ul class="navbar-nav">
+								<li class="nav-item {f:if(condition: '{action}==dashboard', then: 'active')}">
+									<f:link.action action="dashboard" class="nav-link">
+										<em class="fa fa-dashboard" aria-hidden="true"></em><f:translate key="Dashboard" /></f:link.action>
+								</li>
+								<li class="nav-item {f:if(condition: '{action}==list', then: 'active')}">
+									<f:link.action action="list" class="nav-link" additionalAttributes="{data-toggle:'tooltip',data-placement:'bottom'}" title="{f:translate(key: 'report.desc')}">
+										<em class="fa fa-bars" aria-hidden="true"></em><f:translate key="tx_nsfeedback_domain_model_report.nsreport" extensionName="ns_gallery" />
+									</f:link.action>
+								</li>
+								<li class="nav-item {f:if(condition: '{action}==commonSettings', then: 'active')}">
+									<f:link.action action="commonSettings" additionalParams="{cat:'ns_gallery_commonSettings'}" class="nav-link" additionalAttributes="{data-toggle:'tooltip',data-placement:'bottom'}" title="{f:translate(key: 'global.desc')}">
+										<em class="fa fas fa-cogs" aria-hidden="true"></em><f:translate key="commonSettings" />
+									</f:link.action>
+								</li>								
+								<li class="nav-item {f:if(condition: '{action}==premiumExtension', then: 'active')}">
+									<f:link.action action="premiumExtension" class="nav-link">
+										<em class="fa fa-empire" aria-hidden="true"></em><f:translate key="premiumExtension" />
+									</f:link.action>
+								</li>
+							</ul>
+						</div>
+					</nav>
+				</div>
+				<f:render section="content" />
+			</div>
+		</div>
+	</div>
+</f:be.container>
+</html>
