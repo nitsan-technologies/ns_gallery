@@ -8,6 +8,7 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:ns_gallery/Resources/Private/Language/locallang_db.xlf:tx_nsgallery_domain_model_nsmedia',
         'label' => 'media',
+        'label_userFunc' =>  'NITSAN\NsGallery\Utility\label->getObjectLabel',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'sortby' => 'sorting',
