@@ -1,28 +1,37 @@
 {
-    "name": "nitsan/ns-gallery",
-    "type": "typo3-cms-extension",
-    "description": "",
-    "authors": [
-        {
-            "name": "T3: Milan",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "typo3/cms-core": "^9.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "NITSAN\\NsGallery\\": "Classes"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "NITSAN\\NsGallery\\Tests\\": "Tests"
-        }
-    },
-    "replace": {
-        "nitsan/ns-gallery": "self.version",
-        "typo3-ter/ns-gallery": "self.version"
+  "name": "nitsan/ns-gallery",
+  "type": "typo3-cms-extension",
+  "description": "Do you want to integrate feature-rich gallery solution to your TYPO3 site? The extension includes wide-range of gallery album variations. Demo: https://demo.t3terminal.com/t3t-extensions/gallery You can download PRO version for more-features & free-support at https://t3terminal.com/ns-gallery-typo3-extension",
+  "homepage": "https://extensions.typo3.org/extension/ns_gallery/",
+  "license": "GPL-2.0+",
+  "keywords": [
+    "TYPO3",
+    "Gallery",
+    "NITSAN"
+  ],
+  "support": {
+    "issues": "https://github.com/nitsan-technologies/ns_gallery/issues"
+  },
+  "require": {
+    "typo3/cms-core": ">=8.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "NITSAN\\NsGallery\\": "Classes"
     }
+  },
+  "replace": {
+    "nitsan/ns-gallery": "self.version"
+  },
+  "config": {
+    "vendor-dir": ".Build/vendor/",
+    "bin-dir": ".Build/bin/"
+  },
+  "extra": {
+    "typo3/cms": {
+        "cms-package-dir": "{$vendor-dir}/typo3/cms",
+        "web-dir": ".Build/public",
+        "extension-key": "ns_gallery"
+    }
+  }
 }
