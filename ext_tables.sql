@@ -46,6 +46,7 @@ CREATE TABLE tx_nsgallery_domain_model_nsmedia (
     uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 
+	disBig int(11) unsigned DEFAULT '0' NOT NULL,
 	nsalbum int(11) unsigned DEFAULT '0' NOT NULL,
 
 	media int(11) unsigned DEFAULT '0' NOT NULL,
@@ -79,23 +80,6 @@ CREATE TABLE tx_nsgallery_domain_model_nsmedia (
 	KEY t3ver_oid(t3ver_oid,t3ver_wsid),
 	KEY language(l10n_parent,sys_language_uid)
 
-);
-
-#
-# Table structure for table 'tx_nsgallery_domain_model_nsmedia'
-#
-CREATE TABLE tx_nsgallery_domain_model_nsmedia (
-
-	nsalbum int(11) unsigned DEFAULT '0' NOT NULL,
-   disBig int(11) unsigned DEFAULT '0' NOT NULL,
-
-);
-
-#
-# Table structure for table 'tx_nsgallery_domain_model_nsalbum'
-#
-CREATE TABLE tx_nsgallery_domain_model_nsalbum (
-	categories int(11) unsigned DEFAULT '0' NOT NULL,
 );
 
 #
