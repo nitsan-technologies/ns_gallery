@@ -30,6 +30,7 @@ CREATE TABLE tx_nsgallery_domain_model_nsalbum (
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
+	l10n_state text,
 
 	PRIMARY KEY(uid),
 	KEY parent(pid),
@@ -74,6 +75,7 @@ CREATE TABLE tx_nsgallery_domain_model_nsmedia (
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
+	l10n_state text,
 
 	PRIMARY KEY(uid),
 	KEY parent(pid),
