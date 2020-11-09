@@ -1,7 +1,6 @@
 <?php
 namespace NITSAN\NsGallery\Domain\Repository;
 
-
 /***
  *
  * This file is part of the "[NITSAN] Gallery" Extension for TYPO3 CMS.
@@ -17,8 +16,4 @@ namespace NITSAN\NsGallery\Domain\Repository;
  */
 class NsGalleryBackendRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-
-   
-
- 
 }

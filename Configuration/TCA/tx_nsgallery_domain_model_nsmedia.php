@@ -126,15 +126,15 @@ return [
         'media' => [
             'exclude' => true,
             'label' => 'LLL:EXT:ns_gallery/Resources/Private/Language/locallang_db.xlf:tx_nsgallery_domain_model_nsmedia.media',
-            'config' => 
+            'config' =>
             \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'media',
                 [
                     'appearance' => [
                         'createNewRelationLinkTitle' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:media.addFileReference',
                         'enabledControls' => [
-                            'hide' => FALSE,
-                        ]                        
+                            'hide' => false,
+                        ]
                     ],
                     'foreign_types' => [
                         '0' => [
@@ -173,8 +173,8 @@ return [
                 $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
             ),
 
-        ],      
-    
+        ],
+
         'nsalbum' => [
             'config' => [
                 'type' => 'passthrough',

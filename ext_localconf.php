@@ -12,7 +12,7 @@ defined('TYPO3_MODE') || die('Access denied.');
         [
             'NsAlbum' => 'list, show',
         ]
-    );    
+    );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'NITSAN.NsGallery',
@@ -24,19 +24,18 @@ defined('TYPO3_MODE') || die('Access denied.');
         [
             'NsAlbum' => '',
         ]
-    );   
+    );
 
-	$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-	
-	$iconRegistry->registerIcon(
-		'ns_gallery-plugin-album',
-		\TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-		['source' => 'EXT:ns_gallery/Resources/Public/Icons/ns_gallery.svg']
-	);	
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 
-	$iconRegistry->registerIcon(
-		'ns_gallery-plugin-googlesearchimage',
-		\TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-		['source' => 'EXT:ns_gallery/Resources/Public/Icons/ns_gallery.svg']
-	);	
- 
+    $iconRegistry->registerIcon(
+        'ns_gallery-plugin-album',
+        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        ['source' => 'EXT:ns_gallery/Resources/Public/Icons/ns_gallery.svg']
+    );
+
+    $iconRegistry->registerIcon(
+        'ns_gallery-plugin-googlesearchimage',
+        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        ['source' => 'EXT:ns_gallery/Resources/Public/Icons/ns_gallery.svg']
+    );

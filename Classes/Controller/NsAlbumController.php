@@ -1,8 +1,7 @@
 <?php
 namespace NITSAN\NsGallery\Controller;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility as debug;
-use TYPO3\CMS\Extbase\Annotation\Inject as inject;
 
+use TYPO3\CMS\Extbase\Annotation\Inject as inject;
 
 /***
  *
@@ -22,7 +21,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
     /**
      * nsAlbumRepository
-     * 
+     *
      * @var \NITSAN\NsGallery\Domain\Repository\NsAlbumRepository
      * @inject
      */
@@ -30,7 +29,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
     /**
      * nsMediaRepository
-     * 
+     *
      * @var \NITSAN\NsGallery\Domain\Repository\NsMediaRepository
      * @inject
      */
@@ -38,31 +37,28 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
     /**
      * action list
-     * 
+     *
      * @return void
      */
     public function listAction()
     {
-
-        $makeArray = explode(",",$this->settings['records']);
+        $makeArray = explode(',', $this->settings['records']);
         $nsAlbums = [];
         foreach ($makeArray as $key => $value) {
             $nsAlbums[] = $this->nsAlbumRepository->findByUid($value);
-        }        
+        }
         $this->view->assign('nsAlbums', $nsAlbums);
         $this->makeGalleryInitilization('general');
     }
-    
 
     /**
      * action list
-     * 
+     *
      * @return void
      */
     public function googleAction()
-    {       
-
-        $makeArray = explode(",",$this->settings['records']);
+    {
+        $makeArray = explode(',', $this->settings['records']);
         $nsAlbums = [];
         foreach ($makeArray as $album) {
             $getAlbums = $this->nsAlbumRepository->findByUid($album);
@@ -70,31 +66,31 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $nsAlbums[] = $value;
             }
         }
-        $this->view->assign('nsAlbums', $nsAlbums);       
+        $this->view->assign('nsAlbums', $nsAlbums);
     }
-   
 
-    public function makeGalleryInitilization($gallery = ''){
+    public function makeGalleryInitilization($gallery = '')
+    {
         $getContentId = $this->configurationManager->getContentObject()->data['uid'];
         $this->view->assign('getContentId', $getContentId);
         switch ($gallery) {
             case 'general':
-               
-                $constant = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_nsgallery_album.']['settings.'];                
-                $this->view->assign('constant', $constant);              
-                
-                $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings,$constant);
-                
+
+                $constant = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_nsgallery_album.']['settings.'];
+                $this->view->assign('constant', $constant);
+
+                $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
+
                 $this->view->assign('jsSettings', $jsSettings);
-               
+
                 $this->view->assign('mode', $mode);
                 $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] .= "
                 <script>
                     (function($) {
                         $(window).load(function() {                            
-                            $('.nsGallery-".$getContentId."').lightGallery({
+                            $('.nsGallery-" . $getContentId . "').lightGallery({
                                 selector: '.ns-gallery-item',   
-                                ".$jsSettings."
+                                " . $jsSettings . "
                                 addClass:'ns-gallery-arrow--icon-circle video-not-supported',
                                 download:false,
                             });
@@ -102,6 +98,6 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     })(jQuery);
                 </script>";
                 break;
-        }        
+        }
     }
 }

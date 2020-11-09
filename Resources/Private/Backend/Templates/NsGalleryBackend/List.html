@@ -10,7 +10,8 @@
 						<h5> <f:translate key="nsgallery" extensionName="ns_gallery" /> </h5>						
 						<f:if condition="{settings.storagePid}">
 							 <f:link.typolink parameter="{ns:Misc.BackendNewLink(tableName:'tx_nsgallery_domain_model_nsalbum', identifier:'{settings.storagePid}')}" class="btn btn-primary">
-						      <f:translate key="general.AddNew" extensionName="ns_gallery" />
+							 	<em class="fa fa-plus-circle" aria-hidden="true"></em>
+						      	<f:translate key="general.AddNew" extensionName="ns_gallery" />
 						  </f:link.typolink>
 						</f:if>
 					</div>
@@ -33,7 +34,8 @@
 										<td>
 											<div class="button-group ns-backup-actions-wrap">
 												<f:link.typolink parameter="{ns:Misc.BackendEditLink(tableName:'tx_nsgallery_domain_model_nsalbum', identifier:'{galleryAlbum.uid}')}" class="btn btn-primary">
-												      <f:translate key="Edit" extensionName="ns_gallery" />
+														<em class="fa fa-pencil" aria-hidden="true"></em>
+												     	<f:translate key="Edit" extensionName="ns_gallery" />
 												 </f:link.typolink>
 												
 											</div>

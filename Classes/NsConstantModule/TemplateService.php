@@ -1,7 +1,6 @@
 <?php
 namespace NITSAN\NsGallery\NsConstantModule;
 
-
 /*
  * This file is part of the TYPO3 CMS project.
  *

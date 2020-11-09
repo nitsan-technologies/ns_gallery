@@ -7,7 +7,6 @@ use NITSAN\NsGallery\NsConstantModule\TypoScriptTemplateModuleController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation\Inject as inject;
 
-
 /***
  *
  * This file is part of the "[NITSAN] Gallery" Extension for TYPO3 CMS.
@@ -26,7 +25,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
 
     /**
      * nsAlbumRepository
-     * 
+     *
      * @var \NITSAN\NsGallery\Domain\Repository\NsAlbumRepository
      * @inject
      */
@@ -34,7 +33,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
 
     /**
      * nsMediaRepository
-     * 
+     *
      * @var \NITSAN\NsGallery\Domain\Repository\NsMediaRepository
      * @inject
      */
@@ -42,20 +41,20 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
 
     /**
      * nsAlbumRepository
-     * 
+     *
      * @var \NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository
      * @inject
      */
     protected $nsGalleryBackendRepository = null;
-    
+
     /**
      * action list
-     * 
+     *
      * @return void
      */
     public function listAction()
-    {   
-        $galleryAlbums = $this->nsAlbumRepository->findAll();     
+    {
+        $galleryAlbums = $this->nsAlbumRepository->findAll();
         $assign = [
             'action' => 'list',
             'galleryAlbums' => $galleryAlbums
@@ -63,7 +62,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         $this->view->assignMultiple($assign);
     }
 
-    
     protected $templateService;
     protected $constantObj;
     protected $sidebarData;
@@ -126,7 +124,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
             $this->sidebarData = $checkApiData['right_sidebar_html'];
             $this->dashboardSupportData = $checkApiData['support_html'];
             $this->premiumExtensionData = $checkApiData['premuim_extension_html'];
-        }        
+        }
 
         //GET CONSTANTs
         $this->constantObj->init($this->pObj);
@@ -154,7 +152,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     public function dashboardAction()
     {
-
         $galleryAlbums = $this->nsAlbumRepository->findAll();
         $totalImage = $this->nsMediaRepository->findAll();
 
@@ -170,7 +167,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         $this->view->assignMultiple($assign);
     }
 
-        /**
+    /**
      * action premiumExtension
      *
      * @return void
@@ -183,7 +180,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         ];
         $this->view->assignMultiple($assign);
     }
-    
+
     /**
      * action saveConstant
      */

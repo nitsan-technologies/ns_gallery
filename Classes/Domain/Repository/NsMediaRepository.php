@@ -1,10 +1,6 @@
 <?php
 namespace NITSAN\NsGallery\Domain\Repository;
 
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
-
 /***
  *
  * This file is part of the "[NITSAN] Gallery" Extension for TYPO3 CMS.
@@ -20,7 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class NsMediaRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-	protected $defaultOrderings = [
-	    'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
-	];
+    protected $defaultOrderings = [
+        'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
+    ];
 }

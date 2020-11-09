@@ -1152,7 +1152,7 @@ class ExtendedTemplateService extends TemplateService
                     list($fN, $fV, $params, $idName) = $this->ext_fNandV($params);
 
                     $idName = htmlspecialchars($idName);
-                    $hint = '';                
+                    $hint = '';
                     switch ($typeDat['type']) {
                         case 'int':
                         case 'int+':
