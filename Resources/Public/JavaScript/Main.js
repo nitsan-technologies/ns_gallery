@@ -2,8 +2,17 @@ define([
     'jquery',
     'TYPO3/CMS/Backend/Modal',
     'TYPO3/CMS/NsGallery/Main',
+    'TYPO3/CMS/NsGallery/Datatables',
     'TYPO3/CMS/Backend/jquery.clearable'
-], function ($, Model) {    
+], function ($, Model) {  
+    
+    $('.ns-ext-datatable').DataTable({
+        "language": {
+            "lengthMenu": "Display _MENU_ Records",
+            "emptyTable": "No Records Available",
+            "zeroRecords": "No matching Records found"
+        },
+    });  
 
     $('.field-info-trigger').on('click', function(){
         $(this).parents('.form-group').find('.field-info-text').slideToggle();
