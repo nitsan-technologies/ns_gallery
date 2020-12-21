@@ -63,7 +63,9 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         foreach ($makeArray as $album) {
             $getAlbums = $this->nsAlbumRepository->findByUid($album);
             foreach ($getAlbums->getMedia() as $value) {
-                $nsAlbums[] = $value;
+                foreach ($value->getMedia() as $value) {
+                    $nsAlbums[] = $value;
+                }
             }
         }
         $this->view->assign('nsAlbums', $nsAlbums);

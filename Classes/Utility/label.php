@@ -1,6 +1,8 @@
 <?php
 namespace NITSAN\NsGallery\Utility;
 
+session_start();
+
 class label
 {
 
@@ -16,15 +18,13 @@ class label
             }
 
             $rec = \TYPO3\CMS\Backend\Utility\BackendUtility::getRecord($params['table'], $params['row']['uid']);
-            if (empty($rec)) {
+            if ($rec['media'] > 0) {
+                $totalMedia = $rec['media'];
             } else {
-                $resourceFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\FileRepository::class);
-                $file = $resourceFactory->findByRelation('tx_nsgallery_domain_model_nsmedia', 'media', $params['row']['uid']);
-                if ($file[0]) {
-                    $fileName = $file[0]->getOriginalFile()->getName();
-                    $params['title'] = $fileName;
-                }
+                $totalMedia = 0;
             }
+
+            $params['title'] = 'Album Media (' . $rec['media'] . ')';
         }
     }
 }
