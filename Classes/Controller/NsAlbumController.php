@@ -89,7 +89,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] .= "
                 <script>
                     (function($) {
-                        $(window).load(function() {                            
+                        $(window).on('load', function(){
                             $('.nsGallery-" . $getContentId . "').lightGallery({
                                 selector: '.ns-gallery-item',   
                                 " . $jsSettings . "
