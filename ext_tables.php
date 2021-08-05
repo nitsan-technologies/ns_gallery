@@ -3,7 +3,7 @@ defined('TYPO3_MODE') || die('Access denied.');
 
     $_EXTKEY = 'ns_gallery';
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:ns_gallery/Configuration/TSconfig/ContentElementWizard.txt">'
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:ns_gallery/Configuration/TSconfig/ContentElementWizard.tsconfig">'
     );
 
     if (TYPO3_MODE === 'BE') {
