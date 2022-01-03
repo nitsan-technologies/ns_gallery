@@ -1,0 +1,69 @@
+<div class="pagination-block pagination-block--{positionClass}">
+    <div id="cover-spin"></div>
+    <f:if condition="{settings.paginationType} == 'pagination'">
+        <f:then>
+            <f:if condition="{pagination.nextPageNumber} <= {pagination.lastPageNumber}">
+                <ul class="ns-pagination dflex">
+                    <f:if condition="{pagination.previousPageNumber}">
+                        <li class="prev">
+                            <f:if condition="{pagination.previousPageNumber} > 1">
+                                <f:then>
+                                    <a href="{f:uri.action(action:'{action}', arguments:{currentPage: pagination.previousPageNumber})}" title="{f:translate(key:'pagination.previous')}" class="article-load-more">
+                                        <span class="mdi mdi-chevron-double-left"><span class="far fa-chevron-left"></span></span>
+                                    </a>
+                                </f:then>
+                                <f:else>
+                                    <a href="{f:uri.action(action:'{action}', arguments:{currentPage: pagination.previousPageNumber})}" title="{f:translate(key:'pagination.previous')}" class="article-load-more">
+                                        <span class="mdi mdi-chevron-double-left"><span class="far fa-chevron-left"></span></span>
+                                    </a>
+                                </f:else>
+                            </f:if>
+                        </li>
+                    </f:if>
+                    <f:if condition="{pagination.displayRangeStart} > 1">
+                        <li class="first">
+                            <a href="{f:uri.action(action:'{action}', arguments:{currentPage: page})}" class="article-load-more">1</a>
+                        </li>
+                    </f:if>
+                    <f:if condition="{pagination.hasLessPages}">
+                        <li>…</li>
+                    </f:if>
+                    <f:for each="{pages}" as="page">
+                        <li class="{f:if(condition: '{paginator.currentPageNumber} == {page}', then: 'current active', else: '')}">
+                            <f:if condition="{page} > 1">
+                            <f:then>
+                                <a href="{f:uri.action(action:'{action}', arguments:{currentPage: page})}" class="article-load-more ">{page}</a>
+                            </f:then>
+                            <f:else>
+                                <a href="{f:uri.action(action:'{action}', arguments:{currentPage: page})}" class="article-load-more">{page}</a>
+                            </f:else>
+                            </f:if>
+                        </li>
+                    </f:for>
+                    <f:if condition="{pagination.hasMorePages}">
+                        <li class="">…</li>
+                    </f:if>
+                    <f:if condition="{pagination.displayRangeEnd} < {pagination.numberOfPages}">
+                        <li class="last">
+                            <a href="{f:uri.action(action:'{action}', arguments:{currentPage: pagination.lastPageNumber})}" class="article-load-more">{paginator.numberOfPages}</a>
+                        </li>
+                    </f:if>
+                    <f:if condition="{pagination.nextPageNumber}">
+                        <li class="next">
+                            <a href="{f:uri.action(action:'{action}', arguments:{currentPage: pagination.nextPageNumber})}" title="{f:translate(key:'pagination.next')}" class="article-load-more">
+                                <span class="mdi mdi-chevron-double-right"> <span class="far fa-chevron-right"></span> </span>							
+                            </a>
+                        </li>
+                    </f:if>
+                </ul>
+            </f:if>
+        </f:then>
+        <f:else>
+            <f:if condition="{pagination.nextPageNumber}">
+                <a href="{f:uri.action(action:'{action}', arguments:{currentPage: pagination.nextPageNumber})}" id="{configuration.ajaxId}" title="{f:translate(key:'pagination.next')}" class="article-load-more btn ns-gallery-btn">
+                    <f:translate key="general.loadmore" extensionName="ns_gallery" />
+                  </a>
+            </f:if>			
+        </f:else>
+    </f:if>
+</div>

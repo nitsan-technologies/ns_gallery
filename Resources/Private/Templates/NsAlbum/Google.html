@@ -3,11 +3,15 @@
 	<f:section name="content">
 		<input type="hidden" name="totNews" id="totNews-ajax-{getContentId}" value="<f:count>{nsAlbums}</f:count>" />
 		<input type="hidden" name="perPage" id="perPage-ajax-{getContentId}" value="{settings.recordPerPage}" />
+		<f:variable name="action" value="google" />
 		<div class="ns-gallery-google-view">
 			<div class="GITheWall ajax-{getContentId}" id="ajax-{getContentId}">
-				<f:widget.paginate objects="{nsAlbums}" as="paginated" configuration="{itemsPerPage: settings.recordPerPage, insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 2, addQueryStringMethod: 'GET'}">
+				<f:if condition="{version} == 'widget'">
+					<f:render partial="GoogleWidget.html" arguments="{_all}" />
+				</f:if>
+				<f:if condition="{version} == 'custom'">
 					<ul class="dflex flex-wrap cus-row">						
-						<f:for each="{paginated}" as="media" iteration="i">
+						<f:for each="{paginator.paginatedItems}" as="media" iteration="i">
 							<li class="ajaxBlock ns-gallery-google-view-item" data-contenttype="image" data-href="{f:uri.image(image:media)}">
 								<a href="javascript:;" class="ns-gallery-item">
 									<img src="{f:uri.image(image:media)}" alt="NS Gallery">
@@ -15,7 +19,8 @@
 							</li>
 						</f:for>						
 					</ul>
-				</f:widget.paginate>
+					<f:render partial="Pagination.html" arguments="{_all}" />
+				</f:if>
 			</div>
 		</div>
 	</f:section>

@@ -31,6 +31,17 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     protected $nsAlbumRepository = null;
 
+    /*
+     * Inject a news repository to enable DI
+     *
+     * @param \NITSAN\NsGallery\Domain\Repository\NsAlbumRepository $nsAlbumRepository
+     * @return void
+     */
+    public function injectNsAlbumRepository(\NITSAN\NsGallery\Domain\Repository\NsAlbumRepository $nsAlbumRepository)
+    {
+        $this->nsAlbumRepository = $nsAlbumRepository;
+    }
+
     /**
      * nsMediaRepository
      *
@@ -38,6 +49,17 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      * @inject
      */
     protected $nsMediaRepository = null;
+
+    /*
+     * Inject a news repository to enable DI
+     *
+     * @param \NITSAN\NsGallery\Domain\Repository\NsMediaRepository $nsMediaRepository
+     * @return void
+     */
+    public function injectNsMediaRepository(\NITSAN\NsGallery\Domain\Repository\NsMediaRepository $nsMediaRepository)
+    {
+        $this->nsMediaRepository = $nsMediaRepository;
+    }
 
     /**
      * nsAlbumRepository
@@ -47,6 +69,17 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     protected $nsGalleryBackendRepository = null;
 
+    /*
+     * Inject a news repository to enable DI
+     *
+     * @param \NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository $nsGalleryBackendRepository
+     * @return void
+     */
+    public function injectNsGalleryBackendRepository(\NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository $nsGalleryBackendRepository)
+    {
+        $this->nsGalleryBackendRepository = $nsGalleryBackendRepository;
+    }
+    
     /**
      * action list
      *

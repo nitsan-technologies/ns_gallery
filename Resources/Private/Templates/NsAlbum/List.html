@@ -7,14 +7,17 @@
 		<input type="hidden" name="cssEasing" id="cssEasing-ajax-{getContentId}" value="{cssEasing}" />
 			
 		<div id="ajax-{getContentId}" class="ns-gallery-album-view dflex flex-wrap {settings.titleAlign}">
-			<f:widget.paginate objects="{nsAlbums}" as="paginated"
-				configuration="{itemsPerPage: settings.recordPerPage, insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 2, addQueryStringMethod: 'GET', id:ajax-getContentId}">
+			<f:if condition="{version} == 'widget'">
+				<f:render partial="ListWidget.html" arguments="{_all}" />
+			</f:if>
+			<f:if condition="{version} == 'custom'">
 				<div class="cus-row">
-					<f:for each="{paginated}" as="album" iteration="i">
+					<f:for each="{paginator.paginatedItems}" as="album" iteration="i">
 						<f:render section="layout2" arguments="{album:album,getContentId:getContentId}" />
 					</f:for>
 				</div>
-			</f:widget.paginate>
+				<f:render partial="Pagination.html" arguments="{_all}" />
+			</f:if>
 		</div>			
 	</f:section>	
 	<f:section name="layout2">

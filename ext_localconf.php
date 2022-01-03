@@ -1,16 +1,21 @@
 <?php
 defined('TYPO3_MODE') || die('Access denied.');
 
+if (version_compare(TYPO3_branch, '10.0', '>=')) {
+    $moduleClass = \NITSAN\NsGallery\Controller\NsAlbumController::class;
+} else {
+    $moduleClass = 'NsAlbum';
+}
     $_EXTKEY = 'ns_gallery';
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'NITSAN.NsGallery',
         'Album',
         [
-            'NsAlbum' => 'list, show',
+            $moduleClass => 'list, show',
         ],
         // non-cacheable actions
         [
-            'NsAlbum' => 'list, show',
+            $moduleClass => 'list, show',
         ]
     );
 
@@ -18,11 +23,11 @@ defined('TYPO3_MODE') || die('Access denied.');
         'NITSAN.NsGallery',
         'Googlesearchimage',
         [
-            'NsAlbum' => 'google',
+            $moduleClass => 'google',
         ],
         // non-cacheable actions
         [
-            'NsAlbum' => '',
+            $moduleClass => '',
         ]
     );
 

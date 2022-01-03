@@ -1,0 +1,8 @@
+<f:widget.paginate objects="{nsAlbums}" as="paginated"
+    configuration="{itemsPerPage: settings.recordPerPage, insertAbove: 0, insertBelow: 1, maximumNumberOfLinks: 2, addQueryStringMethod: 'GET', id:ajax-getContentId}">
+    <div class="cus-row">
+        <f:for each="{paginated}" as="album" iteration="i">
+            <f:render section="layout2" arguments="{album:album,getContentId:getContentId}" />
+        </f:for>
+    </div>
+</f:widget.paginate>
