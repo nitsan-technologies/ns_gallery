@@ -29,14 +29,18 @@ defined('TYPO3_MODE') || die('Access denied.');
                 }
             }
         }
-
+        if (version_compare(TYPO3_branch, '10.0', '>=')) {
+            $moduleClass = \NITSAN\NsGallery\Controller\NsGalleryBackendController::class;
+        } else {
+            $moduleClass = 'NsGalleryBackend';
+        }
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
             'NITSAN.NsGallery',
             'nitsan', // Make module a submodule of 'web'
             'nsgallery', // Submodule key
             '', // Position
             [
-                'NsGalleryBackend' => 'dashboard, saveConstant, list, show, premiumExtension, appearanceSettings, fullFeedbackForm, popupSettings, commonSettings',
+                $moduleClass => 'dashboard, saveConstant, list, show, premiumExtension, appearanceSettings, fullFeedbackForm, popupSettings, commonSettings',
             ],
             [
                 'access' => 'user,group',
