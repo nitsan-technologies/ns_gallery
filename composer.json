@@ -21,7 +21,7 @@
     }
   },
   "replace": {
-    "nitsan/ns-gallery": "self.version"
+    "typo3-ter/ns-gallery": "self.version"
   },
   "config": {
     "vendor-dir": ".Build/vendor/",
