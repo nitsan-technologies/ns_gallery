@@ -139,6 +139,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'action' => 'google',
             ]
         );
+        $this->makeGalleryInitilization('google');
     }
 
     public function makeGalleryInitilization($gallery = '')
