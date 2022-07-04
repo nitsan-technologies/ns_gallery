@@ -75,24 +75,29 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         {
             $currentPage = $response['currentPage'];
         }
-        if (version_compare(TYPO3_branch, '11.0', '>=')) {
-            $version = 'custom';
-        } else {
-            $version = 'widget';
-        }
+        
         $makeArray = explode(',', $this->settings['records']);
         $nsAlbums = [];
         foreach ($makeArray as $key => $value) {
             $nsAlbums[] = $this->nsAlbumRepository->findByUid($value);
         }
-        $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, (int)$this->settings['recordPerPage']);
-        $pagination = new SimplePagination($arrayPaginator);
+        if (version_compare(TYPO3_branch, '10.0', '>=')) {
+            $version = 'custom';
+            $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, (int)$this->settings['recordPerPage']);
+            $pagination = new SimplePagination($arrayPaginator);
+            $this->view->assignMultiple(
+                [
+                    'paginator' => $arrayPaginator,
+                    'pagination' => $pagination,
+                    'pages' => range(1, $pagination->getLastPageNumber()),
+                ]
+            );
+        } else {
+            $version = 'widget';
+        }
         $this->view->assignMultiple(
             [
                 'nsAlbums' => $nsAlbums,
-                'paginator' => $arrayPaginator,
-                'pagination' => $pagination,
-                'pages' => range(1, $pagination->getLastPageNumber()),
                 'version' => $version,
                 'action' => 'google',
             ]
@@ -112,11 +117,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         {
             $currentPage = $response['currentPage'];
         }
-        if (version_compare(TYPO3_branch, '11.0', '>=')) {
-            $version = 'custom';
-        } else {
-            $version = 'widget';
-        }
+        
         $makeArray = explode(',', $this->settings['records']);
         $nsAlbums = [];
         foreach ($makeArray as $album) {
@@ -127,14 +128,23 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 }
             }
         }
-        $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, $this->settings['recordPerPage']);
-        $pagination = new SimplePagination($arrayPaginator);
+        if (version_compare(TYPO3_branch, '10.0', '>=')) {
+            $version = 'custom';
+            $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, $this->settings['recordPerPage']);
+            $pagination = new SimplePagination($arrayPaginator);
+            $this->view->assignMultiple(
+                [
+                    'paginator' => $arrayPaginator,
+                    'pagination' => $pagination,
+                    'pages' => range(1, $pagination->getLastPageNumber()),
+                ]
+            );
+        } else {
+            $version = 'widget';
+        }
         $this->view->assignMultiple(
             [
                 'nsAlbums' => $nsAlbums,
-                'paginator' => $arrayPaginator,
-                'pagination' => $pagination,
-                'pages' => range(1, $pagination->getLastPageNumber()),
                 'version' => $version,
                 'action' => 'google',
             ]
