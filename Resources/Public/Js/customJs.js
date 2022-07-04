@@ -3,12 +3,14 @@ $(document).ready(function () {
     var wall;
     
     if ($('.ns-gallery-google-view').length) {
-        var initialHeight = 500;
-        wall = $('.GITheWall').GITheWall({
-            nextButtonClass: 'nsgallery-icon nsgallery-next-icon',
-            prevButtonClass: 'nsgallery-icon nsgallery-prev-icon',
-            closeButtonClass: 'nsgallery-icon nsgallery-close-icon',
-            initialWrapperHeight: initialHeight
+        $('.GITheWall').each(function(index, item) {
+            var initialHeight = 500;
+            wall = $(this).GITheWall({
+                nextButtonClass: 'nsgallery-icon nsgallery-next-icon',
+                prevButtonClass: 'nsgallery-icon nsgallery-prev-icon',
+                closeButtonClass: 'nsgallery-icon nsgallery-close-icon',
+                initialWrapperHeight: initialHeight
+            });        
         });
     }
 
