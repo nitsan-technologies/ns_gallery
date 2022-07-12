@@ -13,7 +13,10 @@
 							<config>
 								<type>input</type>
 								<size>30</size>
-								<eval>trim,num</eval>
+								<eval>trim,num,required</eval>
+								<range>
+									<lower>1</lower>
+								</range>
 								<default>10</default>
 							</config>
 						</TCEforms>
