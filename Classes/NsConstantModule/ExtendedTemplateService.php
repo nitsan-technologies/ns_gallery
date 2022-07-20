@@ -327,6 +327,7 @@ class ExtendedTemplateService extends TemplateService
      */
     public function generateConfig_constants()
     {
+        $_POST['data'] = isset($_POST['data']) ? $_POST['data'] : "";
         if ($_POST['data']) {
             foreach ($_POST['data'] as $key => $v) {
                 if (is_array($v)) {

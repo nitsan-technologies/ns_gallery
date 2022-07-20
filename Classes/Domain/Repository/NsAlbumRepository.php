@@ -135,6 +135,9 @@ class NsAlbumRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     }
                 }
             }
+            if(!isset($getContentId)){
+                $getContentId = null;
+            }
             $textData = "<script>
                 (function($) {
                     $(window).load(function() {                            
