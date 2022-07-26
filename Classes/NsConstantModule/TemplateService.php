@@ -866,11 +866,11 @@ class TemplateService
         // For backend analysis (Template Analyzer) provide the order of added constants/config template IDs
         $this->clearList_const[] = $templateID;
         $this->clearList_setup[] = $templateID;
-        if (trim($row['sitetitle'] ?? null)) {
+        if (trim($row['sitetitle'] ?? '')) {
             $this->sitetitle = $row['sitetitle'];
         }
         // If the template record is a Rootlevel record, set the flag and clear the template rootLine (so it starts over from this point)
-        if (trim($row['root'] ?? null)) {
+        if (trim($row['root'] ?? '')) {
             $this->rootId = $pid;
             $this->rootLine = [];
         }
@@ -1132,6 +1132,9 @@ class TemplateService
         // if this is a template of type "default content rendering", also see if other extensions have added their TypoScript that should be included after the content definitions
         if (in_array($identifier, $GLOBALS['TYPO3_CONF_VARS']['FE']['contentRenderingTemplates'], true)) {
             $subrow['config'] .= $GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_setup.']['defaultContentRendering'];
+            if(!isset($GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'])){
+                $GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'] = '';
+            }
             $subrow['constants'] .= $GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'];
         }
         return $subrow;
@@ -1332,7 +1335,7 @@ class TemplateService
         // Setting default configuration:
         $TSdataArray[] = $GLOBALS['TYPO3_CONF_VARS']['BE']['defaultPageTSconfig'];
         for ($a = 0; $a <= $this->outermostRootlineIndexWithTemplate; $a++) {
-            if (trim($this->absoluteRootLine[$a]['tsconfig_includes'])) {
+            if (trim((string)$this->absoluteRootLine[$a]['tsconfig_includes'])) {
                 $includeTsConfigFileList = GeneralUtility::trimExplode(
                     ',',
                     $this->absoluteRootLine[$a]['tsconfig_includes'],
@@ -1349,7 +1352,7 @@ class TemplateService
         /** @var Parser\TypoScriptParser $parseObj */
         $parseObj = GeneralUtility::makeInstance(Parser\TypoScriptParser::class);
         $parseObj->parse($userTS);
-        if (is_array($parseObj->setup['TSFE.']['constants.'])) {
+        if (array_key_exists('TSFE.', $parseObj->setup)) {
             ArrayUtility::mergeRecursiveWithOverrule($constArray, $parseObj->setup['TSFE.']['constants.']);
         }
 
@@ -1814,6 +1817,7 @@ class TemplateService
      */
     protected function getTypoScriptFrontendController()
     {
+        $GLOBALS['TSFE'] = isset($GLOBALS['TSFE']) ? $GLOBALS['TSFE'] : "";
         return $GLOBALS['TSFE'];
     }
 

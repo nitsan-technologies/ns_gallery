@@ -187,7 +187,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
     {
         $galleryAlbums = $this->nsAlbumRepository->findAll();
         $totalImage = $this->nsMediaRepository->findAll();
-
+        $report = isset($report) ? $report : "";
         $assign = [
             'action' => 'dashboard',
             'total' => count($galleryAlbums),

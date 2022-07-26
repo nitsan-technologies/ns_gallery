@@ -18,13 +18,14 @@ class label
             }
 
             $rec = \TYPO3\CMS\Backend\Utility\BackendUtility::getRecord($params['table'], $params['row']['uid']);
-            if ($rec['media'] > 0) {
-                $totalMedia = $rec['media'];
+            $media = $rec['media'] ?? null;
+            if ($media > 0) {
+                $totalMedia = $media;
             } else {
                 $totalMedia = 0;
             }
 
-            $params['title'] = 'Album Media (' . $rec['media'] . ')';
+            $params['title'] = 'Album Media (' . $media . ')';
         }
     }
 }

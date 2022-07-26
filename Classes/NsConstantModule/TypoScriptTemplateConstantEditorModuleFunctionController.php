@@ -110,6 +110,7 @@ class TypoScriptTemplateConstantEditorModuleFunctionController
         $assigns['LLPrefix'] = 'LLL:EXT:tstemplate/Resources/Private/Language/locallang_ceditor.xlf:';
 
         // initialize
+        $template_uid = isset($template_uid) ? $template_uid : "";
         $existTemplate = $this->initialize_editor($this->id, $template_uid);
         if ($existTemplate) {
             $saveId = $this->templateRow['_ORIG_uid'] ?: $this->templateRow['uid'];
