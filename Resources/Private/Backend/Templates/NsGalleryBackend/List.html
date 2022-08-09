@@ -7,11 +7,11 @@
 			<div class="card">
 				<div class="card-header">
 					<div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center">
-						<h5> <f:translate key="nsgallery" extensionName="ns_gallery" /> </h5>						
+						<h5> <f:translate key="nsgallery" extensionName="NsGallery" /> </h5>
 						<f:if condition="{settings.storagePid}">
 							 <f:link.typolink parameter="{ns:Misc.BackendNewLink(tableName:'tx_nsgallery_domain_model_nsalbum', identifier:'{settings.storagePid}')}" class="btn btn-primary">
 							 	<em class="fa fa-plus-circle" aria-hidden="true"></em>
-						      	<f:translate key="general.AddNew" extensionName="ns_gallery" />
+						      	<f:translate key="general.AddNew" extensionName="NsGallery" />
 						  </f:link.typolink>
 						</f:if>
 					</div>
@@ -21,8 +21,8 @@
 						<table class="table ns-ext-datatable">
 							<thead class="thead-light">
 								<tr>
-									<th scope="col"><f:translate extensionName="ns_gallery" key="tx_nsgallery_domain_model_nsalbum.title" /></th>
-									<th scope="col"> <f:translate key="totalimages" extensionName="ns_gallery" /> </th>
+									<th scope="col"><f:translate extensionName="NsGallery" key="tx_nsgallery_domain_model_nsalbum.title" /></th>
+									<th scope="col"> <f:translate key="totalimages" extensionName="NsGallery" /> </th>
 									<th scope="col" data-orderable="false"><f:translate key="action" /></th>
 								</tr>
 							</thead>
@@ -35,7 +35,7 @@
 											<div class="button-group ns-backup-actions-wrap">
 												<f:link.typolink parameter="{ns:Misc.BackendEditLink(tableName:'tx_nsgallery_domain_model_nsalbum', identifier:'{galleryAlbum.uid}')}" class="btn btn-primary">
 														<em class="fa fa-pencil" aria-hidden="true"></em>
-												     	<f:translate key="Edit" extensionName="ns_gallery" />
+												     	<f:translate key="Edit" extensionName="NsGallery" />
 												 </f:link.typolink>
 												
 											</div>
