@@ -87,10 +87,15 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     public function listAction()
     {
+        $bootstrapVariable = 'data';
+        if (version_compare(TYPO3_branch, '11.0', '>')) {
+            $bootstrapVariable = 'data-bs';
+        }
         $galleryAlbums = $this->nsAlbumRepository->findAll();
         $assign = [
             'action' => 'list',
-            'galleryAlbums' => $galleryAlbums
+            'galleryAlbums' => $galleryAlbums,
+            'bootstrapVariable' => $bootstrapVariable
         ];
         $this->view->assignMultiple($assign);
     }
@@ -171,9 +176,14 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     public function commonSettingsAction()
     {
+        $bootstrapVariable = 'data';
+        if (version_compare(TYPO3_branch, '11.0', '>')) {
+            $bootstrapVariable = 'data-bs';
+        }
         $assign = [
             'action' => 'commonSettings',
-            'constant' => $this->constants
+            'constant' => $this->constants,
+            'bootstrapVariable' => $bootstrapVariable
         ];
         $this->view->assignMultiple($assign);
     }
@@ -188,6 +198,10 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         $galleryAlbums = $this->nsAlbumRepository->findAll();
         $totalImage = $this->nsMediaRepository->findAll();
         $report = isset($report) ? $report : "";
+        $bootstrapVariable = 'data';
+        if (version_compare(TYPO3_branch, '11.0', '>')) {
+            $bootstrapVariable = 'data-bs';
+        }
         $assign = [
             'action' => 'dashboard',
             'total' => count($galleryAlbums),
@@ -195,7 +209,8 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
             'pid' => $this->pid,
             'rightSide' => $this->sidebarData,
             'dashboardSupport' => $this->dashboardSupportData,
-            'report' => $report
+            'report' => $report,
+            'bootstrapVariable' => $bootstrapVariable
         ];
         $this->view->assignMultiple($assign);
     }
