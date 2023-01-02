@@ -1132,9 +1132,9 @@ class ExtendedTemplateService extends TemplateService
                         $subcat = $params['subcat_name'];
                         $subcat_name = $params['subcat_name'] ? $this->subCategories[$params['subcat_name']][0] : 'Others';
                         if ($i == 0) {
-                            $output .= '<div class="card"><div class="card-header"><h5>' . $subcat_name . '</h5></div><div class="card-body">';
+                            $output .= '<div class="card custom-card"><div class="card-header"><h5>' . $subcat_name . '</h5></div><div class="card-body">';
                         } else {
-                            $output .= '</div></div><div class="card"><div class="card-header"><h5>' . $subcat_name . '</h5></div><div class="card-body">';
+                            $output .= '</div></div><div class="card custom-card"><div class="card-header"><h5>' . $subcat_name . '</h5></div><div class="card-body">';
                         }
                     }
                     $label = $this->getLanguageService()->sL($params['label']);

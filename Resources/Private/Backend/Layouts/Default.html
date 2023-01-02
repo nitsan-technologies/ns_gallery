@@ -5,33 +5,22 @@
 	<link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Css/global.css', extensionName: 'ns_gallery')}" media="all">
 	<link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Css/main.css', extensionName: 'ns_gallery')}" media="all">
 	
-	<div class="typo3-fullDoc" style="padding: 24px;margin-top: 0;transition: border .2s ease;">
+	<div class="typo3-fullDoc">
 		<div id="typo3-docheader">
 			<div class="typo3-docheader-functions">
 				<f:be.buttons.csh />
-				<div class="ns-ext-button-bar">
-					<div class="button-group float-sm-right">
-						<a href="javascript:;" class="btn btn-success text-white btn-sm">
-							<em class="fa fa-file-o" aria-hidden="true"></em><f:translate key="tx_nsfeedback_domain_model_report.documentaiton" extensionName="NsGallery" />
-						</a>
-						<a href="javascript:;" class="btn btn-info text-white btn-sm">
-							<em class="fa fa-question" aria-hidden="true"></em><f:translate key="tx_nsfeedback_domain_model_report.helpsupport" extensionName="NsGallery" />
-						</a>
-						<a href="javascript:;" class="btn btn-warning text-white btn-sm">
-							<em class="fa fa-dollar" aria-hidden="true"></em><f:translate key="tx_nsfeedback_domain_model_report.donate" extensionName="NsGallery" />
-						</a>
-					</div>
-				</div>
 			</div>
 		</div>
 		
 		<div id="typo3-docbody">
-			<div id="typo3-inner-docbody">
+			<div id="typo3-inner-docbody" style="padding: 24px;margin-top: 0;transition: border .2s ease;">
+			<div class="ns-ext-navigation-wrap">
+				<a class="navbar-brand ns-ext-name ns-ext-name-desktop" href="javascript:;"><f:translate key="nsgallery" extensionName="NsGallery" /></a>
 				<div class="ns-ext-navigation">
 					<nav class="navbar navbar-expand-lg">
-						<a class="navbar-brand" href="javascript:;"><f:translate key="nsgallery" extensionName="NsGallery" /></a>
-						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nsextNavbar"
-						        aria-controls="nsextNavbar" aria-expanded="false" aria-label="Toggle navigation">
+						<a class="navbar-brand ns-ext-name" href="javascript:;"><f:translate key="nsgallery" extensionName="NsGallery" /></a>
+						<button class="navbar-toggler" type="button" {bootstrapVariable}-toggle="collapse" {bootstrapVariable}-target="#nsextNavbar"
+								aria-controls="nsextNavbar" aria-expanded="false" aria-label="Toggle navigation">
 							<span class="navbar-toggler-icon"></span>
 						</button>
 						<div class="collapse navbar-collapse" id="nsextNavbar">
@@ -49,15 +38,11 @@
 									<f:link.action action="commonSettings" additionalParams="{cat:'ns_gallery_commonSettings'}" class="nav-link" additionalAttributes="{data-toggle:'tooltip',data-placement:'bottom'}" title="{f:translate(key: 'global.desc')}">
 										<em class="fa fas fa-cogs" aria-hidden="true"></em><f:translate key="commonSettings" />
 									</f:link.action>
-								</li>								
-								<li class="nav-item {f:if(condition: '{action}==premiumExtension', then: 'active')}">
-									<f:link.action action="premiumExtension" class="nav-link">
-										<em class="fa fa-empire" aria-hidden="true"></em><f:translate key="premiumExtension" />
-									</f:link.action>
 								</li>
 							</ul>
 						</div>
 					</nav>
+				</div>
 				</div>
 				<f:render section="content" />
 			</div>

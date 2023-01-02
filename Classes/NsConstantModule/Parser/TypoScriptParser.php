@@ -1028,9 +1028,22 @@ class TypoScriptParser
             $readableFileName = rtrim($readableFilePrefix, '/') . '/' . $fileObject->getFilename();
             $content .= LF . '### @import \'' . $readableFileName . '\' begin ###' . LF;
             // Check for allowed files
-            if (!GeneralUtility::makeInstance(FileNameValidator::class)->isValid($fileObject->getFilename())) {
-                $content .= self::typoscriptIncludeError('File "' . $readableFileName . '" was not included since it is not allowed due to fileDenyPattern.');
-            } else {
+            if(version_compare(TYPO3_branch, '11', '>=')){
+                if (!GeneralUtility::makeInstance(FileNameValidator::class)->isValid($fileObject->getFilename())) {
+                    $content .= self::typoscriptIncludeError('File "' . $readableFileName . '" was not included since it is not allowed due to fileDenyPattern.');
+                } else {
+                    $includedFiles[] = $fileObject->getPathname();
+                    // check for includes in included text
+                    $included_text = self::checkIncludeLines($fileObject->getContents(), $cycleCounter++, $returnFiles, $absoluteFileName);
+                    // If the method also has to return all included files, merge currently included
+                    // files with files included by recursively calling itself
+                    if ($returnFiles && is_array($included_text)) {
+                        $includedFiles = array_merge($includedFiles, $included_text['files']);
+                        $included_text = $included_text['typoscript'];
+                    }
+                    $content .= $included_text . LF;
+                }
+            }else {
                 $includedFiles[] = $fileObject->getPathname();
                 // check for includes in included text
                 $included_text = self::checkIncludeLines($fileObject->getContents(), $cycleCounter++, $returnFiles, $absoluteFileName);
@@ -1099,9 +1112,41 @@ class TypoScriptParser
         if ((string)$filename !== '') {
             // Must exist and must not contain '..' and must be relative
             // Check for allowed files
-            if (!GeneralUtility::makeInstance(FileNameValidator::class)->isValid($absfilename)) {
-                $newString .= self::typoscriptIncludeError('File "' . $filename . '" was not included since it is not allowed due to fileDenyPattern.');
-            } else {
+            if(version_compare(TYPO3_branch, '11', '>=')){
+                if (!GeneralUtility::makeInstance(FileNameValidator::class)->isValid($absfilename)) {
+                    $newString .= self::typoscriptIncludeError('File "' . $filename . '" was not included since it is not allowed due to fileDenyPattern.');
+                } else {
+                    $fileExists = false;
+                    if (@file_exists($absfilename)) {
+                        $fileExists = true;
+                    } else {
+                        // BC layer after renaming core TypoScript files from .txt to .typoscript
+                        if (substr($absfilename, -4, 4) === '.txt') {
+                            $absfilename = substr($absfilename, 0, -4) . '.typoscript';
+                            if (@file_exists($absfilename)) {
+                                trigger_error('The TypoScript file ' . $filename . ' was renamed to .typoscript extension.'
+                                    . ' Update your "<INCLUDE_TYPOSCRIPT" statements.', E_USER_DEPRECATED);
+                                $fileExists = true;
+                            }
+                        }
+                    }
+    
+                    if ($fileExists) {
+                        $includedFiles[] = $absfilename;
+                        // check for includes in included text
+                        $included_text = self::checkIncludeLines(file_get_contents($absfilename), $cycle_counter + 1, $returnFiles, $absfilename);
+                        // If the method also has to return all included files, merge currently included
+                        // files with files included by recursively calling itself
+                        if ($returnFiles && is_array($included_text)) {
+                            $includedFiles = array_merge($includedFiles, $included_text['files']);
+                            $included_text = $included_text['typoscript'];
+                        }
+                        $newString .= $included_text . LF;
+                    } else {
+                        $newString .= self::typoscriptIncludeError('File "' . $filename . '" was not found.');
+                    }
+                }
+            }else {
                 $fileExists = false;
                 if (@file_exists($absfilename)) {
                     $fileExists = true;
@@ -1132,6 +1177,7 @@ class TypoScriptParser
                     $newString .= self::typoscriptIncludeError('File "' . $filename . '" was not found.');
                 }
             }
+            
         }
         $newString .= '### <INCLUDE_TYPOSCRIPT: source="FILE:' . $filename . '"' . $optionalProperties . '> END:' . LF . LF;
     }
