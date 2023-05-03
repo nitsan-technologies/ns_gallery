@@ -95,7 +95,7 @@ page {
 }
 
 # Module configuration
-module.tx_nsgallery_nitsan_nsgallerynsgallery {
+module.tx_nsgallery {
 
     settings {
         storagePid = {$plugin.tx_nsgallery_album.storageSettings.storagePid}

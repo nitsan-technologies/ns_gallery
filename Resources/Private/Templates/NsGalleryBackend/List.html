@@ -1,0 +1,62 @@
+{namespace ns=NITSAN\NsGallery\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Backend" />
+
+<f:section name="content">		
+	<f:be.pageRenderer
+	includeRequireJsModules="{
+		0:'TYPO3/CMS/NsGallery/Main',
+		1:'TYPO3/CMS/NsGallery/Datatables',
+		2:'@typo3/backend/context-menu.js',
+		3:'@typo3/backend/element/immediate-action-element.js',
+		4:'@typo3/backend/utility/collape-state-persister.js',
+		5:'@typo3/tstemplate/constant-editor.js'
+	}"/>
+<link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Css/global.css', extensionName: 'ns_gallery')}" media="all">
+	<div class="ns-backup-table-block-wrap">
+		<div class="card">
+			<div class="card-header">
+				<div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center">
+					<h5> <f:translate key="nsgallery" extensionName="NsGallery" /> </h5>
+					<f:if condition="{settings.storagePid}">
+							<a href="{ns:Misc.BackendNewLink(tableName:'tx_nsgallery_domain_model_nsalbum', identifier:'{settings.storagePid}')}" class="btn btn-primary">
+							<em class="fa fa-plus-circle" aria-hidden="true"></em>
+							<f:translate key="general.AddNew" extensionName="NsGallery" />
+						</a>
+					</f:if>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="ns-backup-table-wrap">
+					<table class="table ns-ext-datatable">
+						<thead class="thead-light">
+							<tr>
+								<th scope="col"><f:translate extensionName="NsGallery" key="tx_nsgallery_domain_model_nsalbum.title" /></th>
+								<th scope="col"> <f:translate key="totalimages" extensionName="NsGallery" /> </th>
+								<th scope="col" data-orderable="false"><f:translate key="action" /></th>
+							</tr>
+						</thead>
+						<tbody>
+							<f:for each="{galleryAlbums}" as="galleryAlbum">
+								<tr>
+									<td>{galleryAlbum.title}</td>
+									<td> <f:count>{galleryAlbum.media}</f:count></td>
+									<td>
+										<div class="button-group ns-backup-actions-wrap">
+											<a href="{ns:Misc.BackendEditLink(tableName:'tx_nsgallery_domain_model_nsalbum', identifier:'{galleryAlbum.uid}')}" class="btn btn-primary">
+													<em class="fa fa-pencil" aria-hidden="true"></em>
+													<f:translate key="Edit" extensionName="NsGallery" />
+												</a>
+											
+										</div>
+									</td>
+								</tr>
+							</f:for>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</f:section>
+</html>

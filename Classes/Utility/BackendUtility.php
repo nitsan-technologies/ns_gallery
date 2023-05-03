@@ -130,12 +130,10 @@ class BackendUtility extends AbstractUtility
      */
     public static function getModuleUrl($moduleName, $urlParameters = [])
     {
-        if (version_compare(TYPO3_branch, '10', '>=')) {
-            $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-            return $uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
-        } else {
-            return BackendUtilityCore::getModuleUrl($moduleName, $urlParameters);
-        }
+        
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        return $uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
+        
     }
 
     /**

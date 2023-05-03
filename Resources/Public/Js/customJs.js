@@ -73,11 +73,13 @@ $(document).ready(function () {
 
                 if (paginationType == 'pagination') {
                     $(findNReplace).html(disdata).fadeIn('slow');
+                    $(findNReplace).append(disdata);
                 } else {
                     $(findNReplace).append(disdata).fadeIn('slow');
                     if (totPages == curPage) {
                         $('#' + getParentID + ' .pagination-block .article-load-more').fadeOut();
                     }
+                    $(findNReplace).append(disdata);
                 }               
                 $('.GITheWall').each(function(index, item) {
                     wall[index].refresh();

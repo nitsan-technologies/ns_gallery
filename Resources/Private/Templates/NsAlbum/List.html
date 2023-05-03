@@ -5,11 +5,7 @@
 		<input type="hidden" name="perPage" id="perPage-ajax-{getContentId}" value="{settings.recordPerPage}" />
 		<input type="hidden" name="gallerySettings" id="gallery-settings-ajax-{getContentId}" value="{jsSettings}" />
 		<input type="hidden" name="cssEasing" id="cssEasing-ajax-{getContentId}" value="{cssEasing}" />
-			
 		<div id="ajax-{getContentId}" class="ns-gallery-album-view dflex flex-wrap {settings.titleAlign}">
-			<f:if condition="{version} == 'widget'">
-				<f:render partial="ListWidget.html" arguments="{_all}" />
-			</f:if>
 			<f:if condition="{version} == 'custom'">
 				<div class="cus-row">
 					<f:for each="{paginator.paginatedItems}" as="album" iteration="i">
@@ -49,14 +45,14 @@
 				</f:for>
 			</div>
 			<div class="ns-gallery-album-title">
-				<h4>{album.title}</h4>
+				<h4>{album.title}</h4 inline="1">
 				<p>
 					{albumsMedia} <f:translate key="general.photos" extensionName="NsGallery" />
 				</p>
 			</div>
 		</div>
 	</f:section>
-	<f:section name="renderMedia">	
+	<f:section name="renderMedia">
 		<a href="{f:uri.image(image:file, treatIdAsReference: 1)}" class="ns-gallery-item">
 			<img alt="{file.originalResource.title}" src="{f:uri.image(image:file, treatIdAsReference: 1)}" />
 		</a>			
