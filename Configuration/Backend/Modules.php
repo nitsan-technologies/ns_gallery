@@ -3,7 +3,7 @@
 return [
     'nitsan_module' => [
         'labels' => 'LLL:EXT:ns_gallery/Resources/Private/Language/BackendModule.xlf',
-        'icon' => 'EXT:ns_gallery/Resources/Public/Icons/ns_gallery.svg',
+        'icon' => 'EXT:ns_gallery/Resources/Public/Icons/module.svg',
         'navigationComponent' => '@typo3/backend/page-tree/page-tree-element',
         'position' => ['after' => 'web'],
     ],

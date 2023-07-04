@@ -1,32 +1,38 @@
 <?php
+
+use NITSAN\NsGallery\Controller\NsAlbumController;
+use TYPO3\CMS\Core\Imaging\IconRegistry;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
 defined('TYPO3') || die('Access denied.');
 
 $_EXTKEY = 'ns_gallery';
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+ExtensionUtility::configurePlugin(
     'NsGallery',
     'Album',
     [
-        \NITSAN\NsGallery\Controller\NsAlbumController::class => 'list, show',
+        NsAlbumController::class => 'list, show',
     ],
     // non-cacheable actions
     [
-        \NITSAN\NsGallery\Controller\NsAlbumController::class => 'list, show',
+        NsAlbumController::class => 'list, show',
     ]
 );
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+ExtensionUtility::configurePlugin(
     'NsGallery',
     'Googlesearchimage',
     [
-        \NITSAN\NsGallery\Controller\NsAlbumController::class => 'google',
+        NsAlbumController::class => 'google',
     ],
     // non-cacheable actions
     [
-        \NITSAN\NsGallery\Controller\NsAlbumController::class => '',
+        NsAlbumController::class => '',
     ]
 );
 
-$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+$iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
 
 $iconRegistry->registerIcon(
     'ns_gallery-plugin-album',

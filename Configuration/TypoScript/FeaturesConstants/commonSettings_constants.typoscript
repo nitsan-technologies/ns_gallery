@@ -16,7 +16,7 @@ plugin.tx_nsgallery_album {
             #cat=ns_gallery_commonSettings/567/03; type=boolean; label=Add jQuery
 	        jQuery = 0
 
-            #cat=ns_gallery_commonSettings/567/04; type=options[LLL:EXT:ns_gallery/Resources/Private/Language/locallang.xlf:general.loadmore=loadmore,LLL:EXT:ns_gallery/Resources/Private/Language/locallang.xlf:general.pagination=pagination]; label=LLL:EXT:ns_gallery/Resources/Private/Language/locallang.xlf:pagination
+            #cat=ns_gallery_commonSettings/567/04; type=options[loadmore=loadmore,pagination=pagination]; label=LLL:EXT:ns_gallery/Resources/Private/Language/locallang.xlf:pagination
 	        Paging = pagination
            
 		}

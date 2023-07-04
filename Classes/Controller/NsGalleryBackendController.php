@@ -1,6 +1,9 @@
 <?php
 namespace NITSAN\NsGallery\Controller;
 
+use NITSAN\NsGallery\Domain\Repository\NsAlbumRepository;
+use NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository;
+use NITSAN\NsGallery\Domain\Repository\NsMediaRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
@@ -21,67 +24,42 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
  */
 class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-    public function __construct(
-        protected readonly ModuleTemplateFactory $moduleTemplateFactory
-    ) {
-    }
 
     /**
      * nsAlbumRepository
      *
-     * @var \NITSAN\NsGallery\Domain\Repository\NsAlbumRepository
+     * @var NsAlbumRepository
      *
      */
-    protected $nsAlbumRepository = null;
-
-    /*
-     * Inject a news repository to enable DI
-     *
-     * @param \NITSAN\NsGallery\Domain\Repository\NsAlbumRepository $nsAlbumRepository
-     * @return void
-     */
-    public function injectNsAlbumRepository(\NITSAN\NsGallery\Domain\Repository\NsAlbumRepository $nsAlbumRepository)
-    {
-        $this->nsAlbumRepository = $nsAlbumRepository;
-    }
+    protected NsAlbumRepository $nsAlbumRepository;
 
     /**
      * nsMediaRepository
      *
-     * @var \NITSAN\NsGallery\Domain\Repository\NsMediaRepository
+     * @var NsMediaRepository
      *
      */
-    protected $nsMediaRepository = null;
-
-    /*
-     * Inject a news repository to enable DI
-     *
-     * @param \NITSAN\NsGallery\Domain\Repository\NsMediaRepository $nsMediaRepository
-     * @return void
-     */
-    public function injectNsMediaRepository(\NITSAN\NsGallery\Domain\Repository\NsMediaRepository $nsMediaRepository)
-    {
-        $this->nsMediaRepository = $nsMediaRepository;
-    }
+    protected NsMediaRepository $nsMediaRepository;
 
     /**
      * nsAlbumRepository
      *
-     * @var \NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository
+     * @var NsGalleryBackendRepository
      */
-    protected $nsGalleryBackendRepository = null;
+    protected NsGalleryBackendRepository $nsGalleryBackendRepository;
 
-    /*
-     * Inject a news repository to enable DI
-     *
-     * @param \NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository $nsGalleryBackendRepository
-     * @return void
-     */
-    public function injectNsGalleryBackendRepository(\NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository $nsGalleryBackendRepository)
-    {
+    public function __construct(
+        protected readonly ModuleTemplateFactory $moduleTemplateFactory,
+        NsAlbumRepository $nsAlbumRepository,
+        NsMediaRepository $nsMediaRepository,
+        NsGalleryBackendRepository $nsGalleryBackendRepository
+
+    ) {
+        $this->nsAlbumRepository = $nsAlbumRepository;
+        $this->nsMediaRepository = $nsMediaRepository;
         $this->nsGalleryBackendRepository = $nsGalleryBackendRepository;
     }
-    
+
     /**
      * action list
      *
@@ -120,8 +98,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         $view = $this->initializeModuleTemplate($this->request);
         $galleryAlbums = $this->nsAlbumRepository->findAll();
         $totalImage = $this->nsMediaRepository->findAll();
-        $report = isset($report) ? $report : "";
-        
+
         $assign = [
             'action' => 'dashboard',
             'total' => count($galleryAlbums),
@@ -129,7 +106,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
             'pid' => $this->pid,
             'rightSide' => $this->sidebarData,
             'dashboardSupport' => $this->dashboardSupportData,
-            'report' => $report,
         ];
         $view->assignMultiple($assign);
         return $view->renderResponse();

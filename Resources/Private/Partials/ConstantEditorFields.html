@@ -27,7 +27,7 @@
                                     <div class="col-md-5 col-lg-3 col-xl-2">
                                         <div class="d-flex justify-content-between">
                                             <label class="t3js-formengine-label"><span>{constantItem.label}</span></label>
-                                            <div class="field-info-trigger"><em class="fa fa-info-circle" aria-hidden="true"></em></div>
+                                            <div class="field-info-trigger"><em class="fa fa-info-circle" aria-hidden="true" title="{constantItem.label}"></em></div>
                                         </div>
                                     </div>
                                     <div class="col-md-7 col-lg-8">
@@ -35,7 +35,7 @@
                                             type="hidden"
                                             name="check[{constantItem.name}]"
                                             id="check-{constantItem.idName}"
-                                            value="checked"
+                                            value="checked" 
                                             checked
                                             {f:if(condition: '!{constantItem.isInCurrentTemplate}', then: 'disabled')}
                                         >

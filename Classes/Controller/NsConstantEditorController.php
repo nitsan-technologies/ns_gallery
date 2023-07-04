@@ -25,8 +25,8 @@ use TYPO3\CMS\Tstemplate\Controller\AbstractTemplateModuleController;
 use TYPO3\CMS\Core\TypoScript\IncludeTree\Traverser\IncludeTreeTraverser;
 use TYPO3\CMS\Core\TypoScript\IncludeTree\Visitor\IncludeTreeCommentAwareAstBuilderVisitor;
 
-class NsConstantEditorController extends AbstractTemplateModuleController 
-{  
+class NsConstantEditorController extends AbstractTemplateModuleController
+{
     public function __construct(
         protected readonly ModuleTemplateFactory $moduleTemplateFactory,
         private readonly SysTemplateRepository $sysTemplateRepository,
@@ -40,7 +40,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
     }
 
     public function handleRequest(ServerRequestInterface $request): ResponseInterface
-    {  
+    {
         $queryParams = $request->getQueryParams();
         $parsedBody = $request->getParsedBody();
 
@@ -65,12 +65,12 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         if (empty($allTemplatesOnPage)) {
             return $this->noTemplateAction($request);
         }
-        
+
         return $this->showAction($request);
     }
 
     private function showAction(ServerRequestInterface $request): ResponseInterface
-    {           
+    {
         $queryParams = $request->getQueryParams();
         $parsedBody = $request->getParsedBody();
         $languageService = $this->getLanguageService();
@@ -114,8 +114,8 @@ class NsConstantEditorController extends AbstractTemplateModuleController
                 $currentTemplateConstants = $templateRow['constants'] ?? '';
             }
         }
-        
-        
+
+
         // Build the constant include tree
         $rootLine = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
         $sysTemplateRows = $this->sysTemplateRepository->getSysTemplateRowsByRootlineWithUidOverride($rootLine, $request, $selectedTemplateUid);
@@ -132,7 +132,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         $this->astTraverser->resetVisitors();
         $this->astTraverser->addVisitor($astConstantCommentVisitor);
         $this->astTraverser->traverse($constantAst);
-        
+
         $constants = $astConstantCommentVisitor->getConstants();
         $categories = $astConstantCommentVisitor->getCategories();
         $relevantCategories = [];
@@ -154,7 +154,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
             $moduleData->set('selectedCategory', $selectedCategory);
             $backendUser->pushModuleData($currentModuleIdentifier, $moduleData->toArray());
         }
-        
+
         $displayConstants = [];
         foreach ($constants as $constant) {
             if ($constant['cat'] === $selectedCategory) {
@@ -166,7 +166,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         foreach ($displayConstants as &$constant) {
             ksort($constant['items']);
         }
-        
+
         $view = $this->moduleTemplateFactory->create($request);
         $view->setTitle($languageService->sL($currentModule->getTitle()), $pageRecord['title']);
         $view->getDocHeaderComponent()->setMetaInformation($pageRecord);
@@ -275,7 +275,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
 
     private function updateTemplateConstants(ServerRequestInterface $request, array $constantDefinitions, string $rawTemplateConstants): ?array
     {
-        $rawTemplateConstantsArray = explode(LF, $rawTemplateConstants);
+        $rawTemplateConstantsArray = GeneralUtility::trimExplode(LF, $rawTemplateConstants);
         $constantPositions = $this->calculateConstantPositions($rawTemplateConstantsArray);
 
         $parsedBody = $request->getParsedBody();
@@ -416,7 +416,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         $theValue = ' ' . trim($value);
         if (isset($constantPositions[$constantKey])) {
             $lineNum = $constantPositions[$constantKey];
-            $parts = explode('=', $templateConstantsArray[$lineNum], 2);
+            $parts = GeneralUtility::trimExplode('=', $templateConstantsArray[$lineNum], 2);
             if (count($parts) === 2) {
                 $parts[1] = $theValue;
             }
@@ -471,5 +471,3 @@ class NsConstantEditorController extends AbstractTemplateModuleController
     }
 
 }
-
-?>

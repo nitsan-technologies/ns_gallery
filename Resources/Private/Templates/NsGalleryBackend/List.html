@@ -1,8 +1,7 @@
-{namespace ns=NITSAN\NsGallery\ViewHelpers}
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:layout name="Backend" />
 
-<f:section name="content">		
+<f:section name="content">
 	<f:be.pageRenderer
 	includeRequireJsModules="{
 		0:'TYPO3/CMS/NsGallery/Main',
@@ -19,11 +18,11 @@
 				<div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center">
 					<h5> <f:translate key="nsgallery" extensionName="NsGallery" /> </h5>
 					<f:if condition="{settings.storagePid}">
-							<a href="{ns:Misc.BackendNewLink(tableName:'tx_nsgallery_domain_model_nsalbum', identifier:'{settings.storagePid}')}" class="btn btn-primary">
-							<em class="fa fa-plus-circle" aria-hidden="true"></em>
-							<f:translate key="general.AddNew" extensionName="NsGallery" />
-						</a>
-					</f:if>
+                        <be:link.newRecord class="btn btn-primary" table="tx_nsgallery_domain_model_nsalbum" returnUrl="{f:be.uri(route: 'ns_gallery')}" pid="{settings.storagePid}">
+                            <em class="fa fa-plus-circle" aria-hidden="true"></em>
+                            <f:translate key="general.AddNew" extensionName="NsGallery" />
+                        </be:link.newRecord>
+                    </f:if>
 				</div>
 			</div>
 			<div class="card-body">
@@ -43,12 +42,11 @@
 									<td> <f:count>{galleryAlbum.media}</f:count></td>
 									<td>
 										<div class="button-group ns-backup-actions-wrap">
-											<a href="{ns:Misc.BackendEditLink(tableName:'tx_nsgallery_domain_model_nsalbum', identifier:'{galleryAlbum.uid}')}" class="btn btn-primary">
-													<em class="fa fa-pencil" aria-hidden="true"></em>
-													<f:translate key="Edit" extensionName="NsGallery" />
-												</a>
-											
-										</div>
+                                            <be:link.editRecord class="btn btn-primary" table="tx_nsgallery_domain_model_nsalbum" returnUrl="{f:be.uri(route: 'ns_gallery')}" uid="{galleryAlbum.uid}">
+                                                <em class="fa fa-pencil" aria-hidden="true"></em>
+                                                <f:translate key="Edit" extensionName="NsGallery" />
+                                            </be:link.editRecord>
+                                        </div>
 									</td>
 								</tr>
 							</f:for>

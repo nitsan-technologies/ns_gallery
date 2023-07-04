@@ -4,13 +4,8 @@ plugin.tx_nsgallery_album {
         templateRootPaths.1 = {$plugin.tx_nsgallery_album.view.templateRootPath}
         partialRootPaths.0 = EXT:ns_gallery/Resources/Private/Partials/
         partialRootPaths.1 = {$plugin.tx_nsgallery_album.view.partialRootPath}
-        layoutRootPaths.0 = EXT:tx_nsgallery/Resources/Private/Layouts/
+        layoutRootPaths.0 = EXT:ns_gallery/Resources/Private/Layouts/
         layoutRootPaths.1 = {$plugin.tx_nsgallery_album.view.layoutRootPath}
-        widget{
-            TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper{
-                templateRootPaths = {$plugin.tx_nsgallery_album.view.templateRootPath}
-            }
-        }
     }   
     features {
         #skipDefaultArguments = 1
@@ -26,16 +21,10 @@ plugin.tx_nsgallery_album {
         controls = {$plugin.tx_nsgallery_album.appearanceSettings.generalGallery.controls}        
         paginationType = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.Paging}
     }
-    persistence {
-        storagePid = 23
-    }
-
 }
 
 plugin.tx_nsgallery_googlesearchimage {
-    persistence {
-        storagePid = 23
-    }
+
     view {
         templateRootPaths.0 = EXT:{extension.shortExtensionKey}/Resources/Private/Templates/
         templateRootPaths.1 = {$plugin.tx_nsgallery_googlesearchimage.view.templateRootPath}
@@ -43,11 +32,6 @@ plugin.tx_nsgallery_googlesearchimage {
         partialRootPaths.1 = {$plugin.tx_nsgallery_googlesearchimage.view.partialRootPath}
         layoutRootPaths.0 = EXT:tx_nsgallery/Resources/Private/Layouts/
         layoutRootPaths.1 = {$plugin.tx_nsgallery_googlesearchimage.view.layoutRootPath}
-        widget{
-            TYPO3\CMS\Fluid\ViewHelpers\Widget\PaginateViewHelper{
-                templateRootPaths = {$plugin.tx_nsgallery_album.view.templateRootPath}
-            }
-        }
     }
     
     features {
@@ -85,13 +69,11 @@ page {
         nsgalleryTheme = EXT:ns_gallery/Resources/Public/Css/nsgallery-theme.css
         CustomCss = EXT:ns_gallery/Resources/Public/Css/customCss.css
     }
-    headerData {
-        10 = TEXT
-        10 {
-            value = <script src="typo3conf/ext/ns_gallery/Resources/Public/Vendor/initializr/jquery.min.js"></script>
-            if.isTrue = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.jQuery}
-        }
-    }   
+
+    includeJSLibs {
+        nsGjquery = EXT:ns_gallery/Resources/Public/Vendor/initializr/jquery.min.js
+        nsGjquery.if.isTrue = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.jQuery}
+    }
 }
 
 # Module configuration
