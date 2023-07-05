@@ -35,7 +35,6 @@ class NsAlbumRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function setSettingsForGallery($settings, $constant): string
     {
         $txtSettings = '';
-
         if($constant) {
             foreach ($constant as $key => $value) {
                 if (!$key == 'arrowIcon'
@@ -48,7 +47,6 @@ class NsAlbumRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     || !$key == 'paginationType'
                     || !$key == 'addClass'
                     || !$key == 'PagingPosition') {
-
                     if ($key == 'videoControls') {
                         $txtSettings .= 'controls:' . (isset($settings[$key]) && $settings[$key] !='' ? $settings[$key] : $constant[$key]) . ',';
                     } else {
@@ -148,6 +146,9 @@ class NsAlbumRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                         }
                     }
                 }
+                if ($key == 'controls') {
+                    $txtSettings .= 'controls:' . (isset($settings[$key]) && $settings[$key] !='' ? $settings[$key] : $constant[$key]) . ',';
+                }
             }
             $getContentId = null;
             $textData = "<script>
@@ -158,7 +159,7 @@ class NsAlbumRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                             " . $txtSettings . '
                         });
                     });
-                })(jQuery);NsAlbumRepository
+                })(jQuery);
             </script>';
         }
 

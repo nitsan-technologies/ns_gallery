@@ -145,11 +145,8 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         if ($gallery == 'general') {
             $constant = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_nsgallery_album.']['settings.'];
             $this->view->assign('constant', $constant);
-
             $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
-
             $this->view->assign('jsSettings', $jsSettings);
-
             if (!array_key_exists($this->request->getControllerExtensionKey(), $GLOBALS['TSFE']->additionalFooterData)) {
                 $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] = null;
             }
