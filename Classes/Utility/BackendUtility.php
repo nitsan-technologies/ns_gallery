@@ -1,6 +1,7 @@
 <?php
 namespace NITSAN\NsGallery\Utility;
 
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -40,7 +41,7 @@ class BackendUtility extends AbstractUtility
      *
      * @return bool
      */
-    public static function isBackendAdmin()
+    public static function isBackendAdmin(): bool
     {
         if (isset(self::getBackendUserAuthentication()->user)) {
             return self::getBackendUserAuthentication()->user['admin'] === 1;
@@ -54,7 +55,7 @@ class BackendUtility extends AbstractUtility
      * @param string $property
      * @return string
      */
-    public static function getPropertyFromBackendUser($property = 'uid')
+    public static function getPropertyFromBackendUser(string $property = 'uid'): string
     {
         if (!empty(self::getBackendUserAuthentication()->user[$property])) {
             return self::getBackendUserAuthentication()->user[$property];
@@ -69,8 +70,9 @@ class BackendUtility extends AbstractUtility
      * @param int $identifier
      * @param bool $addReturnUrl
      * @return string
+     * @throws RouteNotFoundException
      */
-    public static function createEditUri($tableName, $identifier, $addReturnUrl = true)
+    public static function createEditUri(string $tableName, int $identifier, bool $addReturnUrl = true): string
     {
         $uriParameters = [
             'edit' => [
@@ -86,14 +88,15 @@ class BackendUtility extends AbstractUtility
     }
 
     /**
-     * Create an URI to new record
+     * Create a URI to new record
      *
      * @param string $tableName
      * @param int $identifier
      * @param bool $addReturnUrl
      * @return string
+     * @throws RouteNotFoundException
      */
-    public static function createNewUri($tableName, $identifier, $addReturnUrl = true)
+    public static function createNewUri(string $tableName, int $identifier, bool $addReturnUrl = true): string
     {
         if ($identifier <= 0) {
             $identifier = self::getPidFromBackendPage(self::getReturnUrl());
@@ -117,7 +120,7 @@ class BackendUtility extends AbstractUtility
      *
      * @return string
      */
-    protected static function getReturnUrl()
+    protected static function getReturnUrl(): string
     {
         return GeneralUtility::getIndpEnv('REQUEST_URI');
     }
@@ -127,15 +130,14 @@ class BackendUtility extends AbstractUtility
      * @param string $moduleName Name of the module
      * @param array $urlParameters URL parameters that should be added as key value pairs
      * @return string Calculated URL
+     * @throws RouteNotFoundException
      */
-    public static function getModuleUrl($moduleName, $urlParameters = [])
+    public static function getModuleUrl(string $moduleName, array $urlParameters = []): string
     {
-        if (version_compare(TYPO3_branch, '10', '>=')) {
-            $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-            return $uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
-        } else {
-            return BackendUtilityCore::getModuleUrl($moduleName, $urlParameters);
-        }
+
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        return $uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
+
     }
 
     /**
@@ -144,7 +146,7 @@ class BackendUtility extends AbstractUtility
      * @param array $getParameters
      * @return array
      */
-    public static function getCurrentParameters($getParameters = [])
+    public static function getCurrentParameters(array $getParameters = []): array
     {
         if (empty($getParameters)) {
             $getParameters = GeneralUtility::_GET();
@@ -167,7 +169,7 @@ class BackendUtility extends AbstractUtility
      * @param string $returnUrl
      * @return int
      */
-    public static function getPidFromBackendPage($returnUrl = '')
+    public static function getPidFromBackendPage(string $returnUrl = ''): int
     {
         if (empty($returnUrl)) {
             $returnUrl = GeneralUtility::_GP('returnUrl');
@@ -175,5 +177,9 @@ class BackendUtility extends AbstractUtility
         $urlParts = parse_url($returnUrl);
         parse_str($urlParts['query'], $queryParts);
         return (int) $queryParts['id'];
+    }
+
+    public static function getRecord(mixed $table, mixed $uid)
+    {
     }
 }

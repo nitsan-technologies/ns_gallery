@@ -2,8 +2,7 @@ define([
     'jquery',
     'TYPO3/CMS/Backend/Modal',
     'TYPO3/CMS/NsGallery/Main',
-    'TYPO3/CMS/NsGallery/Datatables',
-    'TYPO3/CMS/Backend/jquery.clearable'
+    'TYPO3/CMS/NsGallery/Datatables'
 ], function ($, Model) {  
     
     $('.ns-ext-datatable').DataTable({

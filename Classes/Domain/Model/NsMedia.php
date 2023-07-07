@@ -1,6 +1,9 @@
 <?php
 namespace NITSAN\NsGallery\Domain\Model;
 
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /***
  *
  * This file is part of the "[NITSAN] Gallery" Extension for TYPO3 CMS.
@@ -18,31 +21,24 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
     /**
-     * uid
-     *
-     * @var int
-     */
-    protected $uid = 0;
-
-    /**
      * disbig
      *
      * @var int
      */
-    protected $disbig = null;
+    protected int $disbig;
 
     /**
      * media
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+     * @var ObjectStorage<FileReference>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
-    protected $media = null;
+    protected ObjectStorage $media;
 
     /**
      * poster
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+     * @var ObjectStorage<FileReference>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $poster = null;
@@ -65,19 +61,19 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return void
      */
-    protected function initStorageObjects()
+    protected function initStorageObjects(): void
     {
-        $this->media = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->poster = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->media = new ObjectStorage();
+        $this->poster = new ObjectStorage();
     }
 
     /**
      * Adds a FileReference
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $medium
+     * @param FileReference $medium
      * @return void
      */
-    public function addMedium(\TYPO3\CMS\Extbase\Domain\Model\FileReference $medium)
+    public function addMedium(FileReference $medium): void
     {
         $this->media->attach($medium);
         $this->poster->attach($medium);
@@ -86,10 +82,10 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Removes a FileReference
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $mediumToRemove The FileReference to be removed
+     * @param FileReference $mediumToRemove The FileReference to be removed
      * @return void
      */
-    public function removeMedium(\TYPO3\CMS\Extbase\Domain\Model\FileReference $mediumToRemove)
+    public function removeMedium(FileReference $mediumToRemove): void
     {
         $this->media->detach($mediumToRemove);
         $this->poster->detach($mediumToRemove);
@@ -98,9 +94,9 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the media
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $media
+     * @return ObjectStorage<FileReference> $media
      */
-    public function getMedia()
+    public function getMedia(): ObjectStorage
     {
         return $this->media;
     }
@@ -108,23 +104,12 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the media
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $media
+     * @param ObjectStorage<FileReference> $media
      * @return void
      */
-    public function setMedia(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $media)
+    public function setMedia(ObjectStorage $media): void
     {
         $this->media = $media;
-    }
-
-    /**
-     * Sets the uid
-     *
-     * @param int $uid
-     * @return void
-     */
-    public function setUid($uid)
-    {
-        $this->uid = $uid;
     }
 
     /**
@@ -132,7 +117,7 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return int $disbig
      */
-    public function getDisbig()
+    public function getDisbig(): int
     {
         return $this->disbig;
     }
@@ -143,7 +128,7 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param int $disbig
      * @return void
      */
-    public function setDisbig($disbig)
+    public function setDisbig(int $disbig): void
     {
         $this->disbig = $disbig;
     }
@@ -151,20 +136,21 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the poster
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $poster
+     * @return ObjectStorage<FileReference> $poster
      */
     public function getPoster()
     {
         return $this->poster;
     }
 
+
     /**
      * Sets the poster
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference> $poster
+     * @param ObjectStorage<FileReference> $poster
      * @return void
      */
-    public function setPoster(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $poster)
+    public function setPoster(ObjectStorage $poster)
     {
         $this->poster = $poster;
     }

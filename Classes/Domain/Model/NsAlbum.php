@@ -1,6 +1,8 @@
 <?php
 namespace NITSAN\NsGallery\Domain\Model;
 
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /***
  *
  * This file is part of the "[NITSAN] Gallery" Extension for TYPO3 CMS.
@@ -23,22 +25,21 @@ class NsAlbum extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * media
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\NITSAN\NsGallery\Domain\Model\NsMedia>
+     * @var ObjectStorage<NsMedia>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
-    protected $media = null;
+    protected ObjectStorage $media;
 
     /**
      * __construct
      */
     public function __construct()
     {
-
         //Do not remove the next line: It would break the functionality
         $this->initStorageObjects();
     }
@@ -51,9 +52,9 @@ class NsAlbum extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return void
      */
-    protected function initStorageObjects()
+    protected function initStorageObjects(): void
     {
-        $this->media = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->media = new ObjectStorage();
     }
 
     /**
@@ -61,7 +62,7 @@ class NsAlbum extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @return string $title
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -72,7 +73,7 @@ class NsAlbum extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $title
      * @return void
      */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
@@ -80,10 +81,10 @@ class NsAlbum extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Adds a NsMedia
      *
-     * @param \NITSAN\NsGallery\Domain\Model\NsMedia $medium
+     * @param NsMedia $medium
      * @return void
      */
-    public function addMedium(\NITSAN\NsGallery\Domain\Model\NsMedia $medium)
+    public function addMedium(NsMedia $medium): void
     {
         $this->media->attach($medium);
     }
@@ -91,10 +92,10 @@ class NsAlbum extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Removes a NsMedia
      *
-     * @param \NITSAN\NsGallery\Domain\Model\NsMedia $mediumToRemove The NsMedia to be removed
+     * @param NsMedia $mediumToRemove The NsMedia to be removed
      * @return void
      */
-    public function removeMedium(\NITSAN\NsGallery\Domain\Model\NsMedia $mediumToRemove)
+    public function removeMedium(NsMedia $mediumToRemove): void
     {
         $this->media->detach($mediumToRemove);
     }
@@ -102,9 +103,9 @@ class NsAlbum extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the media
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\NITSAN\NsGallery\Domain\Model\NsMedia> $media
+     * @return ObjectStorage<NsMedia> $media
      */
-    public function getMedia()
+    public function getMedia(): ObjectStorage
     {
         return $this->media;
     }
@@ -112,10 +113,10 @@ class NsAlbum extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the media
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\NITSAN\NsGallery\Domain\Model\NsMedia> $media
+     * @param ObjectStorage<NsMedia> $media
      * @return void
      */
-    public function setMedia(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $media)
+    public function setMedia(ObjectStorage $media): void
     {
         $this->media = $media;
     }

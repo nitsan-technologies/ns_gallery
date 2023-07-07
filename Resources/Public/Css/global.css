@@ -43,7 +43,12 @@
  body {
      font-family: Verdana, Arial, Helvetica, sans-serif;
      color: #212424;
- } 
+     overflow: auto;
+}
+
+.table {
+    border: 1px solid #ccc !important; 
+}
 
 .form-control::-webkit-input-placeholder {
     color: #bdbdbd;

@@ -1,7 +1,9 @@
 <div class="pagination-block pagination-block--{positionClass}">
     <div id="cover-spin"></div>
+
     <f:if condition="{settings.paginationType} == 'pagination'">
         <f:then>
+			<f:if condition="{pagination.nextPageNumber} || {pagination.previousPageNumber}">
             <f:if condition="{pagination.nextPageNumber} <= {pagination.lastPageNumber}">
                 <ul class="ns-pagination dflex">
                     <f:if condition="{pagination.previousPageNumber}">
@@ -56,6 +58,7 @@
                         </li>
                     </f:if>
                 </ul>
+            </f:if>
             </f:if>
         </f:then>
         <f:else>

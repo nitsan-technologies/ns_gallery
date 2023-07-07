@@ -11,11 +11,10 @@ $EM_CONF['ns_gallery'] = [
     'internal' => '',
     'uploadfolder' => '0',
     'createDirs' => '',
-    'clearCacheOnLoad' => 0,
-    'version' => '2.2.0',
+    'version' => '12.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.0.0-11.5.99',
+            'typo3' => '12.0.0-12.5.99',
         ],
         'conflicts' => [
         ],

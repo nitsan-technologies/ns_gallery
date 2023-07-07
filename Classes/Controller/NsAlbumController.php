@@ -1,10 +1,12 @@
 <?php
 namespace NITSAN\NsGallery\Controller;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation\Inject as inject;
+use NITSAN\NsGallery\Domain\Repository\NsAlbumRepository;
+use NITSAN\NsGallery\Domain\Repository\NsMediaRepository;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /***
  *
@@ -13,7 +15,7 @@ use TYPO3\CMS\Core\Pagination\SimplePagination;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 T3: Milan <sanjay@nitsan.in>, NITSAN Technologies Pvt Ltd
+ *  (c) 2023 T3: Milan <sanjay@nitsan.in>, NITSAN Technologies Pvt Ltd
  *
  ***/
 /**
@@ -28,120 +30,103 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
      * nsAlbumRepository
      *
-     * @var \NITSAN\NsGallery\Domain\Repository\NsAlbumRepository
-     * @inject
-     */
-    protected $nsAlbumRepository = null;
-
-    /*
-     * Inject a news repository to enable DI
+     * @var NsAlbumRepository
      *
-     * @param \NITSAN\NsGallery\Domain\Repository\NsAlbumRepository $nsAlbumRepository
-     * @return void
      */
-    public function injectNsAlbumRepository(\NITSAN\NsGallery\Domain\Repository\NsAlbumRepository $nsAlbumRepository)
-    {
-        $this->nsAlbumRepository = $nsAlbumRepository;
-    }
+    protected NsAlbumRepository $nsAlbumRepository;
 
     /**
      * nsMediaRepository
      *
-     * @var \NITSAN\NsGallery\Domain\Repository\NsMediaRepository
-     * @inject
-     */
-    protected $nsMediaRepository = null;
-
-    /*
-     * Inject a news repository to enable DI
+     * @var NsMediaRepository
      *
-     * @param \NITSAN\NsGallery\Domain\Repository\NsMediaRepository $nsMediaRepository
-     * @return void
      */
-    public function injectNsMediaRepository(\NITSAN\NsGallery\Domain\Repository\NsMediaRepository $nsMediaRepository)
-    {
+    protected NsMediaRepository $nsMediaRepository;
+
+
+    public function __construct(
+        NsAlbumRepository $nsAlbumRepository,
+        NsMediaRepository $nsMediaRepository
+    ) {
+        $this->nsAlbumRepository = $nsAlbumRepository;
         $this->nsMediaRepository = $nsMediaRepository;
     }
+
 
     /**
      * action list
      *
-     * @return void
+     * @param int $currentPage
+     * @return ResponseInterface
      */
-    public function listAction(int $currentPage = 1)
+    public function listAction(int $currentPage = 1): ResponseInterface
     {
-        $response = GeneralUtility::_GP('tx_nsgallery_album');
+        $response = $this->request->getQueryParams()['tx_nsgallery_album'] ?? '';
+
         if(!empty($response['currentPage']))
         {
             $currentPage = $response['currentPage'];
         }
-        
-        $makeArray = explode(',', $this->settings['records']);
+
+        $makeArray = GeneralUtility::trimExplode(',', $this->settings['records']);
         $nsAlbums = [];
         foreach ($makeArray as $key => $value) {
             $nsAlbums[] = $this->nsAlbumRepository->findByUid($value);
         }
-        if (version_compare(TYPO3_branch, '10.0', '>=')) {
-            $version = 'custom';
-            $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, (int)$this->settings['recordPerPage']);
-            $pagination = new SimplePagination($arrayPaginator);
-            $this->view->assignMultiple(
-                [
-                    'paginator' => $arrayPaginator,
-                    'pagination' => $pagination,
-                    'pages' => range(1, $pagination->getLastPageNumber()),
-                ]
-            );
-        } else {
-            $version = 'widget';
-        }
+
+        $version = 'custom';
+        $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, (int)$this->settings['recordPerPage']);
+        $pagination = new SimplePagination($arrayPaginator);
         $this->view->assignMultiple(
             [
+                'paginator' => $arrayPaginator,
+                'pagination' => $pagination,
+                'pages' => range(1, $pagination->getLastPageNumber()),
                 'nsAlbums' => $nsAlbums,
                 'version' => $version,
-                'action' => 'google',
+                'action' => 'list',
             ]
         );
         $this->makeGalleryInitilization('general');
+        return $this->htmlResponse();
     }
 
     /**
      * action list
      *
-     * @return void
+     * @param int $currentPage
+     * @return ResponseInterface
      */
-    public function googleAction(int $currentPage = 1)
+    public function googleAction(int $currentPage = 1): ResponseInterface
     {
-        $response = GeneralUtility::_GP('tx_nsgallery_googlesearchimage');
+        $response = $this->request->getQueryParams()['tx_nsgallery_googlesearchimage'] ?? '';
         if(!empty($response['currentPage']))
         {
             $currentPage = $response['currentPage'];
         }
-        
-        $makeArray = explode(',', $this->settings['records']);
+
+        $makeArray = GeneralUtility::trimExplode(',', $this->settings['records']);
         $nsAlbums = [];
         foreach ($makeArray as $album) {
             $getAlbums = $this->nsAlbumRepository->findByUid($album);
-            foreach ($getAlbums->getMedia() as $value) {
-                foreach ($value->getMedia() as $value) {
+            foreach ($getAlbums->getMedia() as $values) {
+                foreach ($values->getMedia() as $value) {
                     $nsAlbums[] = $value;
                 }
             }
+
         }
-        if (version_compare(TYPO3_branch, '10.0', '>=')) {
-            $version = 'custom';
-            $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, $this->settings['recordPerPage']);
-            $pagination = new SimplePagination($arrayPaginator);
-            $this->view->assignMultiple(
-                [
-                    'paginator' => $arrayPaginator,
-                    'pagination' => $pagination,
-                    'pages' => range(1, $pagination->getLastPageNumber()),
-                ]
-            );
-        } else {
-            $version = 'widget';
-        }
+        $version = 'custom';
+        $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, $this->settings['recordPerPage']);
+        $pagination = new SimplePagination($arrayPaginator);
+        $this->view->assignMultiple(
+            [
+                'paginator' => $arrayPaginator,
+                'pagination' => $pagination,
+                'pages' => range(1, $pagination->getLastPageNumber()),
+            ]
+        );
+
         $this->view->assignMultiple(
             [
                 'nsAlbums' => $nsAlbums,
@@ -150,34 +135,27 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             ]
         );
         $this->makeGalleryInitilization('google');
+        return $this->htmlResponse();
     }
 
-    public function makeGalleryInitilization($gallery = '')
+    public function makeGalleryInitilization($gallery = ''): void
     {
         $getContentId = $this->configurationManager->getContentObject()->data['uid'];
         $this->view->assign('getContentId', $getContentId);
-        switch ($gallery) {
-            case 'general':
-
-                $constant = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_nsgallery_album.']['settings.'];
-                $this->view->assign('constant', $constant);
-
-                $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
-
-                $this->view->assign('jsSettings', $jsSettings);
-                if(!isset($mode)){
-                    $mode = null;
-                }
-                $this->view->assign('mode', $mode);
-                if(array_key_exists($this->request->getControllerExtensionKey(), $GLOBALS['TSFE']->additionalFooterData) == FALSE){
-                    $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] = null;
-                }
-                $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] .= "
+        if ($gallery == 'general') {
+            $constant = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_nsgallery_album.']['settings.'];
+            $this->view->assign('constant', $constant);
+            $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
+            $this->view->assign('jsSettings', $jsSettings);
+            if (!array_key_exists($this->request->getControllerExtensionKey(), $GLOBALS['TSFE']->additionalFooterData)) {
+                $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] = null;
+            }
+            $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] .= "
                 <script>
                     (function($) {
                         $(window).on('load', function(){
                             $('.nsGallery-" . $getContentId . "').lightGallery({
-                                selector: '.ns-gallery-item',   
+                                selector: '.ns-gallery-item',
                                 " . $jsSettings . "
                                 addClass:'ns-gallery-arrow--icon-circle video-not-supported',
                                 download:false,
@@ -185,7 +163,6 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         });
                     })(jQuery);
                 </script>";
-                break;
         }
     }
 }

@@ -1,19 +1,24 @@
 <?php
 namespace NITSAN\NsGallery\Domain\Repository;
 
+use Doctrine\DBAL\Exception;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /***
  *
  * This file is part of the "[NITSAN] Gallery" Extension for TYPO3 CMS.
  *
- * For the full copyright and license information, please read the
+ * For the full copyrigsht and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
  *  (c) 2020 T3: Milan <sanjay@nitsan.in>, NITSAN Technologies Pvt Ltd
  *
  ***/
+
 /**
  * The repository for NsAlbums
  */
@@ -21,20 +26,27 @@ class NsAlbumRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
     /**
-     * @var array
+     * @var array<non-empty-string, QueryInterface::ORDER_*>
      */
     protected $defaultOrderings = [
-        'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
+        'sorting' => QueryInterface::ORDER_ASCENDING,
     ];
 
-    public function setSettingsForGallery($settings, $constant)
+    public function setSettingsForGallery($settings, $constant): string
     {
         $txtSettings = '';
-
         if($constant) {
             foreach ($constant as $key => $value) {
-                if ($key == 'arrowIcon'  || $key == 'zoomIcon'  || $key == 'loadingIcon'  || $key == 'GlobalPagingPosition' || $key == 'layout' || $key == 'detailPageId' || $key == 'filterPosition' || $key == 'paginationType' || $key == 'addClass' || $key == 'PagingPosition') {
-                } else {
+                if (!$key == 'arrowIcon'
+                    || !$key == 'zoomIcon'
+                    || !$key == 'loadingIcon'
+                    || !$key == 'GlobalPagingPosition'
+                    || !$key == 'layout'
+                    || !$key == 'detailPageId'
+                    || !$key == 'filterPosition'
+                    || !$key == 'paginationType'
+                    || !$key == 'addClass'
+                    || !$key == 'PagingPosition') {
                     if ($key == 'videoControls') {
                         $txtSettings .= 'controls:' . (isset($settings[$key]) && $settings[$key] !='' ? $settings[$key] : $constant[$key]) . ',';
                     } else {
@@ -134,15 +146,16 @@ class NsAlbumRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                         }
                     }
                 }
+                if ($key == 'controls') {
+                    $txtSettings .= 'controls:' . (isset($settings[$key]) && $settings[$key] !='' ? $settings[$key] : $constant[$key]) . ',';
+                }
             }
-            if(!isset($getContentId)){
-                $getContentId = null;
-            }
+            $getContentId = null;
             $textData = "<script>
                 (function($) {
-                    $(window).load(function() {                            
+                    $(window).load(function() {
                         $('#nsGallery-" . $getContentId . "').lightGallery({
-                            selector: '.ns-gallery-item',                    
+                            selector: '.ns-gallery-item',
                             " . $txtSettings . '
                         });
                     });
@@ -155,11 +168,14 @@ class NsAlbumRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
     public function getFromAll()
     {
-        $querySettings = $this->objectManager->get(\TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings::class);
+        $querySettings = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings::class);
         $querySettings->setRespectStoragePage(false);
         $this->setDefaultQuerySettings($querySettings);
     }
 
+    /**
+     * @throws Exception
+     */
     public function checkApiData()
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_nsgallery_domain_model_apidata');
@@ -190,7 +206,7 @@ class NsAlbumRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         return $data;
     }
-    public function deleteOldApiData()
+    public function deleteOldApiData(): void
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_nsgallery_domain_model_apidata');
         $queryBuilder
@@ -201,11 +217,11 @@ class NsAlbumRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             ->execute();
     }
 
-    public function getRatings($filterData = null)
+    public function getRatings($filterData = null): QueryResultInterface
     {
         $this->getFromAll();
         $query = $this->createQuery();
-        $main= [];
+        $main = GeneralUtility::makeInstance(ConstraintInterface::class);
 
         $main[] =  $query->equals('pid', $filterData['pId']);
         if ($filterData['cid']) {

@@ -1,0 +1,58 @@
+<html
+    xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true"
+>
+
+<f:layout name="Module"/>
+
+<f:section name="Content">
+    <f:be.pageRenderer
+            includeCssFiles="{
+                0: 'EXT:ns_gallery/Resources/Public/Css/global.css',
+                1: 'EXT:ns_gallery/Resources/Public/Css/main.css',
+                2: 'EXT:ns_gallery/Resources/Public/Vendor/bootstrap4.3.1.min.css',
+                3: 'EXT:ns_gallery/Resources/Public/Css/font-awesome.css'
+                4: 'EXT:ns_gallery/Resources/Public/Css/customCss.css'
+                5: 'EXT:ns_gallery/Resources/Public/Css/nsfeedback.css'
+                6: 'EXT:ns_gallery/Resources/Public/Css/nsgallery-theme.css'
+                7: 'EXT:ns_gallery/Resources/Public/Css/nsgallery.css'
+                8: 'EXT:ns_gallery/Resources/Public/Css/default.css'
+                9: 'EXT:ns_gallery/Resources/Public/Vendor/fontAwesome/css/font-awesome.min.css'
+            }"
+            includeJsFiles="{
+                0: 'EXT:ns_gallery/Resources/Public/JavaScript/Main.js' ,
+                1: 'EXT:ns_gallery/Resources/Public/JavaScript/Datatables.js'
+            }"
+            includeJavaScriptModules="{
+                0: '@typo3/backend/context-menu.js',
+                1: '@typo3/backend/element/immediate-action-element.js',
+                3: '@typo3/backend/utility/collape-state-persister.js',
+                4: '@typo3/tstemplate/constant-editor.js'
+            }"
+    />
+    <link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Css/global.css', extensionName: 'ns_gallery')}" media="all">
+
+    <f:variable name="args" value="{0: 'nitsan', 1: pageUid}" />
+    <f:render
+        partial="ConstantEditorOptions"
+        arguments="{
+            allTemplatesOnPage: allTemplatesOnPage,
+            pageUid: pageUid,
+            selectedTemplateUid: selectedTemplateUid,
+            relevantCategories: relevantCategories,
+            selectedCategory: selectedCategory
+        }"
+    />
+    <f:if condition="!{relevantCategories}">
+        <f:then>
+            <f:be.infobox title="{f:translate(key:'LLL:EXT:tstemplate/Resources/Private/Language/locallang_ceditor.xlf:noConstants')}">
+                {f:translate(key:'LLL:EXT:tstemplate/Resources/Private/Language/locallang_ceditor.xlf:noConstantsDescription')}
+            </f:be.infobox>
+        </f:then>
+        <f:else>
+            <f:render partial="ConstantEditorFields" arguments="{_all}" />
+        </f:else>
+    </f:if>
+</f:section>
+
+</html>
