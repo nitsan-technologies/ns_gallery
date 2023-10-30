@@ -963,7 +963,7 @@ class ExtendedTemplateService extends TemplateService
                                 if ($catSplit[1] && isset($this->subCategories[$catSplit[1]])) {
                                     $editableComments[$const]['subcat_name'] = $catSplit[1];
                                     $orderIdentifier = isset($catSplit[2]) ? trim($catSplit[2]) : $counter;
-                                    $editableComments[$const]['subcat'] = $this->subCategories[$catSplit[1]][1]
+                                    $editableComments[$const]['subcat'] = (isset($this->subCategories[$catSplit[1]][1]) ? $this->subCategories[$catSplit[1]][1] : '')
                                         . '/' . $catSplit[1] . '/' . $orderIdentifier . 'z';
                                 } elseif (isset($catSplit[2])) {
                                     $editableComments[$const]['subcat'] = 'x' . '/' . trim($catSplit[2]) . 'z';
@@ -1060,7 +1060,7 @@ class ExtendedTemplateService extends TemplateService
                 $p = trim(substr($type, $m));
                 $reg = [];
                 preg_match('/\\[(.*)\\]/', $p, $reg);
-                $p = trim($reg[1]);
+                $p = (isset($reg[1]) ? trim($reg[1]) : '');
                 if ($p) {
                     $retArr['paramstr'] = $p;
                     switch ($retArr['type']) {
@@ -1120,7 +1120,7 @@ class ExtendedTemplateService extends TemplateService
         reset($theConstants);
         $output = '';
         $subcat = '';
-        if (is_array($this->categories[$category])) {
+        if (isset($this->categories[$category]) ? is_array($this->categories[$category]) : '0') {
             if (!$this->doNotSortCategoriesBeforeMakingForm) {
                 asort($this->categories[$category]);
             }
@@ -1158,7 +1158,7 @@ class ExtendedTemplateService extends TemplateService
                         case 'int':
                         case 'int+':
                             $additionalAttributes = '';
-                            if ($typeDat['paramstr']) {
+                            if (isset($typeDat['paramstr'])) {
                                 $hint = ' Range: ' . $typeDat['paramstr'];
                             } elseif ($typeDat['type'] === 'int+') {
                                 $hint = ' Range: 0 - ';
@@ -1247,7 +1247,7 @@ class ExtendedTemplateService extends TemplateService
                             $p_field =
                                 '<input type="hidden" name="' . $fN . '" value="0" />'
                                . '<div class="custom-control custom-switch">'
-                                    . '<input class="custom-control-input" id="' . $idName . '" type="checkbox" name="' . $fN . '" value="' . ($typeDat['paramstr'] ? $typeDat['paramstr'] : 1) . '" ' . $sel . '>'
+                                    . '<input class="custom-control-input" id="' . $idName . '" type="checkbox" name="' . $fN . '" value="' . (isset($typeDat['paramstr']) ? $typeDat['paramstr'] : 1) . '" ' . $sel . '>'
                                     . '<label class="custom-control-label" for="' . $idName . '"></label>'
                                 . '</div>';
                             break;
@@ -1476,11 +1476,10 @@ class ExtendedTemplateService extends TemplateService
     {
         $data = $http_post_vars['data'];
         $check = $http_post_vars['check'];
-        $Wdata = $http_post_vars['Wdata'];
-        $W2data = $http_post_vars['W2data'];
-        $W3data = $http_post_vars['W3data'];
-        $W4data = $http_post_vars['W4data'];
-        $W5data = $http_post_vars['W5data'];
+        $Wdata = isset($http_post_vars['Wdata']) ? $http_post_vars['Wdata'] : '';
+        $W2data = isset($http_post_vars['W2data']) ? $http_post_vars['W2data'] : '';
+        $W3data = isset($http_post_vars['W3data']) ? $http_post_vars['W3data'] : '';
+        $W4data = isset($http_post_vars['W4data']) ? $http_post_vars['W4data'] : '';
         if (is_array($data)) {
             foreach ($data as $key => $var) {
                 if (isset($theConstants[$key])) {
@@ -1494,7 +1493,7 @@ class ExtendedTemplateService extends TemplateService
 
                         switch ($typeDat['type']) {
                             case 'int':
-                                if ($typeDat['paramstr']) {
+                                if (isset($typeDat['paramstr'])) {
                                     $var = MathUtility::forceIntegerInRange($var, $typeDat['params'][0], $typeDat['params'][1]);
                                 } else {
                                     $var = (int)$var;
@@ -1554,7 +1553,7 @@ class ExtendedTemplateService extends TemplateService
                                 break;
                             case 'boolean':
                                 if ($var) {
-                                    $var = $typeDat['paramstr'] ? $typeDat['paramstr'] : 1;
+                                    $var = isset($typeDat['paramstr']) ? $typeDat['paramstr'] : 1;
                                 }
                                 break;
                             case 'textarea':

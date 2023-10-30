@@ -70,7 +70,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function listAction(int $currentPage = 1)
     {
-        $response = GeneralUtility::_GP('tx_nsgallery_album');
+        $response = GeneralUtility::_GP('tx_nsgallery_googlesearchimage');
         if(!empty($response['currentPage']))
         {
             $currentPage = $response['currentPage'];

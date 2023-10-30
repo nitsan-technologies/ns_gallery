@@ -113,7 +113,10 @@ class TypoScriptTemplateConstantEditorModuleFunctionController
         $template_uid = isset($template_uid) ? $template_uid : "";
         $existTemplate = $this->initialize_editor($this->id, $template_uid);
         if ($existTemplate) {
-            $saveId = $this->templateRow['_ORIG_uid'] ?: $this->templateRow['uid'];
+            if (isset($this->templateRow['_ORIG_uid'])) {
+                $saveId = $this->templateRow['_ORIG_uid'] ?: $this->templateRow['uid'];
+            }
+            $saveId = $this->templateRow['uid'];
             // Update template ?
             if (GeneralUtility::_POST('_savedok')) {
                 $this->templateService->changed = 0;
@@ -156,7 +159,12 @@ class TypoScriptTemplateConstantEditorModuleFunctionController
                 $assigns['constantsMenu'] = BackendUtility::getDropdownMenu($this->id, 'SET[constant_editor_cat]', $this->pObj->MOD_SETTINGS['constant_editor_cat'], $this->pObj->MOD_MENU['constant_editor_cat']);
             }
 
-            $category = strtolower(GeneralUtility::_GP('cat'));
+            $cat = GeneralUtility::_GP('cat');
+            if (isset($cat)) {
+                $category = strtolower($cat);
+            } else {
+                $category = GeneralUtility::_GP('cat');
+            }
 
             // Category and constant editor config:
             $printFields = trim($this->templateService->ext_printFields($this->constants, $category));
