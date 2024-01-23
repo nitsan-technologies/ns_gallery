@@ -10,7 +10,7 @@ return [
     'ns_gallery_configuration' => [
         'parent' => 'nitsan_module',
         'position' => ['before' => 'top'],
-        'access' => 'admin,user,group',
+        'access' => 'user',
         'path' => '/module/nitsan/NsGalleryConfiguration',
         'labels' => 'LLL:EXT:ns_gallery/Resources/Private/Language/BackendModule.xlf:ns_gallery_configuration',
         'icon' => 'EXT:ns_gallery/Resources/Public/Icons/user_mod_nsgallery.svg',
@@ -29,7 +29,7 @@ return [
     'ns_gallery' => [
         'parent' => 'nitsan_module',
         'position' => ['before' => 'top'],
-        'access' => 'user,group',
+        'access' => 'user',
         'icon'   => 'EXT:ns_gallery/Resources/Public/Icons/user_mod_nsgallery.svg',
         'labels' => 'LLL:EXT:ns_gallery/Resources/Private/Language/locallang_nsgallery.xlf',
         'path' => '/module/web/NsGallery',
