@@ -1,12 +1,14 @@
 <?php
 
 $EM_CONF['ns_gallery'] = [
-    'title' => '[NITSAN] All In One Gallery',
-    'description' => 'Do you want to integrate feature-rich gallery solution to your TYPO3 site? The extension includes wide-range of gallery album variations. Demo: https://demo.t3planet.com/t3t-extensions/gallery You can download PRO version for more-features & free-support at https://t3planet.com/ns-gallery-typo3-extension',
+    'title' => 'All in One Gallery',
+    'description' => 'Using the All In One TYPO3 Gallery Extension, you can easily create beautiful lightbox image and video galleries with various grid layouts right from the TYPO3 dashboard in just a few clicks. Try the best TYPO3 gallery extension for adding custom, unique and responsive galleries to your website.
+
+    *** Live Demo: https://demo.t3planet.com/t3-extensions/gallery/ *** Premium Version, Documentation & Free Support: https://t3planet.com/typo3-gallery-extension',
     'category' => 'plugin',
-    'author' => 'Team NITSAN',
+    'author' => 'T3: Himanshu Ramavat, T3: Nilesh Malankiya, QA: Krishna Dhapa',
     'author_email' => 'sanjay@nitsan.in',
-    'author_company' => 'NITSAN Technologies Pvt Ltd',
+    'author_company' => 'T3Planet // NITSAN',
     'state' => 'stable',
     'internal' => '',
     'uploadfolder' => '0',
@@ -16,9 +18,7 @@ $EM_CONF['ns_gallery'] = [
         'depends' => [
             'typo3' => '12.0.0-12.5.99',
         ],
-        'conflicts' => [
-        ],
-        'suggests' => [
-        ],
+        'conflicts' => [],
+        'suggests' => [],
     ],
 ];
