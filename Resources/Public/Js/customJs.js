@@ -28,6 +28,7 @@ $(document).ready(function () {
 
     $('#cover-spin').hide();
 
+    var checkCurrentGallery = [];
     $(document).on('click', '.article-load-more', function (e) {
         if (paginationType == 'pagination') {
             var getParentID = $(this).parent().parent().parent().parent().attr('id');
@@ -70,28 +71,20 @@ $(document).ready(function () {
                     $('#' + getParentID + ' .article-load-more').attr('href', findNextPageURL);
                 }
                 var findNReplace = '#' + getParentID + ' .cus-row';
-
                 var disdata = $(response).find(findNReplace).html();
-
-                disdata = $(disdata + ' .ajaxBlock-'+getParentID).addClass('page-' + curPage);
-
-                var lastVid2 = $(response).find('#lastVid-'+ getParentID).val();
-                $('#lastVid-'+ getParentID).val(lastVid2);
-
-                $(disdata).find('.grid-sizer .page-2').remove();
+                disdata = $(disdata + ' .ajaxBlock').addClass('page-' + curPage);
 
                 if (paginationType == 'pagination') {
-                    $('.cus-row .ajaxBlock-'+getParentID).remove();
+                    $(findNReplace).html(disdata).fadeIn('slow');
                 } else {
-                    if (totPages === curPage || totPages == 0) {
+                    $(findNReplace).append(disdata).fadeIn('slow');
+                    if (totPages == curPage) {
                         $('#' + getParentID + ' .pagination-block .article-load-more').fadeOut();
                     }
                 }
-
                 $('.GITheWall').each(function(index, item) {
                     wall[index].refresh();
                 });
-
                 try {
                     $('.' + getParentID).data('lightGallery').destroy(true);
                 } catch (ex) { };
