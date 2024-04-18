@@ -1,5 +1,8 @@
 <?php
+
 namespace NITSAN\NsGallery\Domain\Repository;
+
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /***
  *
@@ -14,6 +17,6 @@ namespace NITSAN\NsGallery\Domain\Repository;
 /**
  * The repository for GalleryAlbums
  */
-class NsGalleryBackendRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class NsGalleryBackendRepository extends Repository
 {
 }

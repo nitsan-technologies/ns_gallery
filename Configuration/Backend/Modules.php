@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 return [
     'nitsan_module' => [
@@ -41,6 +42,3 @@ return [
         ],
     ],
 ];
-
-
-?>

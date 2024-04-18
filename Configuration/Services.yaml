@@ -17,4 +17,3 @@ services:
       $astTraverser: '@TYPO3\CMS\Core\TypoScript\AST\Traverser\AstTraverser'
       $astBuilder: '@TYPO3\CMS\Core\TypoScript\AST\AstBuilderInterface'
       $losslessTokenizer: '@TYPO3\CMS\Core\TypoScript\Tokenizer\LosslessTokenizer'
-      $nsGallleryBackendController: '@NITSAN\NsGallery\Controller\NsGalleryBackendController'

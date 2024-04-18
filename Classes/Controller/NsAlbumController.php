@@ -1,4 +1,5 @@
 <?php
+
 namespace NITSAN\NsGallery\Controller;
 
 use NITSAN\NsGallery\Domain\Repository\NsAlbumRepository;
@@ -7,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /***
  *
@@ -24,9 +26,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * @param int $currentPage
  */
-class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class NsAlbumController extends ActionController
 {
-
     /**
      * nsAlbumRepository
      *
@@ -44,6 +45,10 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     protected NsMediaRepository $nsMediaRepository;
 
 
+    /**
+     * @param NsAlbumRepository $nsAlbumRepository
+     * @param NsMediaRepository $nsMediaRepository
+     */
     public function __construct(
         NsAlbumRepository $nsAlbumRepository,
         NsMediaRepository $nsMediaRepository
@@ -51,7 +56,6 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $this->nsAlbumRepository = $nsAlbumRepository;
         $this->nsMediaRepository = $nsMediaRepository;
     }
-
 
     /**
      * action list
@@ -62,19 +66,14 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listAction(int $currentPage = 1): ResponseInterface
     {
         $response = $this->request->getQueryParams()['tx_nsgallery_album'] ?? '';
-
-        if(!empty($response['currentPage']))
-        {
+        if(!empty($response['currentPage'])) {
             $currentPage = $response['currentPage'];
         }
-
         $makeArray = GeneralUtility::trimExplode(',', $this->settings['records']);
         $nsAlbums = [];
-        foreach ($makeArray as $key => $value) {
+        foreach ($makeArray as $value) {
             $nsAlbums[] = $this->nsAlbumRepository->findByUid($value);
         }
-
-        $version = 'custom';
         $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, (int)$this->settings['recordPerPage']);
         $pagination = new SimplePagination($arrayPaginator);
         $this->view->assignMultiple(
@@ -83,7 +82,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'pagination' => $pagination,
                 'pages' => range(1, $pagination->getLastPageNumber()),
                 'nsAlbums' => $nsAlbums,
-                'version' => $version,
+                'version' => 'custom',
                 'action' => 'list',
             ]
         );
@@ -100,11 +99,9 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function googleAction(int $currentPage = 1): ResponseInterface
     {
         $response = $this->request->getQueryParams()['tx_nsgallery_googlesearchimage'] ?? '';
-        if(!empty($response['currentPage']))
-        {
+        if(!empty($response['currentPage'])) {
             $currentPage = $response['currentPage'];
         }
-
         $makeArray = GeneralUtility::trimExplode(',', $this->settings['records']);
         $nsAlbums = [];
         foreach ($makeArray as $album) {
@@ -116,7 +113,6 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             }
 
         }
-        $version = 'custom';
         $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, $this->settings['recordPerPage']);
         $pagination = new SimplePagination($arrayPaginator);
         $this->view->assignMultiple(
@@ -126,11 +122,10 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'pages' => range(1, $pagination->getLastPageNumber()),
             ]
         );
-
         $this->view->assignMultiple(
             [
                 'nsAlbums' => $nsAlbums,
-                'version' => $version,
+                'version' => 'custom',
                 'action' => 'google',
             ]
         );
@@ -140,6 +135,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
     public function makeGalleryInitilization($gallery = ''): void
     {
+        // @extensionScannerIgnoreLine
         $getContentId = $this->configurationManager->getContentObject()->data['uid'];
         $this->view->assign('getContentId', $getContentId);
         if ($gallery == 'general') {
@@ -147,7 +143,10 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $this->view->assign('constant', $constant);
             $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
             $this->view->assign('jsSettings', $jsSettings);
-            if (!array_key_exists($this->request->getControllerExtensionKey(), $GLOBALS['TSFE']->additionalFooterData)) {
+            if (!array_key_exists(
+                $this->request->getControllerExtensionKey(),
+                $GLOBALS['TSFE']->additionalFooterData
+            )) {
                 $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] = null;
             }
             $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] .= "

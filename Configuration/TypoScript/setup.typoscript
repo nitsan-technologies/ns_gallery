@@ -8,14 +8,10 @@ plugin.tx_nsgallery_album {
         layoutRootPaths.1 = {$plugin.tx_nsgallery_album.view.layoutRootPath}
     }   
     features {
-        #skipDefaultArguments = 1
         # if set to 1, the enable fields are ignored in BE context
         ignoreAllEnableFieldsInBe = 0
         # Should be on by default, but can be disabled if all action in the plugin are uncached
         requireCHashArgumentForActionArguments = 1
-    }
-    mvc {
-        #callDefaultActionIfActionCantBeResolved = 1
     }
     settings {        
         controls = {$plugin.tx_nsgallery_album.appearanceSettings.generalGallery.controls}        
@@ -24,7 +20,6 @@ plugin.tx_nsgallery_album {
 }
 
 plugin.tx_nsgallery_googlesearchimage {
-
     view {
         templateRootPaths.0 = EXT:{extension.shortExtensionKey}/Resources/Private/Templates/
         templateRootPaths.1 = {$plugin.tx_nsgallery_googlesearchimage.view.templateRootPath}
@@ -33,16 +28,11 @@ plugin.tx_nsgallery_googlesearchimage {
         layoutRootPaths.0 = EXT:tx_nsgallery/Resources/Private/Layouts/
         layoutRootPaths.1 = {$plugin.tx_nsgallery_googlesearchimage.view.layoutRootPath}
     }
-    
     features {
-        #skipDefaultArguments = 1
         # if set to 1, the enable fields are ignored in BE context
         ignoreAllEnableFieldsInBe = 0
         # Should be on by default, but can be disabled if all action in the plugin are uncached
         requireCHashArgumentForActionArguments = 1
-    }
-    mvc {
-        #callDefaultActionIfActionCantBeResolved = 1
     }
     settings {
         paginationType = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.Paging}
@@ -69,7 +59,6 @@ page {
         nsgalleryTheme = EXT:ns_gallery/Resources/Public/Css/nsgallery-theme.css
         CustomCss = EXT:ns_gallery/Resources/Public/Css/customCss.css
     }
-
     includeJSLibs {
         nsGjquery = EXT:ns_gallery/Resources/Public/Vendor/initializr/jquery.min.js
         nsGjquery.if.isTrue = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.jQuery}
@@ -78,7 +67,6 @@ page {
 
 # Module configuration
 module.tx_nsgallery {
-
     settings {
         storagePid = {$plugin.tx_nsgallery_album.storageSettings.storagePid}
     }

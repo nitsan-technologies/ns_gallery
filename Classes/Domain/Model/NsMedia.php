@@ -1,7 +1,9 @@
 <?php
+
 namespace NITSAN\NsGallery\Domain\Model;
 
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /***
@@ -17,9 +19,8 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * NsMedia
  */
-class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class NsMedia extends AbstractEntity
 {
-
     /**
      * disbig
      *

@@ -1,5 +1,9 @@
 <?php
+
 namespace NITSAN\NsGallery\Domain\Repository;
+
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /***
  *
@@ -14,9 +18,9 @@ namespace NITSAN\NsGallery\Domain\Repository;
 /**
  * The repository for NsMedia
  */
-class NsMediaRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class NsMediaRepository extends Repository
 {
     protected $defaultOrderings = [
-        'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING,
+        'sorting' => QueryInterface::ORDER_ASCENDING,
     ];
 }

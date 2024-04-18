@@ -2,6 +2,7 @@
 
 namespace NITSAN\NsGallery\Controller;
 
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Core\Imaging\Icon;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -27,29 +28,68 @@ use TYPO3\CMS\Core\TypoScript\IncludeTree\Visitor\IncludeTreeCommentAwareAstBuil
 
 class NsConstantEditorController extends AbstractTemplateModuleController
 {
+    /**
+     * @var ModuleTemplateFactory
+     */
+    protected ModuleTemplateFactory $moduleTemplateFactory;
+
+    /**
+     * @var SysTemplateRepository
+     */
+    private SysTemplateRepository $sysTemplateRepository;
+
+    /**
+     * @var SysTemplateTreeBuilder
+     */
+    private SysTemplateTreeBuilder $treeBuilder;
+
+    /**
+     * @var IncludeTreeTraverser
+     */
+    private IncludeTreeTraverser $treeTraverser;
+
+    /**
+     * @var AstTraverser
+     */
+    private AstTraverser $astTraverser;
+
+    /**
+     * @var AstBuilderInterface
+     */
+    private AstBuilderInterface $astBuilder;
+
+    /**
+     * @var LosslessTokenizer
+     */
+    private LosslessTokenizer $losslessTokenizer;
+
     public function __construct(
-        protected readonly ModuleTemplateFactory $moduleTemplateFactory,
-        private readonly SysTemplateRepository $sysTemplateRepository,
-        private readonly SysTemplateTreeBuilder $treeBuilder,
-        private readonly IncludeTreeTraverser $treeTraverser,
-        private readonly AstTraverser $astTraverser,
-        private readonly AstBuilderInterface $astBuilder,
-        private readonly LosslessTokenizer $losslessTokenizer,
-        private readonly NsGalleryBackendController $nsGallleryBackendController
+        ModuleTemplateFactory $moduleTemplateFactory,
+        SysTemplateRepository $sysTemplateRepository,
+        SysTemplateTreeBuilder $treeBuilder,
+        IncludeTreeTraverser $treeTraverser,
+        AstTraverser $astTraverser,
+        AstBuilderInterface $astBuilder,
+        LosslessTokenizer $losslessTokenizer
     ) {
+        $this->losslessTokenizer = $losslessTokenizer;
+        $this->astBuilder = $astBuilder;
+        $this->astTraverser = $astTraverser;
+        $this->treeTraverser = $treeTraverser;
+        $this->treeBuilder = $treeBuilder;
+        $this->sysTemplateRepository = $sysTemplateRepository;
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
     }
 
     public function handleRequest(ServerRequestInterface $request): ResponseInterface
     {
         $queryParams = $request->getQueryParams();
         $parsedBody = $request->getParsedBody();
-
         $pageUid = (int)($queryParams['id'] ?? 0);
         if ($pageUid === 0) {
             // Redirect to template record overview if on page 0.
             return new RedirectResponse($this->uriBuilder->buildUriFromRoute('web_typoscript_recordsoverview'));
         }
-
         if (($parsedBody['action'] ?? '') === 'createExtensionTemplate') {
             return $this->createExtensionTemplateAction($request, 'web_typoscript_constanteditor');
         }
@@ -59,33 +99,30 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         if (($parsedBody['_savedok'] ?? false) === '1') {
             return $this->saveAction($request);
         }
-
         $pageUid = (int)($queryParams['id'] ?? 0);
         $allTemplatesOnPage = $this->getAllTemplateRecordsOnPage($pageUid);
         if (empty($allTemplatesOnPage)) {
             return $this->noTemplateAction($request);
         }
-
         return $this->showAction($request);
     }
 
+    /**
+     * @throws RouteNotFoundException
+     */
     private function showAction(ServerRequestInterface $request): ResponseInterface
     {
         $queryParams = $request->getQueryParams();
         $parsedBody = $request->getParsedBody();
         $languageService = $this->getLanguageService();
         $backendUser = $this->getBackendUser();
-
         $pageUid = (int)($queryParams['id'] ?? 0);
-
         $currentModule = $request->getAttribute('module');
         $currentModuleIdentifier = $currentModule->getIdentifier();
         $moduleData = $request->getAttribute('moduleData');
-
         if ($moduleData->cleanUp([])) {
             $backendUser->pushModuleData($currentModuleIdentifier, $moduleData->toArray());
         }
-
         $pageRecord = BackendUtility::readPageAccess($pageUid, '1=1') ?: [];
         if (empty($pageRecord)) {
             // Redirect to records overview if page could not be determined.
@@ -93,7 +130,6 @@ class NsConstantEditorController extends AbstractTemplateModuleController
             BackendUtility::setUpdateSignal('updatePageTree');
             return new RedirectResponse($this->uriBuilder->buildUriFromRoute('web_typoscript_recordsoverview'));
         }
-
         // Template selection handling for this page
         $allTemplatesOnPage = $this->getAllTemplateRecordsOnPage($pageUid);
         $selectedTemplateFromModuleData = (array)$moduleData->get('selectedTemplatePerPage');
@@ -114,25 +150,18 @@ class NsConstantEditorController extends AbstractTemplateModuleController
                 $currentTemplateConstants = $templateRow['constants'] ?? '';
             }
         }
-
-
         // Build the constant include tree
         $rootLine = GeneralUtility::makeInstance(RootlineUtility::class, $pageUid)->get();
         $sysTemplateRows = $this->sysTemplateRepository->getSysTemplateRowsByRootlineWithUidOverride($rootLine, $request, $selectedTemplateUid);
         $site = $request->getAttribute('site');
         $constantIncludeTree = $this->treeBuilder->getTreeBySysTemplateRowsAndSite('constants', $sysTemplateRows, $this->losslessTokenizer, $site);
         $constantAstBuilderVisitor = GeneralUtility::makeInstance(IncludeTreeCommentAwareAstBuilderVisitor::class);
-        $this->treeTraverser->resetVisitors();
-        $this->treeTraverser->addVisitor($constantAstBuilderVisitor);
-        $this->treeTraverser->traverse($constantIncludeTree);
+        $this->treeTraverser->traverse($constantIncludeTree, [$constantAstBuilderVisitor]);
         $constantAst = $constantAstBuilderVisitor->getAst();
         $astConstantCommentVisitor = GeneralUtility::makeInstance(AstConstantCommentVisitor::class);
         $currentTemplateFlatConstants = $this->astBuilder->build($this->losslessTokenizer->tokenize($currentTemplateConstants), new RootNode())->flatten();
         $astConstantCommentVisitor->setCurrentTemplateFlatConstants($currentTemplateFlatConstants);
-        $this->astTraverser->resetVisitors();
-        $this->astTraverser->addVisitor($astConstantCommentVisitor);
-        $this->astTraverser->traverse($constantAst);
-
+        $this->astTraverser->traverse($constantAst, [$astConstantCommentVisitor]);
         $constants = $astConstantCommentVisitor->getConstants();
         $categories = $astConstantCommentVisitor->getCategories();
         $relevantCategories = [];
@@ -143,7 +172,6 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         }
         $selectedCategory = array_key_first($relevantCategories) ?? '';
         $selectedCategoryFromModuleData = (string)$moduleData->get('selectedCategory');
-
         if (array_key_exists($selectedCategoryFromModuleData, $relevantCategories)) {
             $selectedCategory = $selectedCategoryFromModuleData;
         }
@@ -154,7 +182,6 @@ class NsConstantEditorController extends AbstractTemplateModuleController
             $moduleData->set('selectedCategory', $selectedCategory);
             $backendUser->pushModuleData($currentModuleIdentifier, $moduleData->toArray());
         }
-
         $displayConstants = [];
         foreach ($constants as $constant) {
             if ($constant['cat'] === $selectedCategory) {
@@ -166,7 +193,6 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         foreach ($displayConstants as &$constant) {
             ksort($constant['items']);
         }
-
         $view = $this->moduleTemplateFactory->create($request);
         $view->setTitle($languageService->sL($currentModule->getTitle()), $pageRecord['title']);
         $view->getDocHeaderComponent()->setMetaInformation($pageRecord);
@@ -192,12 +218,10 @@ class NsConstantEditorController extends AbstractTemplateModuleController
     {
         $queryParams = $request->getQueryParams();
         $moduleData = $request->getAttribute('moduleData');
-
         $pageUid = (int)($queryParams['id'] ?? 0);
         if ($pageUid === 0) {
             throw new \RuntimeException('No proper page uid given', 1661333862);
         }
-
         $allTemplatesOnPage = $this->getAllTemplateRecordsOnPage($pageUid);
         $selectedTemplateFromModuleData = (array)$moduleData->get('selectedTemplatePerPage');
         $selectedTemplateUid = (int)($selectedTemplateFromModuleData[$pageUid] ?? 0);
@@ -220,15 +244,10 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         $sysTemplateRows = $this->sysTemplateRepository->getSysTemplateRowsByRootlineWithUidOverride($rootLine, $request, $selectedTemplateUid);
         $constantIncludeTree = $this->treeBuilder->getTreeBySysTemplateRowsAndSite('constants', $sysTemplateRows, $this->losslessTokenizer, $site);
         $constantAstBuilderVisitor = GeneralUtility::makeInstance(IncludeTreeCommentAwareAstBuilderVisitor::class);
-        $this->treeTraverser->resetVisitors();
-        $this->treeTraverser->addVisitor($constantAstBuilderVisitor);
-        $this->treeTraverser->traverse($constantIncludeTree);
+        $this->treeTraverser->traverse($constantIncludeTree, [$constantAstBuilderVisitor]);
         $constantAst = $constantAstBuilderVisitor->getAst();
         $astConstantCommentVisitor = GeneralUtility::makeInstance(AstConstantCommentVisitor::class);
-        $this->astTraverser->resetVisitors();
-        $this->astTraverser->addVisitor($astConstantCommentVisitor);
-        $this->astTraverser->traverse($constantAst);
-
+        $this->astTraverser->traverse($constantAst, [$astConstantCommentVisitor]);
         $constants = $astConstantCommentVisitor->getConstants();
         $updatedTemplateConstantsArray = $this->updateTemplateConstants($request, $constants, $templateRow['constants'] ?? '');
         if ($updatedTemplateConstantsArray) {
@@ -239,7 +258,6 @@ class NsConstantEditorController extends AbstractTemplateModuleController
             $dataHandler->start($recordData, []);
             $dataHandler->process_datamap();
         }
-
         return new RedirectResponse($this->uriBuilder->buildUriFromRoute('ns_gallery_configuration', ['id' => $pageUid]));
     }
 
@@ -259,7 +277,6 @@ class NsConstantEditorController extends AbstractTemplateModuleController
             BackendUtility::setUpdateSignal('updatePageTree');
             return new RedirectResponse($this->uriBuilder->buildUriFromRoute('web_typoscript_recordsoverview'));
         }
-
         $view = $this->moduleTemplateFactory->create($request);
         $view->setTitle($languageService->sL($currentModule->getTitle()), $pageRecord['title']);
         $view->getDocHeaderComponent()->setMetaInformation($pageRecord);
@@ -277,11 +294,9 @@ class NsConstantEditorController extends AbstractTemplateModuleController
     {
         $rawTemplateConstantsArray = GeneralUtility::trimExplode(LF, $rawTemplateConstants);
         $constantPositions = $this->calculateConstantPositions($rawTemplateConstantsArray);
-
         $parsedBody = $request->getParsedBody();
         $data = $parsedBody['data'] ?? null;
         $check = $parsedBody['check'] ?? [];
-
         $valuesHaveChanged = false;
         if (is_array($data)) {
             foreach ($data as $key => $value) {
@@ -302,59 +317,29 @@ class NsConstantEditorController extends AbstractTemplateModuleController
                 $constantDefinition = $constantDefinitions[$key];
                 switch ($constantDefinition['type']) {
                     case 'int':
-                        $min = $constantDefinition['typeIntMin'] ?? PHP_INT_MIN;
-                        $max = $constantDefinition['typeIntMax'] ?? PHP_INT_MAX;
-                        $value = (string)MathUtility::forceIntegerInRange((int)$value, (int)$min, (int)$max);
-                        break;
                     case 'int+':
-                        $min = $constantDefinition['typeIntMin'] ?? 0;
+                        $min = $constantDefinition['typeIntMin'] ?? ($constantDefinition['type'] === 'int+' ? 0 : PHP_INT_MIN);
                         $max = $constantDefinition['typeIntMax'] ?? PHP_INT_MAX;
                         $value = (string)MathUtility::forceIntegerInRange((int)$value, (int)$min, (int)$max);
                         break;
                     case 'color':
-                        $col = [];
                         if ($value) {
-                            $value = preg_replace('/[^A-Fa-f0-9]*/', '', $value) ?? '';
-                            $useFulHex = strlen($value) > 3;
-                            $col[] = (int)hexdec($value[0]);
-                            $col[] = (int)hexdec($value[1]);
-                            $col[] = (int)hexdec($value[2]);
-                            if ($useFulHex) {
-                                $col[] = (int)hexdec($value[3]);
-                                $col[] = (int)hexdec($value[4]);
-                                $col[] = (int)hexdec($value[5]);
-                            }
-                            $value = substr('0' . dechex($col[0]), -1) . substr('0' . dechex($col[1]), -1) . substr('0' . dechex($col[2]), -1);
-                            if ($useFulHex) {
-                                $value .= substr('0' . dechex($col[3]), -1) . substr('0' . dechex($col[4]), -1) . substr('0' . dechex($col[5]), -1);
-                            }
-                            $value = '#' . strtoupper($value);
+                            $value = '#' . strtoupper(substr(preg_replace('/[^A-Fa-f0-9]*/', '', $value) ?? '', 0, 6));
                         }
                         break;
                     case 'comment':
-                        if ($value) {
-                            $value = '';
-                        } else {
-                            $value = '#';
-                        }
+                        $value = $value ? '' : '#';
                         break;
                     case 'wrap':
-                        if (($data[$key]['left'] ?? false) || $data[$key]['right']) {
-                            $value = $data[$key]['left'] . '|' . $data[$key]['right'];
-                        } else {
-                            $value = '';
-                        }
+                        $value = (($data[$key]['left'] ?? false) || $data[$key]['right']) ? ($data[$key]['left'] . '|' . $data[$key]['right']) : '';
                         break;
                     case 'offset':
-                        $value = rtrim(implode(',', $value), ',');
-                        if (trim($value, ',') === '') {
-                            $value = '';
-                        }
+                        $value = trim(rtrim(implode(',', $value), ','), ',');
                         break;
                     case 'boolean':
-                        if ($value) {
-                            $value = ($constantDefinition['trueValue'] ?? false) ?: '1';
-                        }
+                        $value = $value ? ($constantDefinition['trueValue'] ?? '1') : '0';
+                        break;
+                    default:
                         break;
                 }
                 if ((string)($constantDefinition['value'] ?? '') !== (string)$value) {
@@ -469,5 +454,4 @@ class NsConstantEditorController extends AbstractTemplateModuleController
             ->setArguments(['id' => $pageUid]);
         $buttonBar->addButton($shortcutButton);
     }
-
 }

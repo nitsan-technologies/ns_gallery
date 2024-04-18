@@ -1,6 +1,8 @@
 <?php
+
 namespace NITSAN\NsGallery\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /***
@@ -16,9 +18,8 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * NsAlbum
  */
-class NsAlbum extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class NsAlbum extends AbstractEntity
 {
-
     /**
      * title
      *

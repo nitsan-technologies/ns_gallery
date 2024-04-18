@@ -1,9 +1,7 @@
 $(document).ready(function () {
     var wall = [];
     $('.lg-outer .lg-thumb-open .lg-sub-html').remove();
-
     $('.loaderImage').show();
-
 // main image loaded ?
     $('.ns-gallery-slide .ns-gallery-item img').on('load', function(){
         // hide/remove the loading image
@@ -21,10 +19,8 @@ $(document).ready(function () {
             });
         });
     }
-
     var paginationType = $('#paginationType').val();
     themeClass = 'ns-gallery-arrow--icon-circle video-not-supported';
-
     function getTotPage($totalPage, $perPage){
         var totPages2 = Math.ceil($totalPage / $perPage);
         return totPages2;
@@ -66,8 +62,6 @@ $(document).ready(function () {
             type: 'GET',
             url: nextPageUrl,
             success: function (response) {
-
-                
                 if (paginationType == 'pagination') {
                     var findNextPageURL = $(response).find('#' + getParentID).find('.pagination-block').html();
                     $('#' + getParentID + ' .pagination-block').html(findNextPageURL);
@@ -92,9 +86,6 @@ $(document).ready(function () {
                     if (totPages === curPage || totPages == 0) {
                         $('#' + getParentID + ' .pagination-block .article-load-more').fadeOut();
                     }
-                }
-                if ($('.ns-gallery-zoom-view').length > 0 || $('.ns-gallery-google-view').length > 0) {
-                    $(findNReplace).append(disdata);
                 }
 
                 $('.GITheWall').each(function(index, item) {
