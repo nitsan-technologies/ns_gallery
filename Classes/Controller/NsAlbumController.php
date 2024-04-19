@@ -28,7 +28,6 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * nsAlbumRepository
      *
      * @var \NITSAN\NsGallery\Domain\Repository\NsAlbumRepository
-     * @inject
      */
     protected $nsAlbumRepository = null;
 
@@ -47,7 +46,6 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * nsMediaRepository
      *
      * @var \NITSAN\NsGallery\Domain\Repository\NsMediaRepository
-     * @inject
      */
     protected $nsMediaRepository = null;
 
@@ -151,6 +149,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
     public function makeGalleryInitilization($gallery = '')
     {
+        // @extensionScannerIgnoreLine
         $getContentId = $this->configurationManager->getContentObject()->data['uid'];
         $this->view->assign('getContentId', $getContentId);
         if ($gallery == 'general') {

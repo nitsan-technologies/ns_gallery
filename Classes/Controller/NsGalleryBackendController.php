@@ -36,7 +36,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      * nsAlbumRepository
      *
      * @var \NITSAN\NsGallery\Domain\Repository\NsAlbumRepository
-     * @inject
      */
     protected $nsAlbumRepository = null;
 
@@ -44,7 +43,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      * nsMediaRepository
      *
      * @var \NITSAN\NsGallery\Domain\Repository\NsMediaRepository
-     * @inject
      */
     protected $nsMediaRepository = null;
 
@@ -52,7 +50,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      * nsAlbumRepository
      *
      * @var \NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository
-     * @inject
      */
     protected $nsGalleryBackendRepository = null;
 
@@ -132,6 +129,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         parent::initializeAction();
         //GET CONSTANTs
         $this->constantObj->init($this->pObj);
+        //@extensionScannerIgnoreLine
         $this->constants = $this->constantObj->main();
     }
 
@@ -182,6 +180,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     public function saveConstantAction()
     {
+        // @extensionScannerIgnoreLine
         $this->constantObj->main();
         return false;
     }

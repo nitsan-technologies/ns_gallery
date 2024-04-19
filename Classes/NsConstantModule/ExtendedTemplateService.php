@@ -35,6 +35,7 @@ use TYPO3\CMS\Frontend\Configuration\TypoScript\ConditionMatching\ConditionMatch
  * Contains functions for the TS module in TYPO3 backend
  *
  * @internal this is only used for the TYPO3 TypoScript Template module, which should not be used in Extensions
+ * @extensionScannerIgnoreFile
  */
 class ExtendedTemplateService extends TemplateService
 {

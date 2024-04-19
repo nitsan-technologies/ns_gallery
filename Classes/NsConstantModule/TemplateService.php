@@ -44,6 +44,7 @@ use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
  * Template object that is responsible for generating the TypoScript template based on template records.
  * @see \TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser
  * @see \TYPO3\CMS\Core\Configuration\TypoScript\ConditionMatching\AbstractConditionMatcher
+ * @extensionScannerIgnoreFile
  */
 class TemplateService
 {

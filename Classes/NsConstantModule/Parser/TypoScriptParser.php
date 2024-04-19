@@ -30,6 +30,7 @@ use TYPO3\CMS\Core\Resource\Security\FileNameValidator;
 
 /**
  * The TypoScript parser
+ * @extensionScannerIgnoreFile
  */
 class TypoScriptParser
 {

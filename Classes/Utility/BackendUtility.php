@@ -111,6 +111,7 @@ class BackendUtility
             $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
             return $uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
         } else {
+            // @extensionScannerIgnoreLine
             return BackendUtilityCore::getModuleUrl($moduleName, $urlParameters);
         }
     }
