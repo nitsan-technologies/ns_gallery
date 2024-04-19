@@ -48,7 +48,6 @@ page {
     includeJSFooter {
         lightGallery =  EXT:ns_gallery/Resources/Public/Vendor/lightgallery/js/lightgallery.js
         googleSearchImage = EXT:ns_gallery/Resources/Public/Vendor/gi-thewall/githewall.min.js        
-        nsgallery = EXT:ns_gallery/Resources/Public/Js/nsgallery.js
         nsgalleryCustomJs = EXT:ns_gallery/Resources/Public/Js/customJs.js
     }
     includeCSS{            

@@ -11,7 +11,7 @@ class label
     /**
      * @return void|string
      */
-    public function getObjectLabel(&$params, &$pObj)
+    public function getObjectLabel(&$params)
     {
         if (!empty($params)) {
             if ($params['table'] != 'tx_nsgallery_domain_model_nsmedia') {

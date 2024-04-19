@@ -40,9 +40,6 @@ class NsGalleryBackendController extends ActionController
      */
     protected NsMediaRepository $nsMediaRepository;
     protected ModuleTemplateFactory $moduleTemplateFactory;
-    protected $sidebarData;
-    protected $dashboardSupportData;
-    protected $contentObject = null;
     protected $pid = null;
     public function __construct(
         ModuleTemplateFactory $moduleTemplateFactory,
@@ -86,9 +83,7 @@ class NsGalleryBackendController extends ActionController
             'action' => 'dashboard',
             'total' => count($galleryAlbums),
             'totalImage' => count($totalImage),
-            'pid' => $this->pid,
-            'rightSide' => $this->sidebarData,
-            'dashboardSupport' => $this->dashboardSupportData,
+            'pid' => $this->pid
         ];
         $view->assignMultiple($assign);
         return $view->renderResponse();
