@@ -1,4 +1,5 @@
 <?php
+
 namespace NITSAN\NsGallery\Domain\Repository;
 
 /***

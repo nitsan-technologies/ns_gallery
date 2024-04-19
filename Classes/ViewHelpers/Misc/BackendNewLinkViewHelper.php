@@ -1,7 +1,9 @@
 <?php
+
 namespace NITSAN\NsGallery\ViewHelpers\Misc;
 
 use NITSAN\NsGallery\Utility\BackendUtility;
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -19,9 +21,8 @@ class BackendNewLinkViewHelper extends AbstractViewHelper
     /**
      * Create a link for backend new
      *
-     * @param string $tableName
-     * @param int $identifier
      * @return string
+     * @throws RouteNotFoundException
      */
     public function render()
     {

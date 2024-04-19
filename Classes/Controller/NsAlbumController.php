@@ -1,8 +1,8 @@
 <?php
+
 namespace NITSAN\NsGallery\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation\Inject as inject;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 
@@ -24,7 +24,6 @@ use TYPO3\CMS\Core\Pagination\SimplePagination;
  */
 class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-
     /**
      * nsAlbumRepository
      *
@@ -71,14 +70,13 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function listAction(int $currentPage = 1)
     {
         $response = GeneralUtility::_GP('tx_nsgallery_googlesearchimage');
-        if(!empty($response['currentPage']))
-        {
+        if(!empty($response['currentPage'])) {
             $currentPage = $response['currentPage'];
         }
-        
+
         $makeArray = explode(',', $this->settings['records']);
         $nsAlbums = [];
-        foreach ($makeArray as $key => $value) {
+        foreach ($makeArray as $value) {
             $nsAlbums[] = $this->nsAlbumRepository->findByUid($value);
         }
         if (version_compare(TYPO3_branch, '10.0', '>=')) {
@@ -113,11 +111,10 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function googleAction(int $currentPage = 1)
     {
         $response = GeneralUtility::_GP('tx_nsgallery_googlesearchimage');
-        if(!empty($response['currentPage']))
-        {
+        if(!empty($response['currentPage'])) {
             $currentPage = $response['currentPage'];
         }
-        
+
         $makeArray = explode(',', $this->settings['records']);
         $nsAlbums = [];
         foreach ($makeArray as $album) {
@@ -156,28 +153,20 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     {
         $getContentId = $this->configurationManager->getContentObject()->data['uid'];
         $this->view->assign('getContentId', $getContentId);
-        switch ($gallery) {
-            case 'general':
-
-                $constant = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_nsgallery_album.']['settings.'];
-                $this->view->assign('constant', $constant);
-
-                $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
-
-                $this->view->assign('jsSettings', $jsSettings);
-                if(!isset($mode)){
-                    $mode = null;
-                }
-                $this->view->assign('mode', $mode);
-                if(array_key_exists($this->request->getControllerExtensionKey(), $GLOBALS['TSFE']->additionalFooterData) == FALSE){
-                    $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] = null;
-                }
-                $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] .= "
+        if ($gallery == 'general') {
+            $constant = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_nsgallery_album.']['settings.'];
+            $this->view->assign('constant', $constant);
+            $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
+            $this->view->assign('jsSettings', $jsSettings);
+            if (array_key_exists($this->request->getControllerExtensionKey(), $GLOBALS['TSFE']->additionalFooterData) == false) {
+                $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] = null;
+            }
+            $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] .= "
                 <script>
                     (function($) {
                         $(window).on('load', function(){
                             $('.nsGallery-" . $getContentId . "').lightGallery({
-                                selector: '.ns-gallery-item',   
+                                selector: '.ns-gallery-item',
                                 " . $jsSettings . "
                                 addClass:'ns-gallery-arrow--icon-circle video-not-supported',
                                 download:false,
@@ -185,7 +174,6 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                         });
                     })(jQuery);
                 </script>";
-                break;
         }
     }
 }

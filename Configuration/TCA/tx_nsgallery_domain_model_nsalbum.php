@@ -1,4 +1,5 @@
 <?php
+
 if (version_compare(TYPO3_branch, '9.0', '<')) {
     $langfile = 'LLL:EXT:lang/locallang_general.xlf:';
 } else {

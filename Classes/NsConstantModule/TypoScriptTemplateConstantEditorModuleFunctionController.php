@@ -1,4 +1,5 @@
 <?php
+
 namespace NITSAN\NsGallery\NsConstantModule;
 
 /*
@@ -106,6 +107,7 @@ class TypoScriptTemplateConstantEditorModuleFunctionController
      */
     public function main()
     {
+
         $assigns = [];
         $assigns['LLPrefix'] = 'LLL:EXT:tstemplate/Resources/Private/Language/locallang_ceditor.xlf:';
 
@@ -140,17 +142,17 @@ class TypoScriptTemplateConstantEditorModuleFunctionController
                     $this->initialize_editor($this->id, $template_uid);
                 }
             }
-            if (version_compare(TYPO3_branch, '11', '>=')) { 
+            if (version_compare(TYPO3_branch, '11', '>=')) {
                 if (empty($this->pObj)) {
                     $iconFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconFactory::class);
                     $pageRenderer = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
                     $uriBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Routing\UriBuilder::class);
                     $moduleTemplateFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Template\ModuleTemplateFactory::class);
-                    $this->pObj = new \TYPO3\CMS\Tstemplate\Controller\TypoScriptTemplateModuleController($iconFactory,$pageRenderer,$uriBuilder,$moduleTemplateFactory);
+                    $this->pObj = new \TYPO3\CMS\Tstemplate\Controller\TypoScriptTemplateModuleController($iconFactory, $pageRenderer, $uriBuilder, $moduleTemplateFactory);
                 }
             } else {
                 if (empty($this->pObj)) {
-                    $this->pObj = new \TYPO3\CMS\Tstemplate\Controller\TypoScriptTemplateModuleController;
+                    $this->pObj = new \TYPO3\CMS\Tstemplate\Controller\TypoScriptTemplateModuleController();
                 }
             }
             $this->pObj->MOD_SETTINGS = BackendUtility::getModuleData($this->pObj->MOD_MENU, GeneralUtility::_GP('SET'), 'web_ts');

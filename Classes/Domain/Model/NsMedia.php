@@ -1,4 +1,5 @@
 <?php
+
 namespace NITSAN\NsGallery\Domain\Model;
 
 /***
@@ -16,7 +17,6 @@ namespace NITSAN\NsGallery\Domain\Model;
  */
 class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-
     /**
      * uid
      *

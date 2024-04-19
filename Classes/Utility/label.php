@@ -1,30 +1,23 @@
 <?php
+
 namespace NITSAN\NsGallery\Utility;
 
 session_start();
 
 class label
 {
-
     /**
-     * @return void
+     * @param $params
+     * @return string|void
      */
-    public function getObjectLabel(&$params, &$pObj)
+    public function getObjectLabel(&$params)
     {
-        if (empty($params)) {
-        } else {
+        if (!empty($params)) {
             if ($params['table'] != 'tx_nsgallery_domain_model_nsmedia') {
                 return '';
             }
-
             $rec = \TYPO3\CMS\Backend\Utility\BackendUtility::getRecord($params['table'], $params['row']['uid']);
             $media = $rec['media'] ?? null;
-            if ($media > 0) {
-                $totalMedia = $media;
-            } else {
-                $totalMedia = 0;
-            }
-
             $params['title'] = 'Album Media (' . $media . ')';
         }
     }

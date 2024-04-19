@@ -1,4 +1,5 @@
 <?php
+
 namespace NITSAN\NsGallery\NsConstantModule;
 
 /*
@@ -1132,7 +1133,7 @@ class TemplateService
         // if this is a template of type "default content rendering", also see if other extensions have added their TypoScript that should be included after the content definitions
         if (in_array($identifier, $GLOBALS['TYPO3_CONF_VARS']['FE']['contentRenderingTemplates'], true)) {
             $subrow['config'] .= $GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_setup.']['defaultContentRendering'];
-            if(!isset($GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'])){
+            if(!isset($GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'])) {
                 $GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'] = '';
             }
             $subrow['constants'] .= $GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'];
