@@ -2,8 +2,6 @@
 
 namespace NITSAN\NsGallery\Utility;
 
-session_start();
-
 class label
 {
     /**

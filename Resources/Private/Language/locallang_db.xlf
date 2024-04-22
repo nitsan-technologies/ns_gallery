@@ -15,9 +15,6 @@
 			<trans-unit id="tx_nsgallery_domain_model_nsalbum.media">
 				<source>Media</source>
 			</trans-unit>
-			<trans-unit id="tx_nsgallery_domain_model_nsalbum.poster">
-				<source>Poster for video type file (Mandetory while file type video, otherwise thubmnail not show OR may be it give error.)</source>
-			</trans-unit>
 			<trans-unit id="tx_nsgallery_domain_model_nsmedia">
 				<source>NS Media</source>
 			</trans-unit>

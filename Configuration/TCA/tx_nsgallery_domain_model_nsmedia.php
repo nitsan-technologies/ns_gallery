@@ -115,15 +115,6 @@ return [
                 ]
             ],
         ],
-
-        'disBig' => [
-            'exclude' => true,
-            'label' => 'show big image (For Mosaic and Masonry)',
-            'config' => [
-                'type' => 'check',
-            ],
-        ],
-
         'media' => [
             'exclude' => true,
             'label' => 'LLL:EXT:ns_gallery/Resources/Private/Language/locallang_db.xlf:tx_nsgallery_domain_model_nsmedia.media',
