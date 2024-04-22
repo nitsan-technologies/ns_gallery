@@ -6,9 +6,6 @@
 		<f:variable name="action" value="google" />
 		<div class="ns-gallery-google-view">
 			<div class="GITheWall ajax-{getContentId}" id="ajax-{getContentId}">
-				<f:if condition="{version} == 'widget'">
-					<f:render partial="GoogleWidget.html" arguments="{_all}" />
-				</f:if>
 				<f:if condition="{version} == 'custom'">
 					<ul class="dflex flex-wrap cus-row">						
 						<f:for each="{paginator.paginatedItems}" as="media" iteration="i">

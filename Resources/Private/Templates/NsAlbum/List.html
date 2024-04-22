@@ -26,17 +26,17 @@
 							<f:then>
 								<f:if condition="{a.isFirst}">
 									<f:then>
-										<f:render section="renderMedia" arguments="{file:media2, poster:media.poster.0, cycle:i.cycle}" />
+										<f:render section="renderMedia" arguments="{file:media2, cycle:i.cycle}" />
 										{f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
 									</f:then>
 									<f:else>
-										<f:render section="renderMediaNone" arguments="{file:media2, poster:media.poster.0, cycle:i.cycle}" />
+										<f:render section="renderMediaNone" arguments="{file:media2, cycle:i.cycle}" />
 										{f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
 									</f:else>
 								</f:if>
 							</f:then>
 							<f:else>
-								<f:render section="renderMediaNone" arguments="{file:media2, poster:media.poster.0, cycle:i.cycle}" />
+								<f:render section="renderMediaNone" arguments="{file:media2, cycle:i.cycle}" />
 								{f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
 							</f:else>
 						</f:if>

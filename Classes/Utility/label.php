@@ -3,9 +3,6 @@
 namespace NITSAN\NsGallery\Utility;
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-
-session_start();
-
 class label
 {
     /**

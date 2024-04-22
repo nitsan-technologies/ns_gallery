@@ -135,8 +135,8 @@ class NsAlbumController extends ActionController
 
     public function makeGalleryInitilization($gallery = ''): void
     {
-        // @extensionScannerIgnoreLine
-        $getContentId = $this->configurationManager->getContentObject()->data['uid'];
+        $currentContentObject = $this->request->getAttribute('currentContentObject');
+        $getContentId = $currentContentObject->data['uid'];
         $this->view->assign('getContentId', $getContentId);
         if ($gallery == 'general') {
             $constant = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_nsgallery_album.']['settings.'];
