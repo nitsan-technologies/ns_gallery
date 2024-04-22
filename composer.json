@@ -1,7 +1,7 @@
 {
   "name": "nitsan/ns-gallery",
   "type": "typo3-cms-extension",
-  "description": "Do you want to integrate feature-rich gallery solution to your TYPO3 site? The extension includes wide-range of gallery album variations. Demo: https://demo.t3planet.com/t3t-extensions/gallery You can download PRO version for more-features & free-support at https://t3planet.com/ns-gallery-typo3-extension",
+  "description": "Using the All In One TYPO3 Gallery Extension, you can easily create beautiful lightbox image and video galleries with various grid layouts right from the TYPO3 dashboard in just a few clicks. Try the best TYPO3 gallery extension for adding custom, unique and responsive galleries to your website.",
   "homepage": "https://extensions.typo3.org/extension/ns_gallery/",
   "license": "GPL-2.0+",
   "keywords": [
