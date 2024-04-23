@@ -8,12 +8,12 @@ use TYPO3\CMS\Core\Pagination\SimplePagination;
 
 /***
  *
- * This file is part of the "[NITSAN] Gallery" Extension for TYPO3 CMS.
+ * This file is part of the " Gallery" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 T3: Milan <sanjay@nitsan.in>, NITSAN Technologies Pvt Ltd
+ *  (c) 2020 T3: Himanshu Ramavat, T3: Nilesh Malankiya, QA: Krishna Dhapa <sanjay@nitsan.in>, NITSAN Technologies Pvt Ltd
  *
  ***/
 /**
@@ -77,6 +77,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         foreach ($makeArray as $value) {
             $nsAlbums[] = $this->nsAlbumRepository->findByUid($value);
         }
+        $version = 'widget';
         if (version_compare(TYPO3_branch, '10.0', '>=')) {
             $version = 'custom';
             $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, (int)$this->settings['recordPerPage']);
@@ -88,8 +89,6 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'pages' => range(1, $pagination->getLastPageNumber()),
                 ]
             );
-        } else {
-            $version = 'widget';
         }
         $this->view->assignMultiple(
             [
@@ -123,6 +122,7 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 }
             }
         }
+        $version = 'widget';
         if (version_compare(TYPO3_branch, '10.0', '>=')) {
             $version = 'custom';
             $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, $this->settings['recordPerPage']);
@@ -134,8 +134,6 @@ class NsAlbumController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                     'pages' => range(1, $pagination->getLastPageNumber()),
                 ]
             );
-        } else {
-            $version = 'widget';
         }
         $this->view->assignMultiple(
             [

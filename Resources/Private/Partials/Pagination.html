@@ -28,18 +28,20 @@
                     <f:if condition="{pagination.hasLessPages}">
                         <li>…</li>
                     </f:if>
-                    <f:for each="{pages}" as="page">
-                        <li class="{f:if(condition: '{paginator.currentPageNumber} == {page}', then: 'current active', else: '')}">
-                            <f:if condition="{page} > 1">
-                            <f:then>
-                                <a href="{f:uri.action(action:'{action}', arguments:{currentPage: page})}" class="article-load-more ">{page}</a>
-                            </f:then>
-                            <f:else>
-                                <a href="{f:uri.action(action:'{action}', arguments:{currentPage: page})}" class="article-load-more">{page}</a>
-                            </f:else>
-                            </f:if>
-                        </li>
-                    </f:for>
+                    <f:if condition="{pages.1}">
+                        <f:for each="{pages}" as="page">
+                            <li class="{f:if(condition: '{paginator.currentPageNumber} == {page}', then: 'current active', else: '')}">
+                                <f:if condition="{page} > 1">
+                                    <f:then>
+                                        <a href="{f:uri.action(action:'{action}', arguments:{currentPage: page})}" class="article-load-more ">{page}</a>
+                                    </f:then>
+                                    <f:else>
+                                        <a href="{f:uri.action(action:'{action}', arguments:{currentPage: page})}" class="article-load-more">{page}</a>
+                                    </f:else>
+                                </f:if>
+                            </li>
+                        </f:for>
+                    </f:if>
                     <f:if condition="{pagination.hasMorePages}">
                         <li class="">…</li>
                     </f:if>

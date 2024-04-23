@@ -45,3 +45,9 @@ $iconRegistry->registerIcon(
     \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
     ['source' => 'EXT:ns_gallery/Resources/Public/Icons/ns_gallery.svg']
 );
+
+$iconRegistry->registerIcon(
+    'module-gallery',
+    \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+    ['source' => 'EXT:ns_gallery/Resources/Public/Icons/ns_gallery.svg']
+);

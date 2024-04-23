@@ -29,7 +29,7 @@
 						<f:if condition="{i.isFirst}">
 							<f:then>
 								<f:if condition="{a.isFirst}">
-									<f:then>							
+									<f:then>
 										<f:render section="renderMedia" arguments="{file:media2, cycle:i.cycle}" />
 										{f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
 									</f:then>
@@ -61,9 +61,9 @@
 			<img alt="{file.originalResource.title}" src="{f:uri.image(image:file, treatIdAsReference: 1)}" />
 		</a>			
 	</f:section>
-	<f:section name="renderMediaNone">		
+	<f:section name="renderMediaNone">
 		<a style="display: none;" href="{f:uri.image(image:file, treatIdAsReference: 1)}" class="ns-gallery-item">
 			<img alt="{file.originalResource.title}" src="{f:uri.image(image:file, treatIdAsReference: 1)}" />
-		</a>			
+		</a>
 	</f:section>
 </html>

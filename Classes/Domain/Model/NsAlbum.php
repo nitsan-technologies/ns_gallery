@@ -4,7 +4,7 @@ namespace NITSAN\NsGallery\Domain\Model;
 
 /***
  *
- * This file is part of the "[NITSAN] Gallery" Extension for TYPO3 CMS.
+ * This file is part of the " Gallery" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.

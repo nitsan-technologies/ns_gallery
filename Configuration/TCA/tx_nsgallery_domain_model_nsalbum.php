@@ -128,6 +128,7 @@ return [
             'label' => 'LLL:EXT:ns_gallery/Resources/Private/Language/locallang_db.xlf:tx_nsgallery_domain_model_nsalbum.media',
             'config' => [
                 'type' => 'inline',
+                'minitems' => 1,
                 'foreign_table' => 'tx_nsgallery_domain_model_nsmedia',
                 'foreign_field' => 'nsalbum',
                 'foreign_sortby' => 'sorting',
