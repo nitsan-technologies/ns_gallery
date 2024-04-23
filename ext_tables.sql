@@ -47,11 +47,9 @@ CREATE TABLE tx_nsgallery_domain_model_nsmedia (
     uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 
-	disBig int(11) unsigned DEFAULT '0' NOT NULL,
 	nsalbum int(11) unsigned DEFAULT '0' NOT NULL,
 
 	media int(11) unsigned DEFAULT '0' NOT NULL,
-	poster int(11) unsigned DEFAULT '0' NOT NULL,
 
    tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -84,16 +82,3 @@ CREATE TABLE tx_nsgallery_domain_model_nsmedia (
 
 );
 
-#
-# Table structure for table 'tx_nsgallery_domain_model_apidata'
-#
-CREATE TABLE tx_nsgallery_domain_model_apidata (
-   id int(11) NOT NULL auto_increment,
-   extension_key varchar(255) DEFAULT '',
-   right_sidebar_html text,
-   premuim_extension_html text,
-   support_html text,
-   footer_html text,
-   last_update date,
-   PRIMARY KEY (id)
-);

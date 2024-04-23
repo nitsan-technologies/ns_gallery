@@ -1,13 +1,14 @@
 <?php
+
 namespace NITSAN\NsGallery\Controller;
 
 use NITSAN\NsGallery\Domain\Repository\NsAlbumRepository;
-use NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository;
 use NITSAN\NsGallery\Domain\Repository\NsMediaRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /***
  *
@@ -16,15 +17,14 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 T3: Milan <sanjay@nitsan.in>, NITSAN Technologies Pvt Ltd
+ *  (c) 2020 T3: Himanshu Ramavat, T3: Nilesh Malankiya, QA: Krishna Dhapa <sanjay@nitsan.in>, NITSAN Technologies Pvt Ltd
  *
  ***/
 /**
  * NsGalleryBackendController
  */
-class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class NsGalleryBackendController extends ActionController
 {
-
     /**
      * nsAlbumRepository
      *
@@ -32,7 +32,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      *
      */
     protected NsAlbumRepository $nsAlbumRepository;
-
     /**
      * nsMediaRepository
      *
@@ -40,24 +39,16 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      *
      */
     protected NsMediaRepository $nsMediaRepository;
-
-    /**
-     * nsAlbumRepository
-     *
-     * @var NsGalleryBackendRepository
-     */
-    protected NsGalleryBackendRepository $nsGalleryBackendRepository;
-
+    protected ModuleTemplateFactory $moduleTemplateFactory;
+    protected $pid = null;
     public function __construct(
-        protected readonly ModuleTemplateFactory $moduleTemplateFactory,
+        ModuleTemplateFactory $moduleTemplateFactory,
         NsAlbumRepository $nsAlbumRepository,
         NsMediaRepository $nsMediaRepository,
-        NsGalleryBackendRepository $nsGalleryBackendRepository
-
     ) {
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
         $this->nsAlbumRepository = $nsAlbumRepository;
         $this->nsMediaRepository = $nsMediaRepository;
-        $this->nsGalleryBackendRepository = $nsGalleryBackendRepository;
     }
 
     /**
@@ -78,16 +69,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         return $view->renderResponse();
     }
 
-    protected $templateService;
-    protected $constantObj;
-    protected $sidebarData;
-    protected $dashboardSupportData;
-    protected $generalFooterData;
-    protected $premiumExtensionData;
-    protected $constants;
-    protected $contentObject = null;
-    protected $pid = null;
-
     /**
      * action dashboard
      *
@@ -98,18 +79,14 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         $view = $this->initializeModuleTemplate($this->request);
         $galleryAlbums = $this->nsAlbumRepository->findAll();
         $totalImage = $this->nsMediaRepository->findAll();
-
         $assign = [
             'action' => 'dashboard',
             'total' => count($galleryAlbums),
             'totalImage' => count($totalImage),
-            'pid' => $this->pid,
-            'rightSide' => $this->sidebarData,
-            'dashboardSupport' => $this->dashboardSupportData,
+            'pid' => $this->pid
         ];
         $view->assignMultiple($assign);
         return $view->renderResponse();
-
     }
 
     /**

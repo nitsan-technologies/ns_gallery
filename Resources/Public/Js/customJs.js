@@ -1,9 +1,7 @@
 $(document).ready(function () {
     var wall = [];
     $('.lg-outer .lg-thumb-open .lg-sub-html').remove();
-
     $('.loaderImage').show();
-
 // main image loaded ?
     $('.ns-gallery-slide .ns-gallery-item img').on('load', function(){
         // hide/remove the loading image
@@ -21,10 +19,8 @@ $(document).ready(function () {
             });
         });
     }
-
     var paginationType = $('#paginationType').val();
     themeClass = 'ns-gallery-arrow--icon-circle video-not-supported';
-
     function getTotPage($totalPage, $perPage){
         var totPages2 = Math.ceil($totalPage / $perPage);
         return totPages2;
@@ -32,6 +28,7 @@ $(document).ready(function () {
 
     $('#cover-spin').hide();
 
+    var checkCurrentGallery = [];
     $(document).on('click', '.article-load-more', function (e) {
         if (paginationType == 'pagination') {
             var getParentID = $(this).parent().parent().parent().parent().attr('id');
@@ -66,8 +63,6 @@ $(document).ready(function () {
             type: 'GET',
             url: nextPageUrl,
             success: function (response) {
-
-                
                 if (paginationType == 'pagination') {
                     var findNextPageURL = $(response).find('#' + getParentID).find('.pagination-block').html();
                     $('#' + getParentID + ' .pagination-block').html(findNextPageURL);
@@ -76,31 +71,20 @@ $(document).ready(function () {
                     $('#' + getParentID + ' .article-load-more').attr('href', findNextPageURL);
                 }
                 var findNReplace = '#' + getParentID + ' .cus-row';
-
                 var disdata = $(response).find(findNReplace).html();
-
-                disdata = $(disdata + ' .ajaxBlock-'+getParentID).addClass('page-' + curPage);
-
-                var lastVid2 = $(response).find('#lastVid-'+ getParentID).val();
-                $('#lastVid-'+ getParentID).val(lastVid2);
-
-                $(disdata).find('.grid-sizer .page-2').remove();
+                disdata = $(disdata + ' .ajaxBlock').addClass('page-' + curPage);
 
                 if (paginationType == 'pagination') {
-                    $('.cus-row .ajaxBlock-'+getParentID).remove();
+                    $(findNReplace).html(disdata).fadeIn('slow');
                 } else {
-                    if (totPages === curPage || totPages == 0) {
+                    $(findNReplace).append(disdata).fadeIn('slow');
+                    if (totPages == curPage) {
                         $('#' + getParentID + ' .pagination-block .article-load-more').fadeOut();
                     }
                 }
-                if ($('.ns-gallery-zoom-view').length > 0 || $('.ns-gallery-google-view').length > 0) {
-                    $(findNReplace).append(disdata);
-                }
-
                 $('.GITheWall').each(function(index, item) {
                     wall[index].refresh();
                 });
-
                 try {
                     $('.' + getParentID).data('lightGallery').destroy(true);
                 } catch (ex) { };

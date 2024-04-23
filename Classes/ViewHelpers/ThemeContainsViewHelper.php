@@ -1,9 +1,9 @@
 <?php
+
 namespace NITSAN\NsGallery\ViewHelpers;
 
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-
 
 class ThemeContainsViewHelper extends AbstractViewHelper
 {
@@ -11,7 +11,6 @@ class ThemeContainsViewHelper extends AbstractViewHelper
     {
         $this->registerArgument('value', 'string', '', true);
     }
-
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,

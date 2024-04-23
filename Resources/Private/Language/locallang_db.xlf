@@ -4,10 +4,10 @@
 		<header/>
 		<body>
 			<trans-unit id="tx_nsgallery_domain_model_nsalbum.ns_gallery">
-				<source>NS Gallery</source>
+				<source>Gallery</source>
 			</trans-unit>
 			<trans-unit id="tx_nsgallery_domain_model_nsalbum">
-				<source>NS Album</source>
+				<source>Album</source>
 			</trans-unit>
 			<trans-unit id="tx_nsgallery_domain_model_nsalbum.title">
 				<source>Title</source>
@@ -15,53 +15,50 @@
 			<trans-unit id="tx_nsgallery_domain_model_nsalbum.media">
 				<source>Media</source>
 			</trans-unit>
-			<trans-unit id="tx_nsgallery_domain_model_nsalbum.poster">
-				<source>Poster for video type file (Mandetory while file type video, otherwise thubmnail not show OR may be it give error.)</source>
-			</trans-unit>
 			<trans-unit id="tx_nsgallery_domain_model_nsmedia">
-				<source>NS Media</source>
+				<source>Media</source>
 			</trans-unit>
 			<trans-unit id="tx_nsgallery_domain_model_nsmedia.media">
 				<source>Media</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_album.name">
-				<source>[NS Gallery] Album View</source>
+				<source>[Gallery] Album View</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_album.description">
 				<source>Add gallery with albums, use same page gallery and album with detail page.</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_masonry.name">
-				<source>[NS Gallery] Masonry View</source>
+				<source>[Gallery] Masonry View</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_masonry.description">
 				<source>Add gallery with different masonry variation.</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_isotope.name">
-				<source>[NS Gallery] Isotope View</source>
+				<source>[Gallery] Isotope View</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_isotope.description">
 				<source>Add gallery with different isotop variation</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_mosaic.name">
-				<source>[NS Gallery] Mosaic View</source>
+				<source>[Gallery] Mosaic View</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_mosaic.description">
 				<source>Add mosaic view gallery</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_googlesearchimage.name">
-				<source>[NS Gallery] Google Search View</source>
+				<source>[Gallery] Google Search View</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_googlesearchimage.description">
 				<source>Add gallery like google search wall</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_slider.name">
-				<source>[NS Gallery] Slider View</source>
+				<source>[Gallery] Slider View</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_slider.description">
 				<source>Add gallery as a slider</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_zoom.name">
-				<source>[NS Gallery] Zoom View</source>
+				<source>[Gallery] Zoom View</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_zoom.description">
 				<source>Add gallery with zoom effect</source>

@@ -1,7 +1,9 @@
 <?php
+
 namespace NITSAN\NsGallery\Domain\Model;
 
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /***
@@ -17,15 +19,8 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * NsMedia
  */
-class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class NsMedia extends AbstractEntity
 {
-
-    /**
-     * disbig
-     *
-     * @var int
-     */
-    protected int $disbig;
 
     /**
      * media
@@ -34,14 +29,6 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected ObjectStorage $media;
-
-    /**
-     * poster
-     *
-     * @var ObjectStorage<FileReference>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
-     */
-    protected $poster = null;
 
     /**
      * __construct
@@ -64,7 +51,6 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected function initStorageObjects(): void
     {
         $this->media = new ObjectStorage();
-        $this->poster = new ObjectStorage();
     }
 
     /**
@@ -76,7 +62,6 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function addMedium(FileReference $medium): void
     {
         $this->media->attach($medium);
-        $this->poster->attach($medium);
     }
 
     /**
@@ -88,7 +73,6 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function removeMedium(FileReference $mediumToRemove): void
     {
         $this->media->detach($mediumToRemove);
-        $this->poster->detach($mediumToRemove);
     }
 
     /**
@@ -110,48 +94,5 @@ class NsMedia extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setMedia(ObjectStorage $media): void
     {
         $this->media = $media;
-    }
-
-    /**
-     * Returns the disbig
-     *
-     * @return int $disbig
-     */
-    public function getDisbig(): int
-    {
-        return $this->disbig;
-    }
-
-    /**
-     * Sets the disbig
-     *
-     * @param int $disbig
-     * @return void
-     */
-    public function setDisbig(int $disbig): void
-    {
-        $this->disbig = $disbig;
-    }
-
-    /**
-     * Returns the poster
-     *
-     * @return ObjectStorage<FileReference> $poster
-     */
-    public function getPoster()
-    {
-        return $this->poster;
-    }
-
-
-    /**
-     * Sets the poster
-     *
-     * @param ObjectStorage<FileReference> $poster
-     * @return void
-     */
-    public function setPoster(ObjectStorage $poster)
-    {
-        $this->poster = $poster;
     }
 }
