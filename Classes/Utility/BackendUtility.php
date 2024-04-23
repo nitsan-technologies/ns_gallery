@@ -1,6 +1,8 @@
 <?php
+
 namespace NITSAN\NsGallery\Utility;
 
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -32,36 +34,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Backend utility functions
  *
  */
-class BackendUtility extends AbstractUtility
+class BackendUtility
 {
-
-    /**
-     * Check if backend user is admin
-     *
-     * @return bool
-     */
-    public static function isBackendAdmin()
-    {
-        if (isset(self::getBackendUserAuthentication()->user)) {
-            return self::getBackendUserAuthentication()->user['admin'] === 1;
-        }
-        return false;
-    }
-
-    /**
-     * Get property from backend user
-     *
-     * @param string $property
-     * @return string
-     */
-    public static function getPropertyFromBackendUser($property = 'uid')
-    {
-        if (!empty(self::getBackendUserAuthentication()->user[$property])) {
-            return self::getBackendUserAuthentication()->user[$property];
-        }
-        return '';
-    }
-
     /**
      * Create an URI to edit any record
      *
@@ -69,6 +43,7 @@ class BackendUtility extends AbstractUtility
      * @param int $identifier
      * @param bool $addReturnUrl
      * @return string
+     * @throws RouteNotFoundException
      */
     public static function createEditUri($tableName, $identifier, $addReturnUrl = true)
     {
@@ -92,6 +67,7 @@ class BackendUtility extends AbstractUtility
      * @param int $identifier
      * @param bool $addReturnUrl
      * @return string
+     * @throws RouteNotFoundException
      */
     public static function createNewUri($tableName, $identifier, $addReturnUrl = true)
     {
@@ -127,6 +103,7 @@ class BackendUtility extends AbstractUtility
      * @param string $moduleName Name of the module
      * @param array $urlParameters URL parameters that should be added as key value pairs
      * @return string Calculated URL
+     * @throws RouteNotFoundException
      */
     public static function getModuleUrl($moduleName, $urlParameters = [])
     {
@@ -134,33 +111,9 @@ class BackendUtility extends AbstractUtility
             $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
             return $uriBuilder->buildUriFromRoute($moduleName, $urlParameters);
         } else {
+            // @extensionScannerIgnoreLine
             return BackendUtilityCore::getModuleUrl($moduleName, $urlParameters);
         }
-    }
-
-    /**
-     * Get all GET/POST params without module name and token
-     *
-     * @param array $getParameters
-     * @return array
-     */
-    public static function getCurrentParameters($getParameters = [])
-    {
-        if (empty($getParameters)) {
-            $getParameters = GeneralUtility::_GET();
-        }
-        $parameters = [];
-        $ignoreKeys = [
-            'M',
-            'moduleToken',
-        ];
-        foreach ($getParameters as $key => $value) {
-            if (in_array($key, $ignoreKeys)) {
-                continue;
-            }
-            $parameters[$key] = $value;
-        }
-        return $parameters;
     }
 
     /**

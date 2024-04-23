@@ -58,7 +58,6 @@ $(document).ready(function () {
             type: 'GET',
             url: nextPageUrl,
             success: function (response) {
-
                 if (paginationType == 'pagination') {
                     var findNextPageURL = $(response).find('#' + getParentID).find('.pagination-block').html();
                     $('#' + getParentID + ' .pagination-block').html(findNextPageURL);

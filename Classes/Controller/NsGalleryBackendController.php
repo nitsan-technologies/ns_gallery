@@ -1,20 +1,20 @@
 <?php
+
 namespace NITSAN\NsGallery\Controller;
 
 use NITSAN\NsGallery\NsConstantModule\ExtendedTemplateService;
 use NITSAN\NsGallery\NsConstantModule\TypoScriptTemplateConstantEditorModuleFunctionController;
-use NITSAN\NsGallery\NsConstantModule\TypoScriptTemplateModuleController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation\Inject as inject;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /***
  *
- * This file is part of the "[NITSAN] Gallery" Extension for TYPO3 CMS.
+ * This file is part of the " Gallery" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 T3: Milan <sanjay@nitsan.in>, NITSAN Technologies Pvt Ltd
+ *  (c) 2020 T3: Himanshu Ramavat, T3: Nilesh Malankiya, QA: Krishna Dhapa <sanjay@nitsan.in>, NITSAN Technologies Pvt Ltd
  *
  ***/
 /**
@@ -22,14 +22,37 @@ use TYPO3\CMS\Extbase\Annotation\Inject as inject;
  */
 class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+    protected $templateService;
+    protected $constantObj;
+    protected $constants;
+    protected $contentObject = null;
+    protected $pid = null;
 
+    /**
+     * @var TypoScriptTemplateConstantEditorModuleFunctionController
+     */
+    protected $pObj;
     /**
      * nsAlbumRepository
      *
      * @var \NITSAN\NsGallery\Domain\Repository\NsAlbumRepository
-     * @inject
      */
     protected $nsAlbumRepository = null;
+
+    /**
+     * nsMediaRepository
+     *
+     * @var \NITSAN\NsGallery\Domain\Repository\NsMediaRepository
+     */
+    protected $nsMediaRepository = null;
+
+    /**
+     * nsAlbumRepository
+     *
+     * @var \NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository
+     */
+    protected $nsGalleryBackendRepository = null;
+
 
     /*
      * Inject a news repository to enable DI
@@ -42,14 +65,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         $this->nsAlbumRepository = $nsAlbumRepository;
     }
 
-    /**
-     * nsMediaRepository
-     *
-     * @var \NITSAN\NsGallery\Domain\Repository\NsMediaRepository
-     * @inject
-     */
-    protected $nsMediaRepository = null;
-
     /*
      * Inject a news repository to enable DI
      *
@@ -61,14 +76,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         $this->nsMediaRepository = $nsMediaRepository;
     }
 
-    /**
-     * nsAlbumRepository
-     *
-     * @var \NITSAN\NsGallery\Domain\Repository\NsGalleryBackendRepository
-     * @inject
-     */
-    protected $nsGalleryBackendRepository = null;
-
     /*
      * Inject a news repository to enable DI
      *
@@ -79,7 +86,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
     {
         $this->nsGalleryBackendRepository = $nsGalleryBackendRepository;
     }
-    
+
     /**
      * action list
      *
@@ -100,21 +107,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
         $this->view->assignMultiple($assign);
     }
 
-    protected $templateService;
-    protected $constantObj;
-    protected $sidebarData;
-    protected $dashboardSupportData;
-    protected $generalFooterData;
-    protected $premiumExtensionData;
-    protected $constants;
-    protected $contentObject = null;
-    protected $pid = null;
-
-    /**
-     * @var TypoScriptTemplateModuleController
-     */
-    protected $pObj;
-
     /**
      * Initializes this object
      *
@@ -122,7 +114,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     public function initializeObject()
     {
-        $this->contentObject = GeneralUtility::makeInstance('TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer');
+        $this->contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $this->templateService = GeneralUtility::makeInstance(ExtendedTemplateService::class);
         $this->constantObj = GeneralUtility::makeInstance(TypoScriptTemplateConstantEditorModuleFunctionController::class);
     }
@@ -135,37 +127,9 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
     public function initializeAction()
     {
         parent::initializeAction();
-        //Links for the All Dashboard VIEW from API...
-        $sidebarUrl = 'https://composer.t3terminal.com/API/ExtBackendModuleAPI.php?extKey=ns_gallery&blockName=DashboardRightSidebar';
-        $dashboardSupportUrl = 'https://composer.t3terminal.com/API/ExtBackendModuleAPI.php?extKey=ns_gallery&blockName=DashboardSupport';
-        $generalFooterUrl = 'https://composer.t3terminal.com/API/ExtBackendModuleAPI.php?extKey=ns_gallery&blockName=GeneralFooter';
-        $premiumExtensionUrl = 'https://composer.t3terminal.com/API/ExtBackendModuleAPI.php?extKey=ns_gallery&blockName=PremiumExtension';
-
-        $this->nsAlbumRepository->deleteOldApiData();
-        $checkApiData = $this->nsAlbumRepository->checkApiData();
-        if (!$checkApiData) {
-            $this->sidebarData = $this->nsAlbumRepository->curlInitCall($sidebarUrl);
-            $this->dashboardSupportData = $this->nsAlbumRepository->curlInitCall($dashboardSupportUrl);
-            $this->generalFooterData = $this->nsAlbumRepository->curlInitCall($generalFooterUrl);
-            $this->premiumExtensionData = $this->nsAlbumRepository->curlInitCall($premiumExtensionUrl);
-
-            $data = [
-                'right_sidebar_html' => $this->sidebarData,
-                'support_html'=> $this->dashboardSupportData,
-                'footer_html' => $this->generalFooterData,
-                'premuim_extension_html' => $this->premiumExtensionData,
-                'extension_key' => 'ns_gallery',
-                'last_update' => date('Y-m-d')
-            ];
-            $this->nsAlbumRepository->insertNewData($data);
-        } else {
-            $this->sidebarData = $checkApiData['right_sidebar_html'];
-            $this->dashboardSupportData = $checkApiData['support_html'];
-            $this->premiumExtensionData = $checkApiData['premuim_extension_html'];
-        }
-
         //GET CONSTANTs
         $this->constantObj->init($this->pObj);
+        //@extensionScannerIgnoreLine
         $this->constants = $this->constantObj->main();
     }
 
@@ -197,7 +161,6 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
     {
         $galleryAlbums = $this->nsAlbumRepository->findAll();
         $totalImage = $this->nsMediaRepository->findAll();
-        $report = isset($report) ? $report : "";
         $bootstrapVariable = 'data';
         if (version_compare(TYPO3_branch, '11.0', '>')) {
             $bootstrapVariable = 'data-bs';
@@ -207,24 +170,7 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
             'total' => count($galleryAlbums),
             'totalImage' => count($totalImage),
             'pid' => $this->pid,
-            'rightSide' => $this->sidebarData,
-            'dashboardSupport' => $this->dashboardSupportData,
-            'report' => $report,
             'bootstrapVariable' => $bootstrapVariable
-        ];
-        $this->view->assignMultiple($assign);
-    }
-
-    /**
-     * action premiumExtension
-     *
-     * @return void
-     */
-    public function premiumExtensionAction()
-    {
-        $assign = [
-            'action' => 'premiumExtension',
-            'premiumExdata' => $this->premiumExtensionData
         ];
         $this->view->assignMultiple($assign);
     }
@@ -234,8 +180,8 @@ class NsGalleryBackendController extends \TYPO3\CMS\Extbase\Mvc\Controller\Actio
      */
     public function saveConstantAction()
     {
+        // @extensionScannerIgnoreLine
         $this->constantObj->main();
-        $returnAction = $_REQUEST['tx_nsgallery_nitsan_nsgallerynsgallery']['__referrer']['@action']; //get action name
         return false;
     }
 }

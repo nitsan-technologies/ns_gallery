@@ -17,6 +17,7 @@
 			<f:variable name="positionClass">{settings.GlobalPagingPosition}</f:variable>
 		</f:else>
 	</f:if>
+
 	<div class="pagination-block pagination-block--{positionClass}">
 		<div id="cover-spin"></div>
 		<f:if condition="{settings.paginationType} == 'pagination'">
@@ -54,11 +55,13 @@
 						<f:for each="{pagination.pages}" as="page">
 							<f:if condition="{page.isCurrent}">
 								<f:then>
+
 									<li class="current active">
 										{page.number}
 									</li>
 								</f:then>
 								<f:else>
+
 									<li>
 										<f:if condition="{page.number} > 1">
 											<f:then>

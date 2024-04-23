@@ -1,4 +1,5 @@
 <?php
+
 namespace NITSAN\NsGallery\NsConstantModule\Parser;
 
 /*
@@ -29,6 +30,7 @@ use TYPO3\CMS\Core\Resource\Security\FileNameValidator;
 
 /**
  * The TypoScript parser
+ * @extensionScannerIgnoreFile
  */
 class TypoScriptParser
 {
@@ -424,7 +426,7 @@ class TypoScriptParser
                                                 $setup[$objStrName] = trim(substr($line, 1));
                                                 if ($this->lastComment && $this->regComments) {
                                                     // Setting comment..
-                                                    if(!isset($setup[$objStrName . '..'])){
+                                                    if(!isset($setup[$objStrName . '..'])) {
                                                         $setup[$objStrName . '..'] = '';
                                                     }
                                                     $setup[$objStrName . '..'] .= $this->lastComment;
@@ -709,7 +711,7 @@ class TypoScriptParser
                     $setup[$subKey] = $value[1];
                 }
                 if ($this->lastComment && $this->regComments) {
-                    if(!isset($setup[$key . '..'])){
+                    if(!isset($setup[$key . '..'])) {
                         $setup[$key . '..'] = '';
                     }
                     $setup[$key . '..'] .= $this->lastComment;
@@ -1028,7 +1030,7 @@ class TypoScriptParser
             $readableFileName = rtrim($readableFilePrefix, '/') . '/' . $fileObject->getFilename();
             $content .= LF . '### @import \'' . $readableFileName . '\' begin ###' . LF;
             // Check for allowed files
-            if(version_compare(TYPO3_branch, '11', '>=')){
+            if(version_compare(TYPO3_branch, '11', '>=')) {
                 if (!GeneralUtility::makeInstance(FileNameValidator::class)->isValid($fileObject->getFilename())) {
                     $content .= self::typoscriptIncludeError('File "' . $readableFileName . '" was not included since it is not allowed due to fileDenyPattern.');
                 } else {
@@ -1043,7 +1045,7 @@ class TypoScriptParser
                     }
                     $content .= $included_text . LF;
                 }
-            }else {
+            } else {
                 $includedFiles[] = $fileObject->getPathname();
                 // check for includes in included text
                 $included_text = self::checkIncludeLines($fileObject->getContents(), $cycleCounter++, $returnFiles, $absoluteFileName);
@@ -1112,7 +1114,7 @@ class TypoScriptParser
         if ((string)$filename !== '') {
             // Must exist and must not contain '..' and must be relative
             // Check for allowed files
-            if(version_compare(TYPO3_branch, '11', '>=')){
+            if(version_compare(TYPO3_branch, '11', '>=')) {
                 if (!GeneralUtility::makeInstance(FileNameValidator::class)->isValid($absfilename)) {
                     $newString .= self::typoscriptIncludeError('File "' . $filename . '" was not included since it is not allowed due to fileDenyPattern.');
                 } else {
@@ -1130,7 +1132,7 @@ class TypoScriptParser
                             }
                         }
                     }
-    
+
                     if ($fileExists) {
                         $includedFiles[] = $absfilename;
                         // check for includes in included text
@@ -1146,7 +1148,7 @@ class TypoScriptParser
                         $newString .= self::typoscriptIncludeError('File "' . $filename . '" was not found.');
                     }
                 }
-            }else {
+            } else {
                 $fileExists = false;
                 if (@file_exists($absfilename)) {
                     $fileExists = true;
@@ -1177,7 +1179,7 @@ class TypoScriptParser
                     $newString .= self::typoscriptIncludeError('File "' . $filename . '" was not found.');
                 }
             }
-            
+
         }
         $newString .= '### <INCLUDE_TYPOSCRIPT: source="FILE:' . $filename . '"' . $optionalProperties . '> END:' . LF . LF;
     }

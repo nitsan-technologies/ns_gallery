@@ -5,6 +5,7 @@
             <f:render section="layout2" arguments="{album:album,getContentId:getContentId}" />
         </f:for>
     </div>
+
 </f:widget.paginate>
 <f:section name="layout2">
     <div class="ns-gallery-album-item ajaxBlock">
@@ -16,17 +17,17 @@
                         <f:then>
                             <f:if condition="{a.isFirst}">
                                 <f:then>							
-                                    <f:render section="renderMedia" arguments="{file:media2, poster:media.poster.0, cycle:i.cycle}" />
+                                    <f:render section="renderMedia" arguments="{file:media2, cycle:i.cycle}" />
                                     {f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
                                 </f:then>
                                 <f:else>
-                                    <f:render section="renderMediaNone" arguments="{file:media2, poster:media.poster.0, cycle:i.cycle}" />
+                                    <f:render section="renderMediaNone" arguments="{file:media2, cycle:i.cycle}" />
                                     {f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
                                 </f:else>
                             </f:if>
                         </f:then>
                         <f:else>
-                            <f:render section="renderMediaNone" arguments="{file:media2, poster:media.poster.0, cycle:i.cycle}" />
+                            <f:render section="renderMediaNone" arguments="{file:media2, cycle:i.cycle}" />
                             {f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
                         </f:else>
                     </f:if>

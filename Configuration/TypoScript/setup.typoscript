@@ -13,14 +13,10 @@ plugin.tx_nsgallery_album {
         }
     }   
     features {
-        #skipDefaultArguments = 1
         # if set to 1, the enable fields are ignored in BE context
         ignoreAllEnableFieldsInBe = 0
         # Should be on by default, but can be disabled if all action in the plugin are uncached
         requireCHashArgumentForActionArguments = 1
-    }
-    mvc {
-        #callDefaultActionIfActionCantBeResolved = 1
     }
     settings {        
         controls = {$plugin.tx_nsgallery_album.appearanceSettings.generalGallery.controls}        
@@ -51,14 +47,10 @@ plugin.tx_nsgallery_googlesearchimage {
     }
     
     features {
-        #skipDefaultArguments = 1
         # if set to 1, the enable fields are ignored in BE context
         ignoreAllEnableFieldsInBe = 0
         # Should be on by default, but can be disabled if all action in the plugin are uncached
         requireCHashArgumentForActionArguments = 1
-    }
-    mvc {
-        #callDefaultActionIfActionCantBeResolved = 1
     }
     settings {
         paginationType = {$plugin.tx_nsgallery_album.appearanceSettings.appearance.Paging}
@@ -74,7 +66,6 @@ page {
     includeJSFooter {
         lightGallery =  EXT:ns_gallery/Resources/Public/Vendor/lightgallery/js/lightgallery.js
         googleSearchImage = EXT:ns_gallery/Resources/Public/Vendor/gi-thewall/githewall.min.js        
-        nsgallery = EXT:ns_gallery/Resources/Public/Js/nsgallery.js
         nsgalleryCustomJs = EXT:ns_gallery/Resources/Public/Js/customJs.js
     }
     includeCSS{            
@@ -93,7 +84,6 @@ page {
         }
     }   
 }
-
 # Module configuration
 module.tx_nsgallery_nitsan_nsgallerynsgallery {
 

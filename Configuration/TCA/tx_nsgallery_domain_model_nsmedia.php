@@ -1,4 +1,5 @@
 <?php
+
 if (version_compare(TYPO3_branch, '9.0', '<')) {
     $langfile = 'LLL:EXT:lang/locallang_general.xlf:';
 } else {
@@ -114,15 +115,6 @@ return [
                 ]
             ],
         ],
-
-        'disBig' => [
-            'exclude' => true,
-            'label' => 'show big image (For Mosaic and Masonry)',
-            'config' => [
-                'type' => 'check',
-            ],
-        ],
-
         'media' => [
             'exclude' => true,
             'label' => 'LLL:EXT:ns_gallery/Resources/Private/Language/locallang_db.xlf:tx_nsgallery_domain_model_nsmedia.media',
@@ -168,6 +160,7 @@ return [
                             --palette--;;filePalette'
                         ]
                     ],
+                    'minitems' => 1,
                 ],
                 $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
             ),

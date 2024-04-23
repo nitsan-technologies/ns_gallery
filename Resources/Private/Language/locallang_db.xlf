@@ -4,10 +4,10 @@
 		<header/>
 		<body>
 			<trans-unit id="tx_nsgallery_domain_model_nsalbum.ns_gallery">
-				<source>NS Gallery</source>
+				<source>Gallery</source>
 			</trans-unit>
 			<trans-unit id="tx_nsgallery_domain_model_nsalbum">
-				<source>NS Album</source>
+				<source>Album</source>
 			</trans-unit>
 			<trans-unit id="tx_nsgallery_domain_model_nsalbum.title">
 				<source>Title</source>
@@ -15,17 +15,14 @@
 			<trans-unit id="tx_nsgallery_domain_model_nsalbum.media">
 				<source>Media</source>
 			</trans-unit>
-			<trans-unit id="tx_nsgallery_domain_model_nsalbum.poster">
-				<source>Poster for video type file (Mandetory while file type video, otherwise thubmnail not show OR may be it give error.)</source>
-			</trans-unit>
 			<trans-unit id="tx_nsgallery_domain_model_nsmedia">
-				<source>NS Media</source>
+				<source>Media</source>
 			</trans-unit>
 			<trans-unit id="tx_nsgallery_domain_model_nsmedia.media">
 				<source>Media</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_album.name">
-				<source>[NS Gallery] Album View</source>
+				<source>[Gallery] Album View</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_album.description">
 				<source>Add gallery with albums, use same page gallery and album with detail page.</source>
@@ -49,7 +46,7 @@
 				<source>Add mosaic view gallery</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_googlesearchimage.name">
-				<source>[NS Gallery] Google Search View</source>
+				<source>[Gallery] Google Search View</source>
 			</trans-unit>
 			<trans-unit id="tx_ns_gallery_googlesearchimage.description">
 				<source>Add gallery like google search wall</source>

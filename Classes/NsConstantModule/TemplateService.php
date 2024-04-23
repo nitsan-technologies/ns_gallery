@@ -1,4 +1,5 @@
 <?php
+
 namespace NITSAN\NsGallery\NsConstantModule;
 
 /*
@@ -43,6 +44,7 @@ use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
  * Template object that is responsible for generating the TypoScript template based on template records.
  * @see \TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser
  * @see \TYPO3\CMS\Core\Configuration\TypoScript\ConditionMatching\AbstractConditionMatcher
+ * @extensionScannerIgnoreFile
  */
 class TemplateService
 {
@@ -1132,7 +1134,7 @@ class TemplateService
         // if this is a template of type "default content rendering", also see if other extensions have added their TypoScript that should be included after the content definitions
         if (in_array($identifier, $GLOBALS['TYPO3_CONF_VARS']['FE']['contentRenderingTemplates'], true)) {
             $subrow['config'] .= $GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_setup.']['defaultContentRendering'];
-            if(!isset($GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'])){
+            if(!isset($GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'])) {
                 $GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'] = '';
             }
             $subrow['constants'] .= $GLOBALS['TYPO3_CONF_VARS']['FE']['defaultTypoScript_constants.']['defaultContentRendering'];
