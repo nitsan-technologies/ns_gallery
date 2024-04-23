@@ -45,13 +45,6 @@ $imageSettingsFalMedia = [
         ],
     ],
 ];
-$imageConfigurationFalMedia = [
-    'type' => 'file',
-    'appearance' => $imageSettingsFalMedia['appearance'],
-    'behaviour' => $imageSettingsFalMedia['behaviour'],
-    'overrideChildTca' => $imageSettingsFalMedia['overrideChildTca'],
-    'allowed' => 'common-image-types',
-];
 
 return [
     'ctrl' => [
@@ -137,7 +130,14 @@ return [
         'media' => [
             'exclude' => true,
             'label' => 'LLL:EXT:ns_gallery/Resources/Private/Language/locallang_db.xlf:tx_nsgallery_domain_model_nsmedia.media',
-            'config' => $imageConfigurationFalMedia,
+            'config' => [
+                'minitems' => 1,
+                'type' => 'file',
+                'appearance' => $imageSettingsFalMedia['appearance'],
+                'behaviour' => $imageSettingsFalMedia['behaviour'],
+                'overrideChildTca' => $imageSettingsFalMedia['overrideChildTca'],
+                'allowed' => 'common-image-types',
+            ]
         ],
         'nsalbum' => [
             'config' => [

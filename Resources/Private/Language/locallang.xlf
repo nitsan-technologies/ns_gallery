@@ -19,7 +19,7 @@
 				<source>Media</source>
 			</trans-unit>
 			<trans-unit id="nsgallery">
-				<source>NS Gallery</source>
+				<source>Gallery</source>
 			</trans-unit>
 			<trans-unit id="tx_nsfeedback_domain_model_report.documentaiton">
 				<source>Documentaiton</source>
