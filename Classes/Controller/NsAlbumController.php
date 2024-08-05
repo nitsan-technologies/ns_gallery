@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /***
  *
@@ -139,7 +140,9 @@ class NsAlbumController extends ActionController
         $getContentId = $currentContentObject->data['uid'];
         $this->view->assign('getContentId', $getContentId);
         if ($gallery == 'general') {
-            $constant = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_nsgallery_album.']['settings.'];
+            $configurationManager = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
+            $typoScriptSetup = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            $constant = $typoScriptSetup['plugin.']['tx_nsgallery_album.']['settings.'];
             $this->view->assign('constant', $constant);
             $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
             $this->view->assign('jsSettings', $jsSettings);

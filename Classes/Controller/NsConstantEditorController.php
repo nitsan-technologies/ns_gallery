@@ -5,6 +5,7 @@ namespace NITSAN\NsGallery\Controller;
 use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Core\Imaging\Icon;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -86,10 +87,10 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         $queryParams = $request->getQueryParams();
         $parsedBody = $request->getParsedBody();
         $pageUid = (int)($queryParams['id'] ?? 0);
-        if ($pageUid === 0) {
-            // Redirect to template record overview if on page 0.
-            return new RedirectResponse($this->uriBuilder->buildUriFromRoute('web_typoscript_recordsoverview'));
-        }
+//        if ($pageUid === 0) {
+//            // Redirect to template record overview if on page 0.
+//            return new RedirectResponse($this->uriBuilder->buildUriFromRoute('web_typoscript_recordsoverview'));
+//        }
         if (($parsedBody['action'] ?? '') === 'createExtensionTemplate') {
             return $this->createExtensionTemplateAction($request, 'web_typoscript_constanteditor');
         }
@@ -433,7 +434,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
             ->setValue('1')
             ->setForm('TypoScriptConstantEditorController')
             ->setTitle($languageService->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.saveDoc'))
-            ->setIcon($this->iconFactory->getIcon('actions-document-save', Icon::SIZE_SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-document-save', IconSize::SMALL))
             ->setShowLabelText(true);
         $buttonBar->addButton($saveButton);
     }

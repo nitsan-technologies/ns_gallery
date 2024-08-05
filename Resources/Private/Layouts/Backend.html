@@ -1,8 +1,8 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:be.pageRenderer 
+<f:be.pageRenderer
 	pageTitle="{f:translate(key: 'pagetitle')}"
-	includeRequireJsModules="{0:'TYPO3/CMS/NsGallery/Main'}"
+	includeJavaScriptModules="{0:'@nitsan/ns-gallery/Main.js'}"
 />
 
 <link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Css/global.css', extensionName: 'ns_gallery')}" media="all">
@@ -18,7 +18,7 @@
 <div class="typo3-fullDoc">
 	<div id="typo3-docheader">
 		<div class="typo3-docheader-functions">
-			<f:be.buttons.csh />
+
 		</div>
 	</div>
 	<div id="typo3-docbody">
@@ -45,7 +45,7 @@
 										<em class="fa fa-bars" aria-hidden="true"></em><f:translate key="tx_nsfeedback_domain_model_report.nsreport" extensionName="NsGallery" />
 									</f:link.action>
 								</li>
-															
+
 							</ul>
 						</div>
 					</nav>

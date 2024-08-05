@@ -1,35 +1,28 @@
-define([
-    'jquery',
-    'TYPO3/CMS/Backend/Modal',
-    'TYPO3/CMS/NsGallery/Main',
-    'TYPO3/CMS/NsGallery/Datatables'
-], function ($, Model) {  
-    
-    $('.ns-ext-datatable').DataTable({
-        "language": {
-            "lengthMenu": "Display _MENU_ Records",
-            "emptyTable": "No Records Available",
-            "zeroRecords": "No matching Records found"
-        },
-    });  
+import $ from "jquery";
 
-    $('.field-info-trigger').on('click', function(){
-        $(this).parents('.form-group').find('.field-info-text').slideToggle();
-    });
+$('.ns-ext-datatable').DataTable({
+    "language": {
+        "lengthMenu": "Display _MENU_ Records",
+        "emptyTable": "No Records Available",
+        "zeroRecords": "No matching Records found"
+    },
+});
 
-    $('.dataTables_length select,\ .dataTables_filter input').addClass('form-control');
+$('.field-info-trigger').on('click', function(){
+    $(this).parents('.form-group').find('.field-info-text').slideToggle();
+});
 
-    $('#TypoScriptTemplateModuleController').on('submit',function(e){
-        e.preventDefault();
-        url = $(this).attr('action');
-        $.ajax({
-            url:url,
-            method:'post',
-            data:$(this).serializeArray(),
-            success:function(){
-                window.location.reload();
-            }
-        })
-    });
+$('.dataTables_length select,\ .dataTables_filter input').addClass('form-control');
 
+$('#TypoScriptTemplateModuleController').on('submit',function(e){
+    e.preventDefault();
+    const url = $(this).attr('action');
+    $.ajax({
+        url:url,
+        method:'post',
+        data:$(this).serializeArray(),
+        success:function(){
+            window.location.reload();
+        }
+    })
 });

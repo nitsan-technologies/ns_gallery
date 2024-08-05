@@ -3,12 +3,11 @@
 
 <f:section name="content">
 	<f:be.pageRenderer
-	includeRequireJsModules="{
-		0:'TYPO3/CMS/NsGallery/Main',
-		1:'TYPO3/CMS/NsGallery/Datatables',
+	  includeJavaScriptModules = "{
+		0:'@nitsan/ns-gallery/Main.js',
+		1:'@nitsan/ns-gallery/Datatables.js',
 		2:'@typo3/backend/context-menu.js',
 		3:'@typo3/backend/element/immediate-action-element.js',
-		4:'@typo3/backend/utility/collape-state-persister.js',
 		5:'@typo3/tstemplate/constant-editor.js'
 	}"/>
 <link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Css/global.css', extensionName: 'ns_gallery')}" media="all">
