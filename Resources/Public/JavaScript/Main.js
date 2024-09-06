@@ -1,5 +1,3 @@
-import $ from "jquery";
-
 $('.ns-ext-datatable').DataTable({
     "language": {
         "lengthMenu": "Display _MENU_ Records",
@@ -13,16 +11,3 @@ $('.field-info-trigger').on('click', function(){
 });
 
 $('.dataTables_length select,\ .dataTables_filter input').addClass('form-control');
-
-$('#TypoScriptTemplateModuleController').on('submit',function(e){
-    e.preventDefault();
-    const url = $(this).attr('action');
-    $.ajax({
-        url:url,
-        method:'post',
-        data:$(this).serializeArray(),
-        success:function(){
-            window.location.reload();
-        }
-    })
-});

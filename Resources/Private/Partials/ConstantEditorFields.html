@@ -6,9 +6,7 @@
 
 <div class="ns-ext-form-wrap" style="padding: 24px;margin-top: -50px;transition: border .2s ease;">
     <form class="ns-ext-form" action="{f:be.uri(route: 'ns_gallery_configuration', parameters: '{id: pageUid}')}" method="post" id="TypoScriptConstantEditorController">
-        <div class="d-sm-flex justify-content-sm-between align-items-sm-center ns-ext-submit-wrap">
-            <h4><f:translate key="LLL:EXT:ns_gallery/Resources/Private/Language/BackendModule.xlf:{selectedCategory}"  extensionName="NsGallery"/></h4>
-        </div>
+
         <f:for each="{displayConstants}" as="mainCategory" key="mainCategoryKey">
             <div class="tstemplate-constanteditor">
                 <div class="card custom-card">
