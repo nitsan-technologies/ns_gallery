@@ -10,13 +10,15 @@ $_EXTKEY = 'ns_gallery';
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'NITSAN.NsGallery',
     'Album',
-    'Album View'
+    'Album View',
+    'ns_gallery-plugin-album'
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'NITSAN.NsGallery',
     'Googlesearchimage',
-    'Google Search View'
+    'Google Search View',
+    'ns_gallery-plugin-googlesearchimage'
 );
 
 addFlexFile('nsgallery_album', 'galleryAlbum.xml');
