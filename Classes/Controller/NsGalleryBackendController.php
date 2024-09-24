@@ -73,7 +73,7 @@ class NsGalleryBackendController extends ActionController
             'settings' => $this->settings
         ];
         $view->assignMultiple($assign);
-        return $view->renderResponse();
+        return $view->renderResponse('NsGalleryBackend/List');
     }
 
     /**
@@ -93,7 +93,7 @@ class NsGalleryBackendController extends ActionController
             'pid' => $this->pid
         ];
         $view->assignMultiple($assign);
-        return $view->renderResponse();
+        return $view->renderResponse('NsGalleryBackend/Dashboard');
     }
 
     /**

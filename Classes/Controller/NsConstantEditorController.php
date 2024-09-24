@@ -434,7 +434,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
             ->setValue('1')
             ->setForm('TypoScriptConstantEditorController')
             ->setTitle($languageService->sL('LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:rm.saveDoc'))
-            ->setIcon($this->iconFactory->getIcon('actions-document-save', IconSize::SMALL))
+            ->setIcon($this->iconFactory->getIcon('actions-document-save', 'small'))
             ->setShowLabelText(true);
         $buttonBar->addButton($saveButton);
     }
