@@ -75,6 +75,9 @@ class NsAlbumController extends ActionController
         foreach ($makeArray as $value) {
             $nsAlbums[] = $this->nsAlbumRepository->findByUid($value);
         }
+        $nsAlbums = array_filter($nsAlbums, function($value) {
+            return !is_null($value);
+        });
         $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, (int)$this->settings['recordPerPage']);
         $pagination = new SimplePagination($arrayPaginator);
         $this->view->assignMultiple(
@@ -107,9 +110,11 @@ class NsAlbumController extends ActionController
         $nsAlbums = [];
         foreach ($makeArray as $album) {
             $getAlbums = $this->nsAlbumRepository->findByUid($album);
-            foreach ($getAlbums->getMedia() as $values) {
-                foreach ($values->getMedia() as $value) {
-                    $nsAlbums[] = $value;
+            if (!empty($getAlbums)){
+                foreach ($getAlbums->getMedia() as $values) {
+                    foreach ($values->getMedia() as $value) {
+                        $nsAlbums[] = $value;
+                    }
                 }
             }
 
