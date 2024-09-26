@@ -31,10 +31,6 @@ module.tx_nsgallery_nsgallery {
         # cat=module.tx_nsgallery_nsgallery/file; type=string; label=Path to template layouts (BE)
         layoutRootPath = EXT:ns_gallery/Resources/Private/Backend/Layouts/
     }
-    persistence {
-        # cat=module.tx_nsgallery_nsgallery//a; type=string; label=Default storage PID
-        storagePid =
-    }
 }
 //Features constant Includes:
 <INCLUDE_TYPOSCRIPT: source="FILE:EXT:ns_gallery/Configuration/TypoScript/FeaturesConstants/commonSettings_constants.typoscript">
