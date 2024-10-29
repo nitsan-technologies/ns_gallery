@@ -62,7 +62,6 @@ class NsGalleryBackendController extends ActionController
     {
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->loadJavaScriptModule('@nitsan/ns-gallery/jquery.js');
-        $pageRenderer->loadJavaScriptModule('@nitsan/ns-gallery/Datatables.js');
         $pageRenderer->loadJavaScriptModule('@nitsan/ns-gallery/Main.js');
 
         $view = $this->initializeModuleTemplate($this->request);

@@ -1,3 +1,4 @@
+import '@nitsan/ns-gallery/Datatables.js';
 $('.ns-ext-datatable').DataTable({
     "language": {
         "lengthMenu": "Display _MENU_ Records",

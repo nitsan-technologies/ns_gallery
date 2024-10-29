@@ -87,10 +87,10 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         $queryParams = $request->getQueryParams();
         $parsedBody = $request->getParsedBody();
         $pageUid = (int)($queryParams['id'] ?? 0);
-//        if ($pageUid === 0) {
-//            // Redirect to template record overview if on page 0.
-//            return new RedirectResponse($this->uriBuilder->buildUriFromRoute('web_typoscript_recordsoverview'));
-//        }
+        if ($pageUid === 0) {
+            // Redirect to template record overview if on page 0.
+            return new RedirectResponse($this->uriBuilder->buildUriFromRoute('web_typoscript_recordsoverview'));
+        }
         if (($parsedBody['action'] ?? '') === 'createExtensionTemplate') {
             return $this->createExtensionTemplateAction($request, 'web_typoscript_constanteditor');
         }
