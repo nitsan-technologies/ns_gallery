@@ -16,7 +16,7 @@ return [
         'labels' => 'LLL:EXT:ns_gallery/Resources/Private/Language/BackendModule.xlf:ns_gallery_configuration',
         'icon' => 'EXT:ns_gallery/Resources/Public/Icons/user_mod_nsgallery.svg',
         'navigationComponent' => '@typo3/backend/page-tree/page-tree-element',
-        'extensionName' => 'ns_gallery',
+        'extensionName' => 'NsGallery',
         'routes' => [
             '_default' => [
                 'target' => \NITSAN\NsGallery\Controller\NsConstantEditorController::class . '::handleRequest',
@@ -35,7 +35,7 @@ return [
         'labels' => 'LLL:EXT:ns_gallery/Resources/Private/Language/locallang_nsgallery.xlf',
         'path' => '/module/web/NsGallery',
         'inheritNavigationComponentFromMainModule' => false,
-        'extensionName' => 'ns_gallery',
+        'extensionName' => 'NsGallery',
         'navigationComponent' => '@typo3/backend/page-tree/page-tree-element',
         'controllerActions' => [
             \NITSAN\NsGallery\Controller\NsGalleryBackendController::class => 'dashboard, list, show',

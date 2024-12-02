@@ -19,7 +19,6 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\TypoScript\AST\AstBuilderInterface;
 use TYPO3\CMS\Core\TypoScript\AST\Traverser\AstTraverser;
 use TYPO3\CMS\Core\TypoScript\Tokenizer\LosslessTokenizer;
-use NITSAN\NsGallery\Controller\NsGalleryBackendController;
 use TYPO3\CMS\Core\TypoScript\IncludeTree\SysTemplateRepository;
 use TYPO3\CMS\Core\TypoScript\IncludeTree\SysTemplateTreeBuilder;
 use TYPO3\CMS\Core\TypoScript\AST\Visitor\AstConstantCommentVisitor;
@@ -167,7 +166,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         $categories = $astConstantCommentVisitor->getCategories();
         $relevantCategories = [];
         foreach ($categories as $categoryKey => $aCategory) {
-            if ($aCategory['usageCount'] > 0) {
+            if ($aCategory['usageCount'] > 0 && str_starts_with($categoryKey, 'ns_')) {
                 $relevantCategories[$categoryKey] = $aCategory;
             }
         }
