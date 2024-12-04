@@ -1,4 +1,4 @@
-mod.wizards.newContentElement.wizardItems.extra {
+mod.wizards.newContentElement.wizardItems.ns-gallery {
     header = LLL:EXT:ns_gallery/Resources/Private/Language/locallang_db.xlf:tx_nsgallery_domain_model_nsalbum.ns_gallery
     elements {
         nsgallery_album {

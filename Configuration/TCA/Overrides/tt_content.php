@@ -15,7 +15,7 @@ ExtensionUtility::registerPlugin(
     'Album',
     'Album View',
     'ns_gallery-plugin-album',
-    'extra'
+    'ns-gallery'
 );
 
 ExtensionUtility::registerPlugin(
@@ -23,7 +23,7 @@ ExtensionUtility::registerPlugin(
     'Googlesearchimage',
     'Google Search View',
     'ns_gallery-plugin-album',
-    'extra'
+    'ns-gallery'
 );
 
 $pluginsPi = [
