@@ -147,7 +147,7 @@ class NsAlbumController extends ActionController
         if ($gallery == 'general') {
             $configurationManager = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
             $typoScriptSetup = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            $constant = $typoScriptSetup['plugin.']['tx_nsgallery_album.']['settings.'];
+            $constant = $typoScriptSetup['plugin.']['tx_nsgallery_album.']['settings.'] ?? [];
             $this->view->assign('constant', $constant);
             $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
             $this->view->assign('jsSettings', $jsSettings);
