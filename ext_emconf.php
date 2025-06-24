@@ -1,14 +1,12 @@
 <?php
 
 $EM_CONF['ns_gallery'] = [
-    'title' => 'All in One Gallery',
-    'description' => 'Using the All In One TYPO3 Gallery Extension, you can easily create beautiful lightbox image and video galleries with various grid layouts right from the TYPO3 dashboard in just a few clicks. Try the best TYPO3 gallery extension for adding custom, unique and responsive galleries to your website.
-
-    *** Live Demo: https://demo.t3planet.com/t3-extensions/gallery/ *** Premium Version, Documentation & Free Support: https://t3planet.com/typo3-gallery-extension',
+    'title' => 'TYPO3 Gallery Extension',
+    'description' => 'Create responsive and visually stunning lightbox image and video galleries with grid layouts directly from the TYPO3 backend. Easily manage and showcase your media in a user-friendly way.',
     'category' => 'plugin',
-    'author' => 'T3: Himanshu Ramavat, T3: Nilesh Malankiya, QA: Krishna Dhapa',
-    'author_email' => 'sanjay@nitsan.in',
-    'author_company' => 'T3Planet // NITSAN',
+    'author' => 'Team T3Planet',
+    'author_email' => 'info@t3planet.de',
+    'author_company' => 'T3Planet',
     'state' => 'stable',
     'internal' => '',
     'uploadfolder' => '0',
