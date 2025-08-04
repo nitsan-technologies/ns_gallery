@@ -278,8 +278,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         }
         $view = $this->moduleTemplateFactory->create($request);
         $view->setTitle($languageService->sL($currentModule->getTitle()), $pageRecord['title']);
-        $view->getDocHeaderComponent()->setMetaInformation($pageRecord);
-        $this->addPreviewButtonToDocHeader($view, $pageRecord);
+        $view->getDocHeaderComponent()->setMetaInformation($pageRecord);        
         $view->makeDocHeaderModuleMenu(['id' => $pageUid]);
         $view->assignMultiple([
             'pageUid' => $pageUid,
