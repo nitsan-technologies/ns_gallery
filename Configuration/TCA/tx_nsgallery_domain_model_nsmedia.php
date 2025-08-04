@@ -136,7 +136,7 @@ return [
                 'appearance' => $imageSettingsFalMedia['appearance'],
                 'behaviour' => $imageSettingsFalMedia['behaviour'],
                 'overrideChildTca' => $imageSettingsFalMedia['overrideChildTca'],
-                'allowed' => 'common-image-types',
+                'allowed' => 'jpg,jpeg,png,webp,gif',
             ]
         ],
         'nsalbum' => [

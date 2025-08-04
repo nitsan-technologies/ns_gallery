@@ -196,7 +196,6 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         $view = $this->moduleTemplateFactory->create($request);
         $view->setTitle($languageService->sL($currentModule->getTitle()), $pageRecord['title']);
         $view->getDocHeaderComponent()->setMetaInformation($pageRecord);
-        $this->addPreviewButtonToDocHeader($view, $pageUid, (int)$pageRecord['doktype']);
         $this->addShortcutButtonToDocHeader($view, $currentModuleIdentifier, $pageRecord, $pageUid);
         if (!empty($relevantCategories)) {
             $this->addSaveButtonToDocHeader($view);
@@ -280,7 +279,7 @@ class NsConstantEditorController extends AbstractTemplateModuleController
         $view = $this->moduleTemplateFactory->create($request);
         $view->setTitle($languageService->sL($currentModule->getTitle()), $pageRecord['title']);
         $view->getDocHeaderComponent()->setMetaInformation($pageRecord);
-        $this->addPreviewButtonToDocHeader($view, $pageUid, (int)$pageRecord['doktype']);
+        $this->addPreviewButtonToDocHeader($view, $pageRecord);
         $view->makeDocHeaderModuleMenu(['id' => $pageUid]);
         $view->assignMultiple([
             'pageUid' => $pageUid,
