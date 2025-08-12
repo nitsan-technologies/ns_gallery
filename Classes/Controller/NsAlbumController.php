@@ -73,8 +73,13 @@ class NsAlbumController extends ActionController
         $makeArray = GeneralUtility::trimExplode(',', $this->settings['records']);
         $nsAlbums = [];
         foreach ($makeArray as $value) {
-            $nsAlbums[] = $this->nsAlbumRepository->findByUid($value);
+        if ($value !== null && $value !== '') {
+            $album = $this->nsAlbumRepository->findByUid($value);
+            if ($album !== null && $album->getMedia()->count() > 0) {
+                $nsAlbums[] = $album;
+            }
         }
+    }
         $nsAlbums = array_filter($nsAlbums, function($value) {
             return !is_null($value);
         });
