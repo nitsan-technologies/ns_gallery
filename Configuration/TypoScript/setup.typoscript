@@ -69,9 +69,6 @@ module.tx_nsgallery {
     settings {
         storagePid = {$plugin.tx_nsgallery_album.storageSettings.storagePid}
     }
-    persistence {
-        storagePid = {$plugin.tx_nsgallery_album.storageSettings.storagePid}
-    }
     view {
         templateRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Backend/Templates/
         templateRootPaths.1 = {$module.tx_nsgallery_nsgallery.view.templateRootPath}

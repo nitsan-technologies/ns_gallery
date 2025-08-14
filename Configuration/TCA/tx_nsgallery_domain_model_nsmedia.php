@@ -54,11 +54,11 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'sortby' => 'sorting',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'languageField' => 'sys_language_uid',
         'transOrigDiffSourceField' => 'l10n_diffsource',
         'delete' => 'deleted',
+        'hideTable'=> true,
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
@@ -136,7 +136,7 @@ return [
                 'appearance' => $imageSettingsFalMedia['appearance'],
                 'behaviour' => $imageSettingsFalMedia['behaviour'],
                 'overrideChildTca' => $imageSettingsFalMedia['overrideChildTca'],
-                'allowed' => 'common-image-types',
+                'allowed' => 'jpg,jpeg,png,webp,gif',
             ]
         ],
         'nsalbum' => [

@@ -30,6 +30,16 @@ class NsAlbumRepository extends Repository
         'sorting' => QueryInterface::ORDER_ASCENDING,
     ];
 
+    public function initializeObject()
+    {
+        // get the current settings
+        $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
+        // change the default setting, whether the storage page ID is ignored by the plugins (FALSE) or not (TRUE - default setting)
+        $querySettings->setRespectStoragePage(false);
+        // store the new setting(s)
+        $this->setDefaultQuerySettings($querySettings);
+    }
+
     public function setSettingsForGallery($settings, $constant): string
     {
         $txtSettings = '';

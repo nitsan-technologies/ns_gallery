@@ -17,40 +17,42 @@
 		</div>
 	</f:section>
 	<f:section name="layout2">
-		<div class="ns-gallery-album-item ajaxBlock">
-			<div class="ajax-{getContentId} ns-gallery-album-items {constant.zoomIcon} nsGallery nsGallery-{getContentId}">
-				{f:variable(name: 'albumsMedia', value: 0)}
-				<f:for each="{album.media}" as="media" iteration="i">
-					<f:for each="{media.media}" as="media2" iteration="a">
-						<f:if condition="{i.isFirst}">
-							<f:then>
-								<f:if condition="{a.isFirst}">
-									<f:then>
-										<f:render section="renderMedia" arguments="{file:media2, cycle:i.cycle}" />
-										{f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
-									</f:then>
-									<f:else>
-										<f:render section="renderMediaNone" arguments="{file:media2, cycle:i.cycle}" />
-										{f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
-									</f:else>
-								</f:if>
-							</f:then>
-							<f:else>
-								<f:render section="renderMediaNone" arguments="{file:media2, cycle:i.cycle}" />
-								{f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
-							</f:else>
-						</f:if>
+		<f:if condition="{album.media}">
+			<div class="ns-gallery-album-item ajaxBlock">
+				<div class="ajax-{getContentId} ns-gallery-album-items {constant.zoomIcon} nsGallery nsGallery-{getContentId}">
+					{f:variable(name: 'albumsMedia', value: 0)}
+					<f:for each="{album.media}" as="media" iteration="i">
+						<f:for each="{media.media}" as="media2" iteration="a">
+							<f:if condition="{i.isFirst}">
+								<f:then>
+									<f:if condition="{a.isFirst}">
+										<f:then>
+											<f:render section="renderMedia" arguments="{file:media2, cycle:i.cycle}" />
+											{f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
+										</f:then>
+										<f:else>
+											<f:render section="renderMediaNone" arguments="{file:media2, cycle:i.cycle}" />
+											{f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
+										</f:else>
+									</f:if>
+								</f:then>
+								<f:else>
+									<f:render section="renderMediaNone" arguments="{file:media2, cycle:i.cycle}" />
+									{f:variable(name: 'albumsMedia', value: '{albumsMedia + 1}')}
+								</f:else>
+							</f:if>
 
+						</f:for>
 					</f:for>
-				</f:for>
+				</div>
+				<div class="ns-gallery-album-title">
+					<h4>{album.title}</h4 inline="1">
+					<p>
+						{albumsMedia} <f:translate key="general.photos" extensionName="NsGallery" />
+					</p>
+				</div>
 			</div>
-			<div class="ns-gallery-album-title">
-				<h4>{album.title}</h4 inline="1">
-				<p>
-					{albumsMedia} <f:translate key="general.photos" extensionName="NsGallery" />
-				</p>
-			</div>
-		</div>
+		</f:if>
 	</f:section>
 	<f:section name="renderMedia">
 		<a href="{f:uri.image(image:file, treatIdAsReference: 1)}" class="ns-gallery-item">

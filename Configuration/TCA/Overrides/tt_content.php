@@ -13,13 +13,17 @@ $_EXTKEY = 'ns_gallery';
 ExtensionUtility::registerPlugin(
     'NsGallery',
     'Album',
-    'Album View'
+    'Album View',
+    'ns_gallery-plugin-album',
+    'ns-gallery'
 );
 
 ExtensionUtility::registerPlugin(
     'NsGallery',
     'Googlesearchimage',
-    'Google Search View'
+    'Google Search View',
+    'ns_gallery-plugin-album',
+    'ns-gallery'
 );
 
 $pluginsPi = [

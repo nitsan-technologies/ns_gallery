@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /***
  *
@@ -72,8 +73,16 @@ class NsAlbumController extends ActionController
         $makeArray = GeneralUtility::trimExplode(',', $this->settings['records']);
         $nsAlbums = [];
         foreach ($makeArray as $value) {
-            $nsAlbums[] = $this->nsAlbumRepository->findByUid($value);
+        if ($value !== null && $value !== '') {
+            $album = $this->nsAlbumRepository->findByUid($value);
+            if ($album !== null && $album->getMedia()->count() > 0) {
+                $nsAlbums[] = $album;
+            }
         }
+    }
+        $nsAlbums = array_filter($nsAlbums, function($value) {
+            return !is_null($value);
+        });
         $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, (int)$this->settings['recordPerPage']);
         $pagination = new SimplePagination($arrayPaginator);
         $this->view->assignMultiple(
@@ -106,9 +115,11 @@ class NsAlbumController extends ActionController
         $nsAlbums = [];
         foreach ($makeArray as $album) {
             $getAlbums = $this->nsAlbumRepository->findByUid($album);
-            foreach ($getAlbums->getMedia() as $values) {
-                foreach ($values->getMedia() as $value) {
-                    $nsAlbums[] = $value;
+            if (!empty($getAlbums)){
+                foreach ($getAlbums->getMedia() as $values) {
+                    foreach ($values->getMedia() as $value) {
+                        $nsAlbums[] = $value;
+                    }
                 }
             }
 
@@ -139,7 +150,9 @@ class NsAlbumController extends ActionController
         $getContentId = $currentContentObject->data['uid'];
         $this->view->assign('getContentId', $getContentId);
         if ($gallery == 'general') {
-            $constant = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_nsgallery_album.']['settings.'];
+            $configurationManager = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
+            $typoScriptSetup = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            $constant = $typoScriptSetup['plugin.']['tx_nsgallery_album.']['settings.'] ?? [];
             $this->view->assign('constant', $constant);
             $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
             $this->view->assign('jsSettings', $jsSettings);

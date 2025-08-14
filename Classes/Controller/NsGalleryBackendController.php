@@ -8,6 +8,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /***
@@ -58,6 +60,10 @@ class NsGalleryBackendController extends ActionController
      */
     public function listAction(): ResponseInterface
     {
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->loadJavaScriptModule('@nitsan/ns-gallery/jquery.js');
+        $pageRenderer->loadJavaScriptModule('@nitsan/ns-gallery/Main.js');
+
         $view = $this->initializeModuleTemplate($this->request);
         $galleryAlbums = $this->nsAlbumRepository->findAll();
         $assign = [
@@ -66,7 +72,7 @@ class NsGalleryBackendController extends ActionController
             'settings' => $this->settings
         ];
         $view->assignMultiple($assign);
-        return $view->renderResponse();
+        return $view->renderResponse('NsGalleryBackend/List');
     }
 
     /**
@@ -86,7 +92,7 @@ class NsGalleryBackendController extends ActionController
             'pid' => $this->pid
         ];
         $view->assignMultiple($assign);
-        return $view->renderResponse();
+        return $view->renderResponse('NsGalleryBackend/Dashboard');
     }
 
     /**
