@@ -10,7 +10,9 @@
     "NITSAN"
   ],
   "support": {
-    "issues": "https://github.com/nitsan-technologies/ns_gallery/issues"
+    "issues": "https://github.com/nitsan-technologies/ns_gallery/issues",
+    "source": "https://github.com/nitsan-technologies/ns_gallery",
+    "docs": "https://docs.typo3.org/p/nitsan/ns-gallery/main/en-us/"
   },
   "require": {
     "typo3/cms-core": "^12 || ^13"
