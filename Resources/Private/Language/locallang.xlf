@@ -129,6 +129,9 @@
 			<trans-unit id="selectAlbum">
 				<source>Select albums</source>
 			</trans-unit>
+			<trans-unit id="noRecords">
+				<source>No Records Founds</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
