@@ -34,13 +34,11 @@ settings:
     type: string
     default: 'pagination'
     enum:
-      - value: loadmore
-        label: Load More
-      - value: pagination
-        label: Pagination
+      loadmore: 'Load More'
+      pagination: 'Pagination'
 
   plugin.tx_nsgallery_album.appearanceSettings.generalGallery.controls:
-    label: Controls
+    label: Navigation Arrow
     category: nsgallery.general
     type: bool
     default: 1
