@@ -11,6 +11,12 @@ $typo3VersionArray = VersionNumberUtility::convertVersionStringToArray(
 $langfile = 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:';
 
 if ($typo3VersionArray['version_main'] >= 14) {
+    $startTimeConfig = [
+        'type' => 'datetime',
+    ];
+    $endTimeConfig = [
+        'type' => 'datetime',
+    ];
     $imageSettingsFalMedia = [
         'behaviour' => [
             'allowLanguageSynchronization' => true,
@@ -57,6 +63,16 @@ if ($typo3VersionArray['version_main'] >= 14) {
         ],
     ];
 } else {
+    $startTimeConfig = [
+        'type' => 'input',
+        'renderType' => 'datetime',
+        'eval' => 'datetime',
+    ];
+    $endTimeConfig = [
+        'type' => 'input',
+        'renderType' => 'datetime',
+        'eval' => 'datetime',
+    ];
     $imageSettingsFalMedia = [
         'behaviour' => [
             'allowLanguageSynchronization' => true,
@@ -166,9 +182,7 @@ return [
             'exclude' => true,
             'label' => $langfile . 'LGL.starttime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'datetime',
-                'eval' => 'datetime',
+                ...$startTimeConfig,
                 'default' => 0,
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
@@ -179,9 +193,7 @@ return [
             'exclude' => true,
             'label' => $langfile . 'LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'datetime',
-                'eval' => 'datetime',
+                ...$endTimeConfig,
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038),
