@@ -17,7 +17,9 @@ ExtensionUtility::configurePlugin(
     // non-cacheable actions
     [
         NsAlbumController::class => 'list, show',
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+
 );
 
 ExtensionUtility::configurePlugin(
@@ -29,19 +31,7 @@ ExtensionUtility::configurePlugin(
     // non-cacheable actions
     [
         NsAlbumController::class => '',
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
-$iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
-
-$iconRegistry->registerIcon(
-    'ns_gallery-plugin-album',
-    \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-    ['source' => 'EXT:ns_gallery/Resources/Public/Icons/ns_gallery.svg']
-);
-
-$iconRegistry->registerIcon(
-    'ns_gallery-plugin-googlesearchimage',
-    \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-    ['source' => 'EXT:ns_gallery/Resources/Public/Icons/ns_gallery.svg']
-);

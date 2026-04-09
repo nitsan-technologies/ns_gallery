@@ -11,12 +11,8 @@ class ThemeContainsViewHelper extends AbstractViewHelper
     {
         $this->registerArgument('value', 'string', '', true);
     }
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ) {
-        return str_starts_with($arguments['value'], 'ns_gallery');
-
+    public function render(): bool
+    {
+        return str_starts_with($this->arguments['value'], 'ns_gallery');
     }
 }

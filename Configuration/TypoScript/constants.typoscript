@@ -33,4 +33,4 @@ module.tx_nsgallery_nsgallery {
     }
 }
 //Features constant Includes:
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:ns_gallery/Configuration/TypoScript/FeaturesConstants/commonSettings_constants.typoscript">
+@import 'EXT:ns_gallery/Configuration/TypoScript/FeaturesConstants/commonSettings_constants.typoscript'

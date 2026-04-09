@@ -1,0 +1,44 @@
+categories:
+  nsgallery:
+    label: NS Gallery Settings
+
+  nsgallery.storage:
+    label: Storage Settings
+    parent: nsgallery
+
+  nsgallery.appearance:
+    label: Appearance Settings
+    parent: nsgallery
+
+  nsgallery.general:
+    label: General Gallery Settings
+    parent: nsgallery
+
+
+settings:
+  plugin.tx_nsgallery_album.storageSettings.storagePid:
+    label: Storage PID
+    category: nsgallery.storage
+    type: int
+    default: 0
+
+  plugin.tx_nsgallery_album.appearanceSettings.appearance.jQuery:
+    label: Add jQuery
+    category: nsgallery.appearance
+    type: bool
+    default: false
+
+  plugin.tx_nsgallery_album.appearanceSettings.appearance.Paging:
+    label: Pagination
+    category: nsgallery.appearance
+    type: string
+    default: 'pagination'
+    enum:
+      loadmore: 'Load More'
+      pagination: 'Pagination'
+
+  plugin.tx_nsgallery_album.appearanceSettings.generalGallery.controls:
+    label: Navigation Arrow
+    category: nsgallery.general
+    type: bool
+    default: 1

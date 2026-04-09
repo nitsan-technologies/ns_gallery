@@ -67,9 +67,13 @@ $(document).ready(function () {
                     var findNextPageURL = $(response).find('#' + getParentID).find('.pagination-block').html();
                     $('#' + getParentID + ' .pagination-block').html(findNextPageURL);
                 } else {
-                    var findNextPageURL = $(response).find('.article-load-more').attr('href');
-                    $('#' + getParentID + ' .article-load-more').attr('href', findNextPageURL);
-                }
+                    var findNextPageURL = $(response).find('#' + getParentID).find('.pagination-block .article-load-more').attr('href');
+                    if (findNextPageURL) {
+                        $('#' + getParentID + ' .pagination-block .article-load-more').attr('href', findNextPageURL);
+                    } else {
+                        $('#' + getParentID + ' .pagination-block .article-load-more').fadeOut();
+                    }
+                }   
                 var findNReplace = '#' + getParentID + ' .cus-row';
                 var disdata = $(response).find(findNReplace).html();
                 disdata = $(disdata + ' .ajaxBlock').addClass('page-' + curPage);

@@ -1,6 +1,32 @@
 <?php
 
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+
+$typo3VersionArray = VersionNumberUtility::convertVersionStringToArray(
+    VersionNumberUtility::getCurrentTypo3Version(),
+);
+
 $langfile = 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:';
+
+if ($typo3VersionArray['version_main'] >= 14) {
+    $startTimeConfig = [
+        'type' => 'datetime',
+    ];
+    $endTimeConfig = [
+        'type' => 'datetime',
+    ];
+} else {
+    $startTimeConfig = [
+        'type' => 'input',
+        'renderType' => 'datetime',
+        'eval' => 'datetime',
+    ];
+    $endTimeConfig = [
+        'type' => 'input',
+        'renderType' => 'datetime',
+        'eval' => 'datetime',
+    ];
+}
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:ns_gallery/Resources/Private/Language/locallang_db.xlf:tx_nsgallery_domain_model_nsalbum',
@@ -54,9 +80,7 @@ return [
             'exclude' => true,
             'label' => $langfile . 'LGL.starttime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'datetime',
-                'eval' => 'datetime',
+                ...$startTimeConfig,
                 'default' => 0,
                 'behaviour' => [
                     'allowLanguageSynchronization' => true
@@ -67,9 +91,7 @@ return [
             'exclude' => true,
             'label' => $langfile . 'LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'datetime',
-                'eval' => 'datetime',
+                ...$endTimeConfig,
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)

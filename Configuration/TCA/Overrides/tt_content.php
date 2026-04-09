@@ -10,7 +10,7 @@ $_EXTKEY = 'ns_gallery';
 /***************
  * Plugin
  */
-ExtensionUtility::registerPlugin(
+$pluginSignatureList=  ExtensionUtility::registerPlugin(
     'NsGallery',
     'Album',
     'Album View',
@@ -18,7 +18,21 @@ ExtensionUtility::registerPlugin(
     'ns-gallery'
 );
 
-ExtensionUtility::registerPlugin(
+
+ExtensionManagementUtility::addToAllTCAtypes(
+    'tt_content',
+    '--div--;plugin,pi_flexform,',
+    $pluginSignatureList,
+    'after:subheader',
+);
+// @extensionScannerIgnoreLine
+ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:ns_gallery/Configuration/FlexForms/galleryAlbum.xml',
+    $pluginSignatureList
+);
+
+$pluginSignatureListgoogle =ExtensionUtility::registerPlugin(
     'NsGallery',
     'Googlesearchimage',
     'Google Search View',
@@ -26,12 +40,15 @@ ExtensionUtility::registerPlugin(
     'ns-gallery'
 );
 
-$pluginsPi = [
-    'nsgallery_album' => 'galleryAlbum.xml',
-    'nsgallery_googlesearchimage' => 'galleryGoogleImage.xml',
-];
-foreach ($pluginsPi as $listType => $pi_flexform) {
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$listType] = 'pi_flexform';
-    ExtensionManagementUtility::addPiFlexFormValue($listType, 'FILE:EXT:ns_gallery/Configuration/FlexForms/'.$pi_flexform);
-    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$listType] = 'recursive,select_key,pages';
-}
+ExtensionManagementUtility::addToAllTCAtypes(
+    'tt_content',
+    '--div--;plugin,pi_flexform,',
+    $pluginSignatureListgoogle,
+    'after:subheader',
+);
+// @extensionScannerIgnoreLine
+ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:ns_gallery/Configuration/FlexForms/galleryGoogleImage.xml',
+    $pluginSignatureListgoogle
+);

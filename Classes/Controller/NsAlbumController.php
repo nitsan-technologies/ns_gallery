@@ -156,25 +156,21 @@ class NsAlbumController extends ActionController
             $this->view->assign('constant', $constant);
             $jsSettings = $this->nsAlbumRepository->setSettingsForGallery($this->settings, $constant);
             $this->view->assign('jsSettings', $jsSettings);
-            if (!array_key_exists(
-                $this->request->getControllerExtensionKey(),
-                $GLOBALS['TSFE']->additionalFooterData
-            )) {
-                $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] = null;
-            }
-            $GLOBALS['TSFE']->additionalFooterData[$this->request->getControllerExtensionKey()] .= "
-                <script>
-                    (function($) {
-                        $(window).on('load', function(){
-                            $('.nsGallery-" . $getContentId . "').lightGallery({
-                                selector: '.ns-gallery-item',
-                                " . $jsSettings . "
-                                addClass:'ns-gallery-arrow--icon-circle video-not-supported',
-                                download:false,
-                            });
+            $assetCollector = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\AssetCollector::class);
+            $assetCollector->addInlineJavaScript(
+                'ns_gallery_' . $getContentId,
+                '(function($) {
+                    $(window).on("load", function(){
+                        $(".nsGallery-' . $getContentId . '").lightGallery({
+                            selector: ".ns-gallery-item",
+                            ' . $jsSettings . '
+                            addClass:"ns-gallery-arrow--icon-circle video-not-supported",
+                            download:false,
                         });
-                    })(jQuery);
-                </script>";
+                    });
+                })(jQuery);',
+                ['defer' => true]
+            );
         }
     }
 }
