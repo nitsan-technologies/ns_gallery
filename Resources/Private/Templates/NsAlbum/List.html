@@ -19,9 +19,15 @@
 					</f:if>
 				</f:then>
 				<f:else>
-					<p class="ns-gallery-no-records">
-						<f:translate key="noRecords" extensionName="NsGallery" />
-					</p>
+					<div class="alert alert-warning" role="alert">
+						<div class="media">
+							<div class="media-body">
+								<h5 class="alert-title">
+									<f:translate key="noRecords" extensionName="NsGallery" />
+								</h5>
+							</div>
+						</div>
+					</div>
 				</f:else>
 			</f:if>
 		</div>
