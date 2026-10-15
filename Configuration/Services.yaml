@@ -6,3 +6,9 @@ services:
 
   NITSAN\NsGallery\:
     resource: '../Classes/*'
+
+  NITSAN\NsGallery\EventListener\PremiumStripPreview:
+    tags:
+      - name: event.listener
+        identifier: 'ns-gallery/premium-strip-preview'
+        event: TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent

@@ -35,3 +35,9 @@ ExtensionUtility::configurePlugin(
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeResolver'][1791976312] = [
+    'nodeName' => 'flexFormNoTabsContainer',
+    'priority' => 42,
+    'class' => \NITSAN\NsGallery\Form\Resolver\PremiumStripFlexFormNoTabsContainerResolver::class,
+];
+
