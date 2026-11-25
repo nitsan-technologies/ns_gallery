@@ -7,6 +7,13 @@ services:
   NITSAN\NsGallery\:
     resource: '../Classes/*'
 
+  # Explicit tag keeps the wizard discoverable on v12–v14 without
+  # version-specific UpgradeWizard attribute imports in PHP.
+  NITSAN\NsGallery\Upgrades\NsGalleryCTypeMigration:
+    tags:
+      - name: install.upgradewizard
+        identifier: NsGalleryCTypeMigration
+
   NITSAN\NsGallery\EventListener\PremiumStripPreview:
     tags:
       - name: event.listener

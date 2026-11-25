@@ -8,8 +8,9 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /***
  *
@@ -159,7 +160,12 @@ class NsAlbumController extends ActionController
     public function makeGalleryInitilization($gallery = ''): void
     {
         $currentContentObject = $this->request->getAttribute('currentContentObject');
-        $getContentId = (int)($currentContentObject->data['uid'] ?? 0);
+        $getContentId = 0;
+        if ($currentContentObject instanceof ContentObjectRenderer) {
+            // Public cObj record API; weak match is a false positive for GifBuilder->data.
+            // @extensionScannerIgnoreLine
+            $getContentId = (int)($currentContentObject->data['uid'] ?? 0);
+        }
         $this->view->assign('getContentId', $getContentId);
         if ($gallery == 'general') {
             $configurationManager = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
