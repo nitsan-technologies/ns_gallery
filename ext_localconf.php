@@ -12,11 +12,11 @@ ExtensionUtility::configurePlugin(
     'NsGallery',
     'Album',
     [
-        NsAlbumController::class => 'list, show',
+        NsAlbumController::class => 'list',
     ],
     // non-cacheable actions
     [
-        NsAlbumController::class => 'list, show',
+        NsAlbumController::class => 'list',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 

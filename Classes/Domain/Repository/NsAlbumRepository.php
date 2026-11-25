@@ -30,6 +30,18 @@ class NsAlbumRepository extends Repository
         'sorting' => QueryInterface::ORDER_ASCENDING,
     ];
 
+    /**
+     * Allowed raw values for the lightGallery "controls" option (FlexForm + TypoScript).
+     *
+     * @var list<string>
+     */
+    private const CONTROLS_TRUE_VALUES = ['1', 'true', 'yes', 'on'];
+
+    /**
+     * @var list<string>
+     */
+    private const CONTROLS_FALSE_VALUES = ['0', 'false', 'no', 'off', ''];
+
     public function initializeObject()
     {
         // get the current settings
@@ -40,16 +52,50 @@ class NsAlbumRepository extends Repository
         $this->setDefaultQuerySettings($querySettings);
     }
 
+    /**
+     * Build a safe lightGallery options fragment (e.g. "controls:true,").
+     * Only boolean allow-listed values are emitted — never raw FlexForm/TS strings.
+     *
+     * @param array<string, mixed> $settings
+     * @param array<string, mixed> $constant
+     */
     public function setSettingsForGallery($settings, $constant): string
     {
         $txtSettings = '';
-        if($constant) {
+        if ($constant) {
             foreach ($constant as $key => $value) {
-                if ($key == 'controls') {
-                    $txtSettings .= 'controls:' . (isset($settings[$key]) && $settings[$key] != '' ? $settings[$key] : $constant[$key]) . ',';
+                if ($key === 'controls') {
+                    $raw = (isset($settings[$key]) && $settings[$key] !== '')
+                        ? $settings[$key]
+                        : $constant[$key];
+                    $txtSettings .= 'controls:' . ($this->normalizeControlsFlag($raw) ? 'true' : 'false') . ',';
                 }
             }
         }
         return $txtSettings;
+    }
+
+    /**
+     * Map FlexForm/TypoScript controls values to a boolean.
+     * Unknown values default to false (safe for inline JS).
+     */
+    private function normalizeControlsFlag(mixed $value): bool
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+        if (is_int($value) || is_float($value)) {
+            return (int)$value === 1;
+        }
+
+        $normalized = strtolower(trim((string)$value));
+        if (in_array($normalized, self::CONTROLS_TRUE_VALUES, true)) {
+            return true;
+        }
+        if (in_array($normalized, self::CONTROLS_FALSE_VALUES, true)) {
+            return false;
+        }
+
+        return false;
     }
 }

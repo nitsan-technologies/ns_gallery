@@ -66,24 +66,29 @@ class NsAlbumController extends ActionController
      */
     public function listAction(int $currentPage = 1): ResponseInterface
     {
-        $response = $this->request->getQueryParams()['tx_nsgallery_album'] ?? '';
-        if(!empty($response['currentPage'])) {
-            $currentPage = $response['currentPage'];
+        $response = $this->request->getQueryParams()['tx_nsgallery_album'] ?? [];
+        if (is_array($response) && !empty($response['currentPage'])) {
+            $currentPage = (int)$response['currentPage'];
         }
-        $makeArray = GeneralUtility::trimExplode(',', $this->settings['records']);
+        if ($currentPage < 1) {
+            $currentPage = 1;
+        }
+        $makeArray = GeneralUtility::trimExplode(',', (string)($this->settings['records'] ?? ''), true);
         $nsAlbums = [];
         foreach ($makeArray as $value) {
-        if ($value !== null && $value !== '') {
-            $album = $this->nsAlbumRepository->findByUid($value);
-            if ($album !== null && $album->getMedia()->count() > 0) {
-                $nsAlbums[] = $album;
+            $uid = (int)$value;
+            if ($uid > 0) {
+                $album = $this->nsAlbumRepository->findByUid($uid);
+                if ($album !== null && $album->getMedia()->count() > 0) {
+                    $nsAlbums[] = $album;
+                }
             }
         }
-    }
-        $nsAlbums = array_filter($nsAlbums, function($value) {
+        $nsAlbums = array_filter($nsAlbums, function ($value) {
             return !is_null($value);
         });
-        $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, (int)$this->settings['recordPerPage']);
+        $recordPerPage = max(1, (int)($this->settings['recordPerPage'] ?? 10));
+        $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, $recordPerPage);
         $pagination = new SimplePagination($arrayPaginator);
         $this->view->assignMultiple(
             [
@@ -107,24 +112,31 @@ class NsAlbumController extends ActionController
      */
     public function googleAction(int $currentPage = 1): ResponseInterface
     {
-        $response = $this->request->getQueryParams()['tx_nsgallery_googlesearchimage'] ?? '';
-        if(!empty($response['currentPage'])) {
-            $currentPage = $response['currentPage'];
+        $response = $this->request->getQueryParams()['tx_nsgallery_googlesearchimage'] ?? [];
+        if (is_array($response) && !empty($response['currentPage'])) {
+            $currentPage = (int)$response['currentPage'];
         }
-        $makeArray = GeneralUtility::trimExplode(',', $this->settings['records']);
+        if ($currentPage < 1) {
+            $currentPage = 1;
+        }
+        $makeArray = GeneralUtility::trimExplode(',', (string)($this->settings['records'] ?? ''), true);
         $nsAlbums = [];
         foreach ($makeArray as $album) {
-            $getAlbums = $this->nsAlbumRepository->findByUid($album);
-            if (!empty($getAlbums)){
+            $uid = (int)$album;
+            if ($uid <= 0) {
+                continue;
+            }
+            $getAlbums = $this->nsAlbumRepository->findByUid($uid);
+            if (!empty($getAlbums)) {
                 foreach ($getAlbums->getMedia() as $values) {
                     foreach ($values->getMedia() as $value) {
                         $nsAlbums[] = $value;
                     }
                 }
             }
-
         }
-        $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, $this->settings['recordPerPage']);
+        $recordPerPage = max(1, (int)($this->settings['recordPerPage'] ?? 10));
+        $arrayPaginator = new ArrayPaginator($nsAlbums, $currentPage, $recordPerPage);
         $pagination = new SimplePagination($arrayPaginator);
         $this->view->assignMultiple(
             [
@@ -147,7 +159,7 @@ class NsAlbumController extends ActionController
     public function makeGalleryInitilization($gallery = ''): void
     {
         $currentContentObject = $this->request->getAttribute('currentContentObject');
-        $getContentId = $currentContentObject->data['uid'];
+        $getContentId = (int)($currentContentObject->data['uid'] ?? 0);
         $this->view->assign('getContentId', $getContentId);
         if ($gallery == 'general') {
             $configurationManager = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
